@@ -1,18 +1,24 @@
-const SUPABASE_KEY = "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
-const supabaseClient = supabase.createClient(
+const SUPABASE_URL = "https://gguzdxgxtpibbsfqtxjm.supabase.co"
+const SUPABASE_KEY = "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX"
+
+const supabaseClient = 
+    supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
+    );
 
+async function loadProducts() { const { data, error} = await supabaseClient
+                               .from("products")
+                               .select("*");
 
-    if (error) {
-        console.error("Error loading products:", error);
-        return;
-    }
+                               if (error) { console.error("Error loading products:"'error);
+                                   return;
 
-    console.log("Products loaded:", data);
-}EADVERSE Website JavaScript
+                                           console.log("Products loaded:",data);
+                                          }
 
-document.addEventListener("loadProducts();", function () {
+document.addEventListener("DOMContentLoaded", funtion () {
+    loadProducts()
 
     // Show welcome message in browser console
     console.log("Welcome to THREADVERSE - Wear Your Identity!");
