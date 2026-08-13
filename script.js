@@ -2,14 +2,7 @@ const SUPABASE_KEY = "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
 const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
-);
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);// 
-    const { data, error } = await supabaseClient
-        .from("products")
-        .select("*");
+
 
     if (error) {
         console.error("Error loading products:", error);
