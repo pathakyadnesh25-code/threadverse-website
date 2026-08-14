@@ -1,65 +1,121 @@
-const SUPABASE_URL = "https://gguzdxgxtpibbsfqtxjm.supabase.co"
-const SUPABASE_KEY = "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX"
+// ==========================================
+// THREADVERSE - MAIN JAVASCRIPT
+// ==========================================
 
-const supabaseClient = 
-    supabase.createClient(
+
+// ==========================================
+// 1. SUPABASE CONFIGURATION
+// ==========================================
+
+const SUPABASE_URL = "https://gguzdxgtpibsftqxjm.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
+
+const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
-    );
+);
 
-async function loadProducts() { const { data, error} = await supabaseClient
-                               .from("products")
-                               .select("*");
 
-                               if (error) { console.error("Error loading products:"'error);
-                                   return;
+// ==========================================
+// 2. LOAD PRODUCTS FROM SUPABASE
+// ==========================================
 
-                                           console.log("Products loaded:",data);
-                                          }
+async function loadProducts() {
+    try {
+        const { data, error } = await supabaseClient
+            .from("products")
+            .select("*");
 
-document.addEventListener("DOMContentLoaded", funtion () {
-    loadProducts()
+        if (error) {
+            console.error("Supabase product error:", error.message);
+            return;
+        }
 
-    // Show welcome message in browser console
-    console.log("Welcome to THREADVERSE - Wear Your Identity!");
+        console.log("Products loaded successfully:", data);
+        console.log("Total products:", data.length);
 
-    // Smooth scrolling for navigation links
+    } catch (error) {
+        console.error("Unexpected error:", error);
+    }
+}
+
+
+// ==========================================
+// 3. WEBSITE START
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("THREADVERSE website started successfully!");
+
+    // Load products from Supabase
+    loadProducts();
+
+
+    // ======================================
+    // SMOOTH SCROLLING
+    // ======================================
+
     const navLinks = document.querySelectorAll('a[href^="#"]');
 
     navLinks.forEach(function (link) {
+
         link.addEventListener("click", function (event) {
+
             const targetId = this.getAttribute("href");
 
-            if (targetId !== "#") {
+            if (targetId && targetId !== "#") {
+
                 const targetElement = document.querySelector(targetId);
 
                 if (targetElement) {
+
                     event.preventDefault();
 
                     targetElement.scrollIntoView({
                         behavior: "smooth"
                     });
+
                 }
             }
+
         });
+
     });
 
-    // Product buttons
+
+    // ======================================
+    // PRODUCT BUTTONS
+    // ======================================
+
     const productButtons = document.querySelectorAll(".product-button");
 
     productButtons.forEach(function (button) {
+
         button.addEventListener("click", function () {
-            alert("This product will be available soon on THREADVERSE!");
+
+            alert("This product feature is being connected to THREADVERSE!");
+
         });
+
     });
 
-    // Custom order button
+
+    // ======================================
+    // CUSTOM DESIGN BUTTON
+    // ======================================
+
     const customButtons = document.querySelectorAll(".custom-order");
 
     customButtons.forEach(function (button) {
+
         button.addEventListener("click", function () {
-            alert("Welcome to THREADVERSE Custom Design! Your custom clothing journey starts here.");
+
+            alert("Welcome to THREADVERSE Custom Design!");
+
         });
+
     });
 
 });
