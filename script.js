@@ -110,9 +110,9 @@ async function loadProducts() {
                         ₹${product.price || "0"}
                     </p>
 
-                    <button class="product-button">
-                        VIEW PRODUCT
-                    </button>
+                    <button class="product-button" data-product-id="${product.id}">
+    VIEW PRODUCT
+</button>
 
                 </div>
             `;
@@ -126,15 +126,15 @@ async function loadProducts() {
         // Add click events after products are created
         const productButtons = document.querySelectorAll(".product-button");
 
-        productButtons.forEach(function (button) {
+productButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
 
-            button.addEventListener("click", function () {
+        const productId = this.getAttribute("data-product-id");
 
-                alert("Product ordering will be connected soon!");
+        window.location.href = `product.html?id=${productId}`;
 
-            });
-
-        });
+    });
+});
 
 
     } catch (error) {
