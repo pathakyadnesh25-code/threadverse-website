@@ -1,333 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-  <title>THREADVERSE | A World of Custom Wear</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    body {
-      background: #f7f7f7;
-      color: #111;
-    }
+    <title>THREADVERSE | A World of Custom Wear</title>
 
-    /* NAVBAR */
-    nav {
-      background: #111;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 8%;
-      position: sticky;
-      top: 0;
-    }
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
+    <!-- Supabase Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    .logo span {
-      color: #ff5a36;
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 25px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-    }
-
-    /* HERO */
-    .hero {
-      min-height: 85vh;
-      background: linear-gradient(135deg, #111, #333);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .hero-content h1 {
-      font-size: 60px;
-      margin-bottom: 20px;
-    }
-
-    .hero-content h1 span {
-      color: #ff5a36;
-    }
-
-    .hero-content p {
-      font-size: 20px;
-      margin-bottom: 30px;
-      color: #ddd;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #ff5a36;
-      color: white;
-      padding: 15px 28px;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-      margin: 5px;
-    }
-
-    .btn.secondary {
-      background: transparent;
-      border: 2px solid white;
-    }
-
-    /* SECTION */
-    section {
-      padding: 70px 8%;
-      text-align: center;
-    }
-
-    section h2 {
-      font-size: 35px;
-      margin-bottom: 15px;
-    }
-
-    .subtitle {
-      color: #666;
-      margin-bottom: 40px;
-    }
-
-    /* PRODUCTS */
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
-    }
-
-    .product-card {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      text-align: left;
-    }
-
-    .product-image {
-      height: 220px;
-      background: #e5e5e5;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 50px;
-      margin-bottom: 15px;
-    }
-
-    .product-card h3 {
-      margin-bottom: 10px;
-    }
-
-    .price {
-      color: #ff5a36;
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    /* CUSTOM DESIGN */
-    .custom {
-      background: #111;
-      color: white;
-    }
-
-    .custom p {
-      color: #ccc;
-      max-width: 650px;
-      margin: 15px auto 30px;
-      line-height: 1.6;
-    }
-
-    /* FEATURES */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 25px;
-    }
-
-    .feature {
-      background: white;
-      padding: 30px 20px;
-      border-radius: 10px;
-    }
-
-    .feature h3 {
-      margin-bottom: 10px;
-    }
-
-    footer {
-      background: #111;
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-
-    @media (max-width: 700px) {
-      nav ul {
-        display: none;
-      }
-
-      .hero-content h1 {
-        font-size: 40px;
-      }
-    }
-  </style>
 </head>
 
 <body>
 
-  <!-- NAVIGATION -->
-  <nav>
-    <div class="logo">THREAD<span>VERSE</span></div>
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
 
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#products">Shop</a></li>
-      <li><a href="#custom">Customize</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
-  </nav>
+    <nav>
+        <div class="logo">
+            THREADVERSE
+        </div>
 
-  <!-- HERO SECTION -->
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <h1>Wear Your <span>Identity</span></h1>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#custom">Custom Design</a>
+            <a href="#about">About</a>
+        </div>
+    </nav>
 
-      <p>
-        Premium custom clothing designed by you.
-        Create your style. Express yourself. Wear THREADVERSE.
-      </p>
 
-      <a href="#products" class="btn">Shop Now</a>
-      <a href="#custom" class="btn secondary">Customize Now</a>
-    </div>
-  </section>
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
 
-  <!-- PRODUCTS -->
-  <section id="products">
-    <h2>Featured Products</h2>
+    <section id="home" class="hero">
 
-    <p class="subtitle">
-      Discover premium clothing made for your unique identity.
-    </p>
+        <div class="hero-content">
 
-    <div class="products">
+            <p class="hero-small-text">
+                A WORLD OF CUSTOM WEAR
+            </p>
 
-      <div class="product-card">
-        <div class="product-image">👕</div>
-        <h3>Classic Custom T-Shirt</h3>
-        <p class="price">₹499</p>
-        <button class="btn" onclick="alert('Product added to cart!')">
-          Add to Cart
+            <h1>
+                WEAR YOUR<br>
+                IDENTITY.
+            </h1>
+
+            <p class="hero-description">
+                Create premium custom clothing that represents your style,
+                creativity, brand and identity.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#shop" class="btn">
+                    SHOP NOW
+                </a>
+
+                <a href="#custom" class="btn custom-order">
+                    CREATE YOUR DESIGN
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SHOP SECTION
+    ========================== -->
+
+    <section id="shop" class="products-section">
+
+        <div class="section-heading">
+
+            <p>EXPLORE THREADVERSE</p>
+
+            <h2>
+                OUR COLLECTION
+            </h2>
+
+            <p class="section-description">
+                Premium custom wear made for your style.
+            </p>
+
+        </div>
+
+
+        <div class="products-grid">
+
+            <div class="product-card">
+
+                <div class="product-image">
+                    CUSTOM T-SHIRT
+                </div>
+
+                <h3>Custom T-Shirts</h3>
+
+                <p>
+                    Create a T-shirt with your own design.
+                </p>
+
+                <button class="product-button">
+                    CUSTOMIZE NOW
+                </button>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-image">
+                    OVERSIZED WEAR
+                </div>
+
+                <h3>Oversized Streetwear</h3>
+
+                <p>
+                    Premium oversized clothing for modern style.
+                </p>
+
+                <button class="product-button">
+                    EXPLORE
+                </button>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-image">
+                    PERSONALIZED
+                </div>
+
+                <h3>Personalized Wear</h3>
+
+                <p>
+                    Make your clothing truly unique.
+                </p>
+
+                <button class="product-button">
+                    PERSONALIZE
+                </button>
+
+            </div>
+
+
+            <div class="product-card">
+
+                <div class="product-image">
+                    BRAND MERCH
+                </div>
+
+                <h3>Brand Merchandise</h3>
+
+                <p>
+                    Custom apparel for businesses and brands.
+                </p>
+
+                <button class="product-button">
+                    GET STARTED
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CUSTOM DESIGN SECTION
+    ========================== -->
+
+    <section id="custom" class="custom-section">
+
+        <div class="section-heading">
+
+            <p>CREATE SOMETHING UNIQUE</p>
+
+            <h2>
+                CREATE YOUR OWN DESIGN
+            </h2>
+
+            <p class="section-description">
+                From your idea to premium custom clothing.
+            </p>
+
+        </div>
+
+
+        <div class="steps-container">
+
+            <div class="step">
+
+                <span>01</span>
+
+                <h3>Choose Your Style</h3>
+
+                <p>
+                    Select the product and style you want.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <span>02</span>
+
+                <h3>Add Your Artwork</h3>
+
+                <p>
+                    Upload your design or share your idea.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <span>03</span>
+
+                <h3>We Create Your Design</h3>
+
+                <p>
+                    Your design is prepared for premium printing.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <span>04</span>
+
+                <h3>Wear Your Identity</h3>
+
+                <p>
+                    Receive clothing made uniquely for you.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button class="btn custom-order">
+            START CUSTOM ORDER
         </button>
-      </div>
 
-      <div class="product-card">
-        <div class="product-image">👔</div>
-        <h3>Premium Oversized T-Shirt</h3>
-        <p class="price">₹799</p>
-        <button class="btn" onclick="alert('Product added to cart!')">
-          Add to Cart
-        </button>
-      </div>
+    </section>
 
-      <div class="product-card">
-        <div class="product-image">🧥</div>
-        <h3>Custom Hoodie</h3>
-        <p class="price">₹1,299</p>
-        <button class="btn" onclick="alert('Product added to cart!')">
-          Add to Cart
-        </button>
-      </div>
 
-      <div class="product-card">
-        <div class="product-image">🎨</div>
-        <h3>Design Your Own</h3>
-        <p class="price">Starting ₹599</p>
-        <a href="#custom" class="btn">Customize</a>
-      </div>
+    <!-- =========================
+         ABOUT SECTION
+    ========================== -->
 
-    </div>
-  </section>
+    <section id="about" class="about-section">
 
-  <!-- CUSTOM DESIGN -->
-  <section class="custom" id="custom">
-    <h2>Create Your Own Design</h2>
+        <div class="section-heading">
 
-    <p>
-      Upload your artwork, logo, image or idea and create clothing
-      that represents your personality. Your design. Your style.
-      Your THREADVERSE.
-    </p>
+            <p>ABOUT THREADVERSE</p>
 
-    <button class="btn" onclick="alert('Custom design feature will be connected to Supabase next!')">
-      Start Designing
-    </button>
-  </section>
+            <h2>
+                MORE THAN JUST CLOTHING
+            </h2>
 
-  <!-- WHY THREADVERSE -->
-  <section id="about">
-    <h2>Why THREADVERSE?</h2>
+        </div>
 
-    <p class="subtitle">A World of Custom Wear</p>
+        <p class="about-description">
 
-    <div class="features">
+            THREADVERSE is a world of custom wear where creativity meets
+            premium clothing. We help individuals, creators, businesses and
+            brands turn their ideas into wearable identities.
 
-      <div class="feature">
-        <h3>🎨 Custom Designs</h3>
-        <p>Create clothing exactly the way you imagine it.</p>
-      </div>
+        </p>
 
-      <div class="feature">
-        <h3>⭐ Premium Quality</h3>
-        <p>High-quality clothing designed for comfort and style.</p>
-      </div>
+    </section>
 
-      <div class="feature">
-        <h3>🚚 Easy Ordering</h3>
-        <p>Simple shopping experience from design to delivery.</p>
-      </div>
 
-      <div class="feature">
-        <h3>🌍 Your Identity</h3>
-        <p>Wear designs that represent who you are.</p>
-      </div>
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
-    </div>
-  </section>
+    <footer>
 
-  <!-- FOOTER -->
-  <footer>
-    <h3>THREADVERSE</h3>
-    <p>A World of Custom Wear</p>
-    <br>
-    <p>© 2026 THREADVERSE. All Rights Reserved.</p>
-  </footer>
-     <script src="script.js"></script>
+        <h2>THREADVERSE</h2>
+
+        <p>
+            A World of Custom Wear
+        </p>
+
+        <p>
+            © 2026 THREADVERSE. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         MAIN JAVASCRIPT
+    ========================== -->
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>
