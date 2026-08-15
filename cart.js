@@ -1,111 +1,183 @@
-```javascript
 // ==========================================
-// THREADVERSE - SHOPPING CART JAVASCRIPT
+// THREADVERSE - CART JAVASCRIPT
 // ==========================================
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("THREADVERSE cart page started!");
-
-    loadCart();
-
-});
+console.log("THREADVERSE cart.js loaded successfully!");
 
 
 // ==========================================
-// LOAD CART
+// GET CART FROM LOCAL STORAGE
+// ==========================================
+
+function getCart() {
+
+    return JSON.parse(localStorage.getItem("threadverseCart")) || [];
+
+}
+
+
+// ==========================================
+// SAVE CART
+// ==========================================
+
+function saveCart(cart) {
+
+    localStorage.setItem(
+        "threadverseCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+// ==========================================
+// LOAD AND DISPLAY CART
 // ==========================================
 
 function loadCart() {
 
-    const cartItemsContainer = document.getElementById("cart-items");
-    const cartSummaryContainer = document.getElementById("cart-summary");
+    const cartContainer =
+        document.getElementById("cart-container");
 
-    // Get cart from browser storage
-    let cart = JSON.parse(
-        localStorage.getItem("threadverseCart")
-    ) || [];
+    const cartTotal =
+        document.getElementById("cart-total");
 
+    if (!cartContainer) {
 
-    // Empty cart
-    if (cart.length === 0) {
-
-        cartItemsContainer.innerHTML = `
-            <div class="empty-cart">
-                <h2>Your cart is empty</h2>
-                <p>Explore our collection and find your perfect style.</p>
-
-                <a href="index.html#products" class="continue-shopping-button">
-                    CONTINUE SHOPPING
-                </a>
-            </div>
-        `;
-
-        cartSummaryContainer.innerHTML = "";
+        console.error(
+            "Cart container not found in cart.html"
+        );
 
         return;
+
     }
 
 
-    // Clear loading text
-    cartItemsContainer.innerHTML = "";
+    const cart = getCart();
 
-    let totalAmount = 0;
+    console.log("Current cart:", cart);
 
 
-    // Display each cart item
+    // ======================================
+    // EMPTY CART
+    // ======================================
+
+    if (cart.length === 0) {
+
+        cartContainer.innerHTML = `
+            <div class="empty-cart">
+
+                <h2>Your cart is empty.</h2>
+
+                <p>
+                    Add some amazing THREADVERSE products
+                    to your cart!
+                </p>
+
+                <a href="index.html#products"
+                   class="continue-shopping">
+
+                    CONTINUE SHOPPING
+
+                </a>
+
+            </div>
+        `;
+
+        if (cartTotal) {
+
+            cartTotal.textContent = "₹0";
+
+        }
+
+        return;
+
+    }
+
+
+    // ======================================
+    // DISPLAY CART PRODUCTS
+    // ======================================
+
+    cartContainer.innerHTML = "";
+
+
+    let total = 0;
+
+
     cart.forEach(function (item, index) {
 
-        const itemTotal = Number(item.price) * Number(item.quantity);
+        const quantity =
+            Number(item.quantity) || 1;
 
-        totalAmount += itemTotal;
+        const price =
+            Number(item.price) || 0;
 
 
-        const cartItem = document.createElement("div");
+        const itemTotal =
+            price * quantity;
+
+
+        total += itemTotal;
+
+
+        const cartItem =
+            document.createElement("div");
+
 
         cartItem.className = "cart-item";
 
 
         cartItem.innerHTML = `
 
-            <div class="cart-item-image">
+            <div class="cart-product">
 
                 <img
-                    src="${item.image}"
+                    src="${item.image || ""}"
                     alt="${item.name || "THREADVERSE Product"}"
+                    class="cart-product-image"
                 >
 
+                <div class="cart-product-info">
+
+                    <p class="cart-category">
+                        ${item.category || "THREADVERSE"}
+                    </p>
+
+                    <h3>
+                        ${item.name || "THREADVERSE Product"}
+                    </h3>
+
+                    <p>
+                        Size: ${item.size || "Not selected"}
+                    </p>
+
+                    <p class="cart-price">
+                        ₹${price}
+                    </p>
+
+                </div>
+
             </div>
 
 
-            <div class="cart-item-info">
-
-                <p class="cart-item-size">
-                    SIZE: ${item.size}
-                </p>
-
-                <h2>${item.name}</h2>
-
-                <p class="cart-item-price">
-                    ₹${Number(item.price).toFixed(0)}
-                </p>
-
-            </div>
-
-
-            <div class="cart-item-quantity">
+            <div class="cart-quantity">
 
                 <button
-                    class="quantity-button decrease-quantity"
+                    class="quantity-button decrease-button"
                     data-index="${index}"
                 >
                     −
                 </button>
 
-                <span>${item.quantity}</span>
+
+                <span>
+                    ${quantity}
+                </span>
+
 
                 <button
-                    class="quantity-button increase-quantity"
+                    class="quantity-button increase-button"
                     data-index="${index}"
                 >
                     +
@@ -115,12 +187,14 @@ function loadCart() {
 
 
             <div class="cart-item-total">
-                ₹${itemTotal.toFixed(0)}
+
+                ₹${itemTotal}
+
             </div>
 
 
             <button
-                class="remove-item-button"
+                class="remove-button"
                 data-index="${index}"
             >
                 REMOVE
@@ -129,137 +203,143 @@ function loadCart() {
         `;
 
 
-        cartItemsContainer.appendChild(cartItem);
+        cartContainer.appendChild(cartItem);
 
     });
 
 
-    // ==========================================
-    // CART SUMMARY
-    // ==========================================
+    // ======================================
+    // UPDATE TOTAL
+    // ======================================
 
-    cartSummaryContainer.innerHTML = `
+    if (cartTotal) {
 
-        <div class="cart-summary-box">
-
-            <h2>ORDER SUMMARY</h2>
-
-            <div class="summary-row">
-                <span>Total</span>
-                <strong>₹${totalAmount.toFixed(0)}</strong>
-            </div>
-
-            <button
-                class="checkout-button"
-                id="checkout-button"
-            >
-                PROCEED TO CHECKOUT
-            </button>
-
-            <a
-                href="index.html#products"
-                class="continue-shopping-link"
-            >
-                ← Continue Shopping
-            </a>
-
-        </div>
-
-    `;
-
-
-    // ==========================================
-    // INCREASE QUANTITY
-    // ==========================================
-
-    document.querySelectorAll(".increase-quantity").forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const index = Number(this.getAttribute("data-index"));
-
-            cart[index].quantity += 1;
-
-            saveAndReloadCart(cart);
-
-        });
-
-    });
-
-
-    // ==========================================
-    // DECREASE QUANTITY
-    // ==========================================
-
-    document.querySelectorAll(".decrease-quantity").forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const index = Number(this.getAttribute("data-index"));
-
-            if (cart[index].quantity > 1) {
-
-                cart[index].quantity -= 1;
-
-                saveAndReloadCart(cart);
-
-            }
-
-        });
-
-    });
-
-
-    // ==========================================
-    // REMOVE ITEM
-    // ==========================================
-
-    document.querySelectorAll(".remove-item-button").forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            const index = Number(this.getAttribute("data-index"));
-
-            cart.splice(index, 1);
-
-            saveAndReloadCart(cart);
-
-        });
-
-    });
-
-
-    // ==========================================
-    // CHECKOUT BUTTON
-    // ==========================================
-
-    const checkoutButton = document.getElementById("checkout-button");
-
-    if (checkoutButton) {
-
-        checkoutButton.addEventListener("click", function () {
-
-            alert("Checkout will be connected in the next step!");
-
-        });
+        cartTotal.textContent = `₹${total}`;
 
     }
 
+
+    // ======================================
+    // INCREASE QUANTITY
+    // ======================================
+
+    const increaseButtons =
+        document.querySelectorAll(".increase-button");
+
+
+    increaseButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const index =
+                Number(this.dataset.index);
+
+
+            const cart = getCart();
+
+
+            cart[index].quantity =
+                (Number(cart[index].quantity) || 1) + 1;
+
+
+            saveCart(cart);
+
+
+            loadCart();
+
+        });
+
+    });
+
+
+    // ======================================
+    // DECREASE QUANTITY
+    // ======================================
+
+    const decreaseButtons =
+        document.querySelectorAll(".decrease-button");
+
+
+    decreaseButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const index =
+                Number(this.dataset.index);
+
+
+            const cart = getCart();
+
+
+            const currentQuantity =
+                Number(cart[index].quantity) || 1;
+
+
+            if (currentQuantity > 1) {
+
+                cart[index].quantity =
+                    currentQuantity - 1;
+
+            }
+
+
+            saveCart(cart);
+
+
+            loadCart();
+
+        });
+
+    });
+
+
+    // ======================================
+    // REMOVE PRODUCT
+    // ======================================
+
+    const removeButtons =
+        document.querySelectorAll(".remove-button");
+
+
+    removeButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const index =
+                Number(this.dataset.index);
+
+
+            const cart = getCart();
+
+
+            cart.splice(index, 1);
+
+
+            saveCart(cart);
+
+
+            loadCart();
+
+        });
+
+    });
+
 }
 
 
 // ==========================================
-// SAVE CART AND RELOAD
+// START CART PAGE
 // ==========================================
 
-function saveAndReloadCart(cart) {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    localStorage.setItem(
-        "threadverseCart",
-        JSON.stringify(cart)
-    );
+        console.log(
+            "THREADVERSE cart page started successfully!"
+        );
 
-    loadCart();
+        loadCart();
 
-}
-```
+    }
+);
