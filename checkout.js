@@ -5,7 +5,21 @@
 
 
 // ==========================================
-// START CHECKOUT PAGE
+// 1. SUPABASE CONFIGURATION
+// ==========================================
+
+const SUPABASE_URL = "https://gguzdxgxtpibbsfqtxjm.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// ==========================================
+// 2. START CHECKOUT PAGE
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -20,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // ==========================================
-// LOAD CART INTO CHECKOUT
+// 3. LOAD CART INTO CHECKOUT
 // ==========================================
 
 function loadCheckout() {
@@ -31,23 +45,16 @@ function loadCheckout() {
     const checkoutTotalPrice =
         document.getElementById("checkout-total-price");
 
-
-    // Get cart from browser storage
     const cart = JSON.parse(
         localStorage.getItem("threadverseCart")
     ) || [];
 
 
-    // Check empty cart
     if (cart.length === 0) {
 
-        checkoutItems.innerHTML = `
-            <p>Your cart is empty.</p>
-
-            <a href="index.html#products">
-                Continue Shopping
-            </a>
-        `;
+        checkoutItems.innerHTML =
+            '<p>Your cart is empty.</p>' +
+            '<a href="index.html#products">Continue Shopping</a>';
 
         checkoutTotalPrice.textContent = "₹0";
 
@@ -56,25 +63,16 @@ function loadCheckout() {
     }
 
 
-    // Clear loading message
     checkoutItems.innerHTML = "";
-
 
     let totalAmount = 0;
 
 
-    // Display all products
     cart.forEach(function (item) {
 
-        const quantity =
-            Number(item.quantity) || 1;
-
-        const price =
-            Number(item.price) || 0;
-
-        const itemTotal =
-            price * quantity;
-
+        const quantity = Number(item.quantity) || 1;
+        const price = Number(item.price) || 0;
+        const itemTotal = price * quantity;
 
         totalAmount += itemTotal;
 
@@ -82,43 +80,30 @@ function loadCheckout() {
         const checkoutItem =
             document.createElement("div");
 
-        checkoutItem.className =
-            "checkout-item";
+        checkoutItem.className = "checkout-item";
 
 
-        checkoutItem.innerHTML = `
+        checkoutItem.innerHTML =
+            '<div class="checkout-item-image">' +
+                '<img src="' + item.image + '" alt="' +
+                (item.name || "THREADVERSE Product") + '">' +
+            '</div>' +
 
-            <div class="checkout-item-image">
+            '<div class="checkout-item-info">' +
+                '<h3>' +
+                    (item.name || "THREADVERSE Product") +
+                '</h3>' +
 
-                <img
-                    src="${item.image}"
-                    alt="${item.name || "THREADVERSE Product"}"
-                >
+                '<p>Size: ' +
+                    (item.size || "Not selected") +
+                '</p>' +
 
-            </div>
+                '<p>Quantity: ' + quantity + '</p>' +
 
-
-            <div class="checkout-item-info">
-
-                <h3>
-                    ${item.name || "THREADVERSE Product"}
-                </h3>
-
-                <p>
-                    Size: ${item.size || "Not selected"}
-                </p>
-
-                <p>
-                    Quantity: ${quantity}
-                </p>
-
-                <strong>
-                    ₹${itemTotal.toFixed(0)}
-                </strong>
-
-            </div>
-
-        `;
+                '<strong>₹' +
+                    itemTotal.toFixed(0) +
+                '</strong>' +
+            '</div>';
 
 
         checkoutItems.appendChild(checkoutItem);
@@ -126,7 +111,6 @@ function loadCheckout() {
     });
 
 
-    // Show total
     checkoutTotalPrice.textContent =
         "₹" + totalAmount.toFixed(0);
 
@@ -134,7 +118,7 @@ function loadCheckout() {
 
 
 // ==========================================
-// CHECKOUT FORM
+// 4. CHECKOUT FORM AND SAVE ORDER
 // ==========================================
 
 function setupCheckoutForm() {
@@ -145,9 +129,8 @@ function setupCheckoutForm() {
 
     checkoutForm.addEventListener(
         "submit",
-        function (event) {
+        async function (event) {
 
-            // Stop page from refreshing
             event.preventDefault();
 
 
@@ -157,7 +140,6 @@ function setupCheckoutForm() {
             ) || [];
 
 
-            // Prevent empty order
             if (cart.length === 0) {
 
                 alert(
@@ -192,50 +174,104 @@ function setupCheckoutForm() {
                 document.getElementById("pincode").value.trim();
 
 
-            // Create order object
-            const order = {
+            // Calculate total amount
+            let totalAmount = 0;
 
-                customerName: customerName,
+            cart.forEach(function (item) {
 
-                customerEmail: customerEmail,
+                const price =
+                    Number(item.price) || 0;
 
-                customerPhone: customerPhone,
+                const quantity =
+                    Number(item.quantity) || 1;
 
-                address: address,
+                totalAmount +=
+                    price * quantity;
 
-                city: city,
-
-                state: state,
-
-                pincode: pincode,
-
-                items: cart,
-
-                orderDate:
-                    new Date().toISOString()
-
-            };
+            });
 
 
-            // Temporary: save latest order locally
-            localStorage.setItem(
-                "threadverseLatestOrder",
-                JSON.stringify(order)
-            );
+            // Disable button while saving
+            const placeOrderButton =
+                document.querySelector(".place-order-button");
+
+            placeOrderButton.disabled = true;
+
+            placeOrderButton.textContent =
+                "PLACING ORDER...";
+
+
+            // Save order to Supabase
+            const { data, error } =
+                await supabaseClient
+                    .from("orders")
+                    .insert([
+                        {
+                            customer_name: customerName,
+                            customer_email: customerEmail,
+                            customer_phone: customerPhone,
+                            address: address,
+                            city: city,
+                            state: state,
+                            pincode: pincode,
+                            items: cart,
+                            total_amount: totalAmount
+                        }
+                    ])
+                    .select();
+
+
+            // Handle error
+            if (error) {
+
+                console.error(
+                    "Order saving error:",
+                    error
+                );
+
+                alert(
+                    "Unable to place your order. Please try again."
+                );
+
+                placeOrderButton.disabled = false;
+
+                placeOrderButton.textContent =
+                    "PLACE ORDER";
+
+                return;
+
+            }
 
 
             console.log(
-                "Order created successfully:",
-                order
+                "Order placed successfully:",
+                data
             );
 
 
-            alert(
-                "Your order details are ready! Order database connection is the next step."
+            // Get order ID
+            const orderId = data[0].id;
+
+
+            // Clear cart
+            localStorage.removeItem(
+                "threadverseCart"
             );
+
+
+            // Save order ID temporarily
+            localStorage.setItem(
+                "threadverseLastOrderId",
+                orderId
+            );
+
+
+            // Redirect to confirmation page
+            window.location.href =
+                "order-success.html?id=" + orderId;
 
         }
     );
 
 }
-```
+
