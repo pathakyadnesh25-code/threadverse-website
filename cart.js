@@ -11,9 +11,19 @@ console.log("THREADVERSE cart.js loaded successfully!");
 
 function getCart() {
 
-    return JSON.parse(
-        localStorage.getItem("threadverseCart")
-    ) || [];
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("threadverseCart")
+        ) || [];
+
+    } catch (error) {
+
+        console.error("Error reading cart:", error);
+
+        return [];
+
+    }
 
 }
 
@@ -33,20 +43,23 @@ function saveCart(cart) {
 
 
 // ==========================================
-// LOAD AND DISPLAY CART
+// LOAD CART
 // ==========================================
 
 function loadCart() {
 
     const cartContainer =
-        document.getElementById("cart-items");
+        document.getElementById("cart-container");
 
-    const cartSummary =
-        document.getElementById("cart-summary");
+    const cartTotal =
+        document.getElementById("cart-total");
+
+    const checkoutButton =
+        document.getElementById("checkout-button");
 
 
-    // Check if cart elements exist
-    if (!cartContainer || !cartSummary) {
+    // CHECK REQUIRED ELEMENTS
+    if (!cartContainer || !cartTotal) {
 
         console.error(
             "Cart elements not found in cart.html"
@@ -57,22 +70,22 @@ function loadCart() {
     }
 
 
+    // GET CART
     const cart = getCart();
 
     console.log("Current cart:", cart);
 
 
-    // ======================================
+    // ==========================================
     // EMPTY CART
-    // ======================================
+    // ==========================================
 
     if (cart.length === 0) {
 
         cartContainer.innerHTML = `
-
             <div class="empty-cart">
 
-                <h2>Your cart is empty.</h2>
+                <h2>Your cart is empty</h2>
 
                 <p>
                     Add some amazing THREADVERSE products
@@ -87,30 +100,40 @@ function loadCart() {
                 </a>
 
             </div>
-
         `;
 
 
-        cartSummary.innerHTML = "";
+        cartTotal.textContent = "₹0";
+
+
+        if (checkoutButton) {
+
+            checkoutButton.style.display = "none";
+
+        }
+
 
         return;
 
     }
 
 
-    // ======================================
-    // CLEAR OLD CART CONTENT
-    // ======================================
+    // SHOW CHECKOUT BUTTON
+    if (checkoutButton) {
+
+        checkoutButton.style.display = "inline-block";
+
+    }
+
+
+    // ==========================================
+    // DISPLAY PRODUCTS
+    // ==========================================
 
     cartContainer.innerHTML = "";
 
-
     let total = 0;
 
-
-    // ======================================
-    // DISPLAY CART PRODUCTS
-    // ======================================
 
     cart.forEach(function (item, index) {
 
@@ -131,7 +154,8 @@ function loadCart() {
             document.createElement("div");
 
 
-        cartItem.className = "cart-item";
+        cartItem.className =
+            "cart-item";
 
 
         cartItem.innerHTML = `
@@ -144,19 +168,23 @@ function loadCart() {
                     class="cart-product-image"
                 >
 
+
                 <div class="cart-product-info">
 
                     <p class="cart-category">
                         ${item.category || "THREADVERSE"}
                     </p>
 
+
                     <h3>
                         ${item.name || "THREADVERSE Product"}
                     </h3>
 
+
                     <p>
                         Size: ${item.size || "Not selected"}
                     </p>
+
 
                     <p class="cart-price">
                         ₹${price}
@@ -214,176 +242,157 @@ function loadCart() {
     });
 
 
-    // ======================================
-    // ORDER SUMMARY + CHECKOUT BUTTON
-    // ======================================
+    // ==========================================
+    // UPDATE TOTAL
+    // ==========================================
 
-    cartSummary.innerHTML = `
-
-        <div class="cart-total-box">
-
-            <h2>ORDER SUMMARY</h2>
+    cartTotal.textContent = `₹${total}`;
 
 
-            <div class="summary-row">
-
-                <span>Subtotal</span>
-
-                <span>₹${total}</span>
-
-            </div>
-
-
-            <div class="summary-row">
-
-                <span>Delivery</span>
-
-                <span>Calculated at checkout</span>
-
-            </div>
-
-
-            <div class="summary-row total-row">
-
-                <span>TOTAL</span>
-
-                <span>₹${total}</span>
-
-            </div>
-
-
-            <a
-                href="checkout.html"
-                class="checkout-button"
-            >
-                PROCEED TO CHECKOUT
-            </a>
-
-
-            <a
-                href="index.html#products"
-                class="continue-shopping-cart"
-            >
-                ← CONTINUE SHOPPING
-            </a>
-
-        </div>
-
-    `;
-
-
-    // ======================================
+    // ==========================================
     // INCREASE QUANTITY
-    // ======================================
+    // ==========================================
 
-    const increaseButtons =
-        document.querySelectorAll(".increase-button");
+    document
+        .querySelectorAll(".increase-button")
+        .forEach(function (button) {
 
+            button.addEventListener(
+                "click",
+                function () {
 
-    increaseButtons.forEach(function (button) {
+                    const index =
+                        Number(this.dataset.index);
 
-        button.addEventListener("click", function () {
-
-            const index =
-                Number(this.dataset.index);
-
-            const updatedCart =
-                getCart();
-
-
-            updatedCart[index].quantity =
-                (Number(updatedCart[index].quantity) || 1) + 1;
+                    const updatedCart =
+                        getCart();
 
 
-            saveCart(updatedCart);
+                    updatedCart[index].quantity =
+                        (Number(
+                            updatedCart[index].quantity
+                        ) || 1) + 1;
 
 
-            loadCart();
+                    saveCart(updatedCart);
+
+                    loadCart();
+
+                }
+            );
 
         });
 
-    });
 
-
-    // ======================================
+    // ==========================================
     // DECREASE QUANTITY
-    // ======================================
+    // ==========================================
 
-    const decreaseButtons =
-        document.querySelectorAll(".decrease-button");
+    document
+        .querySelectorAll(".decrease-button")
+        .forEach(function (button) {
 
+            button.addEventListener(
+                "click",
+                function () {
 
-    decreaseButtons.forEach(function (button) {
+                    const index =
+                        Number(this.dataset.index);
 
-        button.addEventListener("click", function () {
-
-            const index =
-                Number(this.dataset.index);
-
-            const updatedCart =
-                getCart();
-
-
-            const currentQuantity =
-                Number(
-                    updatedCart[index].quantity
-                ) || 1;
+                    const updatedCart =
+                        getCart();
 
 
-            if (currentQuantity > 1) {
-
-                updatedCart[index].quantity =
-                    currentQuantity - 1;
-
-            }
+                    const currentQuantity =
+                        Number(
+                            updatedCart[index].quantity
+                        ) || 1;
 
 
-            saveCart(updatedCart);
+                    if (currentQuantity > 1) {
+
+                        updatedCart[index].quantity =
+                            currentQuantity - 1;
+
+                    }
 
 
-            loadCart();
+                    saveCart(updatedCart);
+
+                    loadCart();
+
+                }
+            );
 
         });
 
-    });
 
-
-    // ======================================
+    // ==========================================
     // REMOVE PRODUCT
-    // ======================================
+    // ==========================================
 
-    const removeButtons =
-        document.querySelectorAll(".remove-button");
+    document
+        .querySelectorAll(".remove-button")
+        .forEach(function (button) {
 
+            button.addEventListener(
+                "click",
+                function () {
 
-    removeButtons.forEach(function (button) {
+                    const index =
+                        Number(this.dataset.index);
 
-        button.addEventListener("click", function () {
-
-            const index =
-                Number(this.dataset.index);
-
-            const updatedCart =
-                getCart();
-
-
-            updatedCart.splice(index, 1);
+                    const updatedCart =
+                        getCart();
 
 
-            saveCart(updatedCart);
+                    updatedCart.splice(index, 1);
 
 
-            loadCart();
+                    saveCart(updatedCart);
+
+                    loadCart();
+
+                }
+            );
 
         });
-
-    });
 
 }
 
 
 // ==========================================
-// START CART PAGE
+// CHECKOUT BUTTON
+// ==========================================
+
+function setupCheckout() {
+
+    const checkoutButton =
+        document.getElementById("checkout-button");
+
+
+    if (!checkoutButton) {
+
+        return;
+
+    }
+
+
+    checkoutButton.addEventListener(
+        "click",
+        function () {
+
+            window.location.href =
+                "checkout.html";
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// START WEBSITE
 // ==========================================
 
 document.addEventListener(
@@ -394,7 +403,10 @@ document.addEventListener(
             "THREADVERSE cart page started successfully!"
         );
 
+
         loadCart();
+
+        setupCheckout();
 
     }
 );
