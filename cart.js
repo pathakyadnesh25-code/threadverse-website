@@ -11,7 +11,9 @@ console.log("THREADVERSE cart.js loaded successfully!");
 
 function getCart() {
 
-    return JSON.parse(localStorage.getItem("threadverseCart")) || [];
+    return JSON.parse(
+        localStorage.getItem("threadverseCart")
+    ) || [];
 
 }
 
@@ -37,15 +39,17 @@ function saveCart(cart) {
 function loadCart() {
 
     const cartContainer =
-        document.getElementById("cart-container");
+        document.getElementById("cart-items");
 
-    const cartTotal =
-        document.getElementById("cart-total");
+    const cartSummary =
+        document.getElementById("cart-summary");
 
-    if (!cartContainer) {
+
+    // Check if cart elements exist
+    if (!cartContainer || !cartSummary) {
 
         console.error(
-            "Cart container not found in cart.html"
+            "Cart elements not found in cart.html"
         );
 
         return;
@@ -65,6 +69,7 @@ function loadCart() {
     if (cart.length === 0) {
 
         cartContainer.innerHTML = `
+
             <div class="empty-cart">
 
                 <h2>Your cart is empty.</h2>
@@ -74,21 +79,19 @@ function loadCart() {
                     to your cart!
                 </p>
 
-                <a href="index.html#products"
-                   class="continue-shopping">
-
+                <a
+                    href="index.html#products"
+                    class="continue-shopping"
+                >
                     CONTINUE SHOPPING
-
                 </a>
 
             </div>
+
         `;
 
-        if (cartTotal) {
 
-            cartTotal.textContent = "₹0";
-
-        }
+        cartSummary.innerHTML = "";
 
         return;
 
@@ -96,7 +99,7 @@ function loadCart() {
 
 
     // ======================================
-    // DISPLAY CART PRODUCTS
+    // CLEAR OLD CART CONTENT
     // ======================================
 
     cartContainer.innerHTML = "";
@@ -105,6 +108,10 @@ function loadCart() {
     let total = 0;
 
 
+    // ======================================
+    // DISPLAY CART PRODUCTS
+    // ======================================
+
     cart.forEach(function (item, index) {
 
         const quantity =
@@ -112,7 +119,6 @@ function loadCart() {
 
         const price =
             Number(item.price) || 0;
-
 
         const itemTotal =
             price * quantity;
@@ -171,7 +177,7 @@ function loadCart() {
                 </button>
 
 
-                <span>
+                <span class="quantity-number">
                     ${quantity}
                 </span>
 
@@ -209,14 +215,61 @@ function loadCart() {
 
 
     // ======================================
-    // UPDATE TOTAL
+    // ORDER SUMMARY + CHECKOUT BUTTON
     // ======================================
 
-    if (cartTotal) {
+    cartSummary.innerHTML = `
 
-        cartTotal.textContent = `₹${total}`;
+        <div class="cart-total-box">
 
-    }
+            <h2>ORDER SUMMARY</h2>
+
+
+            <div class="summary-row">
+
+                <span>Subtotal</span>
+
+                <span>₹${total}</span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Delivery</span>
+
+                <span>Calculated at checkout</span>
+
+            </div>
+
+
+            <div class="summary-row total-row">
+
+                <span>TOTAL</span>
+
+                <span>₹${total}</span>
+
+            </div>
+
+
+            <a
+                href="checkout.html"
+                class="checkout-button"
+            >
+                PROCEED TO CHECKOUT
+            </a>
+
+
+            <a
+                href="index.html#products"
+                class="continue-shopping-cart"
+            >
+                ← CONTINUE SHOPPING
+            </a>
+
+        </div>
+
+    `;
 
 
     // ======================================
@@ -234,15 +287,15 @@ function loadCart() {
             const index =
                 Number(this.dataset.index);
 
-
-            const cart = getCart();
-
-
-            cart[index].quantity =
-                (Number(cart[index].quantity) || 1) + 1;
+            const updatedCart =
+                getCart();
 
 
-            saveCart(cart);
+            updatedCart[index].quantity =
+                (Number(updatedCart[index].quantity) || 1) + 1;
+
+
+            saveCart(updatedCart);
 
 
             loadCart();
@@ -267,23 +320,25 @@ function loadCart() {
             const index =
                 Number(this.dataset.index);
 
-
-            const cart = getCart();
+            const updatedCart =
+                getCart();
 
 
             const currentQuantity =
-                Number(cart[index].quantity) || 1;
+                Number(
+                    updatedCart[index].quantity
+                ) || 1;
 
 
             if (currentQuantity > 1) {
 
-                cart[index].quantity =
+                updatedCart[index].quantity =
                     currentQuantity - 1;
 
             }
 
 
-            saveCart(cart);
+            saveCart(updatedCart);
 
 
             loadCart();
@@ -308,14 +363,14 @@ function loadCart() {
             const index =
                 Number(this.dataset.index);
 
-
-            const cart = getCart();
-
-
-            cart.splice(index, 1);
+            const updatedCart =
+                getCart();
 
 
-            saveCart(cart);
+            updatedCart.splice(index, 1);
+
+
+            saveCart(updatedCart);
 
 
             loadCart();
