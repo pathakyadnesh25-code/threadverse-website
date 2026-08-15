@@ -14,7 +14,6 @@
 
     <!-- NAVIGATION -->
     <nav>
-
         <div class="logo">
             THREADVERSE
         </div>
@@ -25,38 +24,41 @@
             <a href="cart.html">CART</a>
             <a href="index.html#about">ABOUT</a>
         </div>
-
     </nav>
 
 
     <!-- CART PAGE -->
     <main class="cart-page">
 
-        <!-- CART HEADING -->
         <div class="cart-heading">
             <p>YOUR THREADVERSE</p>
             <h1>Shopping Cart</h1>
         </div>
 
 
-        <!-- CART PRODUCTS -->
+        <!-- PRODUCTS WILL APPEAR HERE -->
         <div id="cart-container">
-            Loading your cart...
+            <p>Loading your cart...</p>
         </div>
 
 
-        <!-- CART SUMMARY -->
+        <!-- TOTAL AND CHECKOUT -->
         <div id="cart-summary">
 
             <div class="cart-total-box">
 
                 <h2>
-                    Total: <span id="cart-total">₹0</span>
+                    Cart Total:
+                    <span id="cart-total">₹0</span>
                 </h2>
 
-                <a href="checkout.html" class="checkout-button">
+                <button
+                    id="checkout-button"
+                    class="checkout-button"
+                    type="button"
+                >
                     PROCEED TO CHECKOUT
-                </a>
+                </button>
 
             </div>
 
@@ -67,17 +69,13 @@
 
     <!-- FOOTER -->
     <footer>
-
         <h2>THREADVERSE</h2>
-
         <p>A World of Custom Wear</p>
-
         <p>© 2026 THREADVERSE. All rights reserved.</p>
-
     </footer>
 
 
-    <!-- CART JAVASCRIPT -->
+    <!-- JAVASCRIPT -->
     <script src="cart.js"></script>
 
 </body>
