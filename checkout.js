@@ -430,23 +430,22 @@ function setupCheckoutForm() {
                 // SAVE ORDER TO SUPABASE
                 // ==================================
 
-                const { data, error } =
-                    await supabaseClient
-                        .from("orders")
-                        .insert([
-                            {
-                                customer_name: customerName,
-                                customer_email: customerEmail,
-                                customer_phone: customerPhone,
-                                address: address,
-                                city: city,
-                                state: state,
-                                pincode: pincode,
-                                items: cart,
-                                total_amount: totalAmount
-                            }
-                        ])
-                        .select();
+             const { error } =
+    await supabaseClient
+        .from("orders")
+        .insert([
+            {
+                customer_name: customerName,
+                customer_email: customerEmail,
+                customer_phone: customerPhone,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                items: cart,
+                total_amount: totalAmount
+            }
+        ]);
 
 
                 // ==================================
@@ -512,8 +511,7 @@ function setupCheckoutForm() {
                 // GET ORDER ID
                 // ==================================
 
-                const orderId =
-                    data[0].id;
+                
 
 
                 console.log(
@@ -535,10 +533,8 @@ function setupCheckoutForm() {
                 // SAVE ORDER DETAILS LOCALLY
                 // ==================================
 
-                localStorage.setItem(
-                    "threadverseLastOrderId",
-                    orderId
-                );
+                window.location.href =
+    "order-success.html?id=" + orderId;
 
 
                 localStorage.setItem(
