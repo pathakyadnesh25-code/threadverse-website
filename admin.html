@@ -1,0 +1,592 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Dashboard | THREADVERSE</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body class="admin-body">
+
+
+    <!-- =========================================
+         ADMIN HEADER
+    ========================================== -->
+
+    <header class="admin-header">
+
+        <div class="admin-brand">
+
+            <a
+                href="index.html"
+                class="admin-logo"
+            >
+                THREADVERSE
+            </a>
+
+            <p>
+                YADNESH PATHAK, FOUNDER AND CEO OF THREADVERSE
+            </p>
+
+        </div>
+
+
+        <div class="admin-header-right">
+
+            <div class="admin-status">
+
+                <span class="admin-status-dot"></span>
+
+                ADMIN PANEL
+
+            </div>
+
+
+            <a
+                href="index.html"
+                class="admin-view-store"
+            >
+                VIEW STORE
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         ADMIN MAIN
+    ========================================== -->
+
+    <main class="admin-dashboard">
+
+
+        <!-- =====================================
+             PAGE HEADING
+        ====================================== -->
+
+        <section class="admin-welcome">
+
+            <div>
+
+                <p class="admin-eyebrow">
+                    BUSINESS MANAGEMENT
+                </p>
+
+                <h1>
+                    THREADVERSE
+                    <span>Admin Dashboard</span>
+                </h1>
+
+                <p class="admin-description">
+
+                    Manage customer orders, track sales and
+                    monitor your THREADVERSE business from
+                    one place.
+
+                </p>
+
+            </div>
+
+
+            <button
+                id="refresh-orders-button"
+                class="admin-refresh-button"
+                type="button"
+            >
+                ↻ REFRESH ORDERS
+            </button>
+
+        </section>
+
+
+
+        <!-- =====================================
+             BUSINESS STATISTICS
+        ====================================== -->
+
+        <section class="admin-stats-grid">
+
+
+            <!-- TOTAL ORDERS -->
+
+            <div class="admin-stat-card">
+
+                <p>
+                    TOTAL ORDERS
+                </p>
+
+                <h2 id="total-orders">
+                    0
+                </h2>
+
+                <span>
+                    All customer orders
+                </span>
+
+            </div>
+
+
+
+            <!-- PENDING ORDERS -->
+
+            <div class="admin-stat-card">
+
+                <p>
+                    PENDING ORDERS
+                </p>
+
+                <h2 id="pending-orders">
+                    0
+                </h2>
+
+                <span>
+                    Orders awaiting action
+                </span>
+
+            </div>
+
+
+
+            <!-- TOTAL SALES -->
+
+            <div class="admin-stat-card">
+
+                <p>
+                    TOTAL SALES
+                </p>
+
+                <h2 id="total-sales">
+                    ₹0
+                </h2>
+
+                <span>
+                    Total order value
+                </span>
+
+            </div>
+
+
+
+            <!-- TODAY ORDERS -->
+
+            <div class="admin-stat-card">
+
+                <p>
+                    TODAY'S ORDERS
+                </p>
+
+                <h2 id="today-orders">
+                    0
+                </h2>
+
+                <span>
+                    Orders received today
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             ORDERS SECTION
+        ====================================== -->
+
+        <section class="admin-orders-section">
+
+
+            <div class="admin-section-header">
+
+                <div>
+
+                    <p class="admin-eyebrow">
+                        CUSTOMER MANAGEMENT
+                    </p>
+
+                    <h2>
+                        Recent Orders
+                    </h2>
+
+                </div>
+
+
+                <div class="admin-order-controls">
+
+                    <select
+                        id="order-status-filter"
+                    >
+
+                        <option value="all">
+                            ALL ORDERS
+                        </option>
+
+                        <option value="pending">
+                            PENDING
+                        </option>
+
+                        <option value="confirmed">
+                            CONFIRMED
+                        </option>
+
+                        <option value="processing">
+                            PROCESSING
+                        </option>
+
+                        <option value="shipped">
+                            SHIPPED
+                        </option>
+
+                        <option value="delivered">
+                            DELIVERED
+                        </option>
+
+                        <option value="cancelled">
+                            CANCELLED
+                        </option>
+
+                    </select>
+
+
+                    <input
+                        type="text"
+                        id="order-search"
+                        placeholder="Search customer or Order ID"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================
+                 LOADING STATE
+            ================================== -->
+
+            <div
+                id="admin-orders-loading"
+                class="admin-loading"
+            >
+
+                <div class="admin-loader"></div>
+
+                <p>
+                    Loading THREADVERSE orders...
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================
+                 EMPTY STATE
+            ================================== -->
+
+            <div
+                id="admin-empty-orders"
+                class="admin-empty-orders"
+                style="display: none;"
+            >
+
+                <h3>
+                    No Orders Found
+                </h3>
+
+                <p>
+                    Customer orders will appear here
+                    once they are placed.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================
+                 ORDERS TABLE
+            ================================== -->
+
+            <div
+                id="admin-orders-wrapper"
+                class="admin-orders-wrapper"
+                style="display: none;"
+            >
+
+                <div class="admin-table-scroll">
+
+                    <table class="admin-orders-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ORDER
+                                </th>
+
+                                <th>
+                                    CUSTOMER
+                                </th>
+
+                                <th>
+                                    PHONE
+                                </th>
+
+                                <th>
+                                    AMOUNT
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                                <th>
+                                    DATE
+                                </th>
+
+                                <th>
+                                    ACTION
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody
+                            id="admin-orders-table-body"
+                        >
+
+                            <!-- Orders will be added
+                                 here by admin.js -->
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             QUICK BUSINESS ACTIONS
+        ====================================== -->
+
+        <section class="admin-quick-section">
+
+            <p class="admin-eyebrow">
+                QUICK ACTIONS
+            </p>
+
+            <h2>
+                Manage Your Business
+            </h2>
+
+
+            <div class="admin-quick-grid">
+
+
+                <a
+                    href="index.html#products"
+                    class="admin-quick-card"
+                >
+
+                    <span>
+                        01
+                    </span>
+
+                    <h3>
+                        View Products
+                    </h3>
+
+                    <p>
+                        Check the products currently
+                        displayed on your store.
+                    </p>
+
+                </a>
+
+
+
+                <button
+                    class="admin-quick-card admin-quick-button"
+                    id="admin-refresh-bottom"
+                    type="button"
+                >
+
+                    <span>
+                        02
+                    </span>
+
+                    <h3>
+                        Refresh Orders
+                    </h3>
+
+                    <p>
+                        Check Supabase for the latest
+                        customer orders.
+                    </p>
+
+                </button>
+
+
+
+                <a
+                    href="index.html"
+                    class="admin-quick-card"
+                >
+
+                    <span>
+                        03
+                    </span>
+
+                    <h3>
+                        Open Store
+                    </h3>
+
+                    <p>
+                        Visit your live THREADVERSE
+                        customer website.
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         ORDER DETAILS MODAL
+    ========================================== -->
+
+    <div
+        id="order-details-modal"
+        class="order-details-modal"
+        style="display: none;"
+    >
+
+        <div class="order-modal-overlay"></div>
+
+
+        <div class="order-modal-content">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="order-modal-header">
+
+                <div>
+
+                    <p>
+                        THREADVERSE ORDER
+                    </p>
+
+                    <h2>
+                        Order Details
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="close-order-modal"
+                    class="close-order-modal"
+                    type="button"
+                    aria-label="Close order details"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- ORDER DETAILS CONTENT -->
+
+            <div
+                id="order-modal-body"
+                class="order-modal-body"
+            >
+
+                <!-- admin.js will load
+                     complete order details here -->
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         ADMIN FOOTER
+    ========================================== -->
+
+    <footer class="admin-footer">
+
+        <div>
+
+            <strong>
+                THREADVERSE ADMIN
+            </strong>
+
+            <span>
+                Business Management Dashboard
+            </span>
+
+        </div>
+
+
+        <p>
+            © 2026 THREADVERSE.
+            YADNESH PATHAK, FOUNDER AND CEO.
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <!-- SUPABASE -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- ADMIN JAVASCRIPT -->
+    <script src="admin.js"></script>
+
+
+</body>
+
+</html>
+```
