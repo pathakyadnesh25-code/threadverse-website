@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +14,6 @@
 
     <!-- NAVIGATION -->
     <nav>
-
         <div class="logo">
             THREADVERSE
         </div>
@@ -25,117 +23,201 @@
             <a href="index.html#products">SHOP</a>
             <a href="cart.html">CART</a>
         </div>
-
     </nav>
 
 
     <!-- CHECKOUT PAGE -->
     <main class="checkout-page">
 
+        <!-- PAGE HEADING -->
         <div class="checkout-heading">
 
-            <p>COMPLETE YOUR ORDER</p>
+            <div class="checkout-heading-content">
+                <p>SECURE CHECKOUT</p>
+                <h1>Complete Your Order</h1>
 
-            <h1>Checkout</h1>
+                <div class="checkout-steps">
+                    <span class="checkout-step active">
+                        <strong>1</strong>
+                        Cart
+                    </span>
+
+                    <span class="checkout-line"></span>
+
+                    <span class="checkout-step active">
+                        <strong>2</strong>
+                        Details
+                    </span>
+
+                    <span class="checkout-line"></span>
+
+                    <span class="checkout-step">
+                        <strong>3</strong>
+                        Confirmation
+                    </span>
+                </div>
+            </div>
 
         </div>
 
 
+        <!-- MAIN CHECKOUT CONTAINER -->
         <div class="checkout-container">
 
 
-            <!-- CUSTOMER FORM -->
+            <!-- LEFT SIDE - CUSTOMER DETAILS -->
             <section class="checkout-form-section">
 
-                <h2>Customer Details</h2>
+                <div class="checkout-section-header">
+                    <span class="section-number">01</span>
+
+                    <div>
+                        <p>YOUR INFORMATION</p>
+                        <h2>Customer Details</h2>
+                    </div>
+                </div>
+
 
                 <form id="checkout-form">
 
-                    <label for="customer-name">
-                        FULL NAME
-                    </label>
+                    <!-- CUSTOMER DETAILS GRID -->
+                    <div class="checkout-form-grid">
 
-                    <input
-                        type="text"
-                        id="customer-name"
-                        required
-                    >
+                        <div class="form-group">
+                            <label for="customer-name">
+                                FULL NAME
+                            </label>
 
-
-                    <label for="customer-email">
-                        EMAIL ADDRESS
-                    </label>
-
-                    <input
-                        type="email"
-                        id="customer-email"
-                        required
-                    >
+                            <input
+                                type="text"
+                                id="customer-name"
+                                placeholder="Enter your full name"
+                                required
+                            >
+                        </div>
 
 
-                    <label for="customer-phone">
-                        PHONE NUMBER
-                    </label>
+                        <div class="form-group">
+                            <label for="customer-email">
+                                EMAIL ADDRESS
+                            </label>
 
-                    <input
-                        type="tel"
-                        id="customer-phone"
-                        required
-                    >
-
-
-                    <h2>Delivery Address</h2>
-
-
-                    <label for="address">
-                        FULL ADDRESS
-                    </label>
-
-                    <textarea
-                        id="address"
-                        rows="4"
-                        required
-                    ></textarea>
+                            <input
+                                type="email"
+                                id="customer-email"
+                                placeholder="Enter your email address"
+                                required
+                            >
+                        </div>
 
 
-                    <label for="city">
-                        CITY
-                    </label>
+                        <div class="form-group full-width">
+                            <label for="customer-phone">
+                                PHONE NUMBER
+                            </label>
 
-                    <input
-                        type="text"
-                        id="city"
-                        required
-                    >
+                            <input
+                                type="tel"
+                                id="customer-phone"
+                                placeholder="Enter your phone number"
+                                required
+                            >
+                        </div>
 
-
-                    <label for="state">
-                        STATE
-                    </label>
-
-                    <input
-                        type="text"
-                        id="state"
-                        required
-                    >
+                    </div>
 
 
-                    <label for="pincode">
-                        PIN CODE
-                    </label>
+                    <!-- DELIVERY ADDRESS -->
+                    <div class="checkout-section-header address-header">
 
-                    <input
-                        type="text"
-                        id="pincode"
-                        required
-                    >
+                        <span class="section-number">02</span>
+
+                        <div>
+                            <p>WHERE SHOULD WE DELIVER?</p>
+                            <h2>Delivery Address</h2>
+                        </div>
+
+                    </div>
 
 
+                    <div class="checkout-form-grid">
+
+                        <div class="form-group full-width">
+                            <label for="address">
+                                FULL ADDRESS
+                            </label>
+
+                            <textarea
+                                id="address"
+                                rows="4"
+                                placeholder="House number, street, area, landmark"
+                                required
+                            ></textarea>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="city">
+                                CITY
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                placeholder="Enter your city"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="state">
+                                STATE
+                            </label>
+
+                            <input
+                                type="text"
+                                id="state"
+                                placeholder="Enter your state"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="form-group full-width">
+                            <label for="pincode">
+                                PIN CODE
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pincode"
+                                placeholder="Enter your PIN code"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <!-- SECURITY MESSAGE -->
+                    <div class="checkout-security">
+                        <div class="security-icon">🔒</div>
+
+                        <div>
+                            <strong>Secure Order</strong>
+                            <p>Your information is securely used to process your THREADVERSE order.</p>
+                        </div>
+                    </div>
+
+
+                    <!-- PLACE ORDER BUTTON -->
                     <button
                         type="submit"
                         class="place-order-button"
                     >
-                        PLACE ORDER
+                        <span>PLACE ORDER</span>
+                        <span class="button-arrow">→</span>
                     </button>
 
                 </form>
@@ -143,27 +225,80 @@
             </section>
 
 
-            <!-- ORDER SUMMARY -->
+            <!-- RIGHT SIDE - ORDER SUMMARY -->
             <aside class="checkout-summary">
 
-                <h2>Your Order</h2>
+                <div class="order-summary-top">
 
-                <div id="checkout-items">
-                    Loading order...
+                    <p>ORDER SUMMARY</p>
+
+                    <h2>Your THREADVERSE Order</h2>
+
+                    <a href="cart.html" class="edit-cart-link">
+                        ← EDIT CART
+                    </a>
+
                 </div>
+
+
+                <!-- PRODUCTS -->
+                <div id="checkout-items" class="checkout-items">
+                    Loading your order...
+                </div>
+
+
+                <!-- ORDER TOTAL -->
+                <div class="checkout-price-details">
+
+                    <div class="checkout-price-row">
+                        <span>Subtotal</span>
+                        <span id="checkout-subtotal">Calculated at checkout</span>
+                    </div>
+
+                    <div class="checkout-price-row">
+                        <span>Shipping</span>
+                        <span>Calculated at checkout</span>
+                    </div>
+
+                </div>
+
 
                 <div class="checkout-total">
 
-                    <span>Total</span>
+                    <div>
+                        <span>ORDER TOTAL</span>
+                        <small>Including applicable charges</small>
+                    </div>
 
+                    <!-- IMPORTANT: KEEP THIS ID FOR checkout.js -->
                     <strong id="checkout-total-price">
                         ₹0
                     </strong>
 
                 </div>
 
-            </aside>
 
+                <!-- BENEFITS -->
+                <div class="checkout-benefits">
+
+                    <div class="checkout-benefit">
+                        <span>✓</span>
+                        <p>Premium quality custom wear</p>
+                    </div>
+
+                    <div class="checkout-benefit">
+                        <span>✓</span>
+                        <p>Order details securely stored</p>
+                    </div>
+
+                    <div class="checkout-benefit">
+                        <span>✓</span>
+                        <p>Support available for your order</p>
+                    </div>
+
+                </div>
+
+            </aside>
 
         </div>
 
@@ -182,11 +317,12 @@
     </footer>
 
 
+    <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="checkout.js"></script>
-</body>
+
+    <!-- CHECKOUT JAVASCRIPT -->
+    <script src="checkout.js"></script>
 
 </body>
 
 </html>
-```
