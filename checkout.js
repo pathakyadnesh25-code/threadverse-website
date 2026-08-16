@@ -362,22 +362,23 @@ function setupCheckoutForm() {
                 // ==================================
 
                 const { data, error } =
-                    await supabaseClient
-                        .from("orders")
-                        .insert([
-                            {
-                                customer_name: customerName,
-                                customer_email: customerEmail,
-                                customer_phone: customerPhone,
-                                address: address,
-                                city: city,
-                                state: state,
-                                pincode: pincode,
-                                items: cart,
-                                total_amount: totalAmount
-                            }
-                        ])
-                        .select();
+    await supabaseClient
+        .from("orders")
+        .insert([
+            {
+                customer_name: customerName,
+                customer_email: customerEmail,
+                customer_phone: customerPhone,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                items: cart,
+                total_amount: totalAmount
+            }
+        ])
+        .select()
+        .single();
 
 
                 // ==================================
