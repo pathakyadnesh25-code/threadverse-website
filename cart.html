@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Your Cart | THREADVERSE</title>
 
@@ -12,71 +14,381 @@
 
 <body>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <div class="logo">
+
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
+    <nav class="main-navbar">
+
+        <a href="index.html" class="logo">
             THREADVERSE
-        </div>
+        </a>
+
 
         <div class="nav-links">
-            <a href="index.html">HOME</a>
-            <a href="index.html#products">SHOP</a>
-            <a href="cart.html">CART</a>
-            <a href="index.html#about">ABOUT</a>
+
+            <a href="index.html">
+                HOME
+            </a>
+
+            <a href="index.html#products">
+                SHOP
+            </a>
+
+            <a href="cart.html" class="active-nav">
+                CART
+            </a>
+
+            <a href="index.html#about">
+                ABOUT
+            </a>
+
         </div>
+
     </nav>
 
 
-    <!-- CART PAGE -->
+
+    <!-- =========================================
+         CART PAGE
+    ========================================== -->
     <main class="cart-page">
 
-        <div class="cart-heading">
-            <p>YOUR THREADVERSE</p>
-            <h1>Shopping Cart</h1>
-        </div>
+
+        <!-- PAGE HEADER -->
+        <section class="cart-hero">
+
+            <p class="cart-eyebrow">
+                YOUR THREADVERSE
+            </p>
+
+            <h1>
+                Shopping Cart
+            </h1>
+
+            <p class="cart-subtitle">
+                Review your custom wear before checkout.
+            </p>
+
+        </section>
 
 
-        <!-- PRODUCTS WILL APPEAR HERE -->
-        <div id="cart-container">
-            <p>Loading your cart...</p>
-        </div>
+
+        <!-- CART CONTENT -->
+        <section class="cart-layout">
 
 
-        <!-- TOTAL AND CHECKOUT -->
-        <div id="cart-summary">
+            <!-- LEFT SIDE: PRODUCTS -->
+            <div class="cart-products-section">
 
-            <div class="cart-total-box">
+                <div class="cart-section-header">
 
-                <h2>
-                    Cart Total:
-                    <span id="cart-total">₹0</span>
-                </h2>
+                    <div>
+                        <p class="section-label">
+                            YOUR SELECTION
+                        </p>
 
-                <button
-                    id="checkout-button"
-                    class="checkout-button"
-                    type="button"
-                >
-                    PROCEED TO CHECKOUT
-                </button>
+                        <h2>
+                            Cart Items
+                        </h2>
+                    </div>
+
+                    <a href="index.html#products"
+                        class="continue-shopping-link">
+                        ← CONTINUE SHOPPING
+                    </a>
+
+                </div>
+
+
+                <!-- CART PRODUCTS
+                     cart.js will insert products here -->
+                <div id="cart-container"
+                    class="cart-container">
+
+                    <div class="cart-loading">
+
+                        <div class="loading-spinner"></div>
+
+                        <p>
+                            Loading your THREADVERSE cart...
+                        </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
-        </div>
+
+
+            <!-- RIGHT SIDE: ORDER SUMMARY -->
+            <aside id="cart-summary"
+                class="cart-summary">
+
+
+                <div class="cart-summary-card">
+
+                    <p class="section-label">
+                        ORDER SUMMARY
+                    </p>
+
+                    <h2>
+                        Your Order
+                    </h2>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <span id="cart-total">
+                            ₹0
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row shipping-row">
+
+                        <span>
+                            Shipping
+                        </span>
+
+                        <span>
+                            Calculated at checkout
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-divider"></div>
+
+
+                    <div class="summary-total">
+
+                        <span>
+                            TOTAL
+                        </span>
+
+                        <strong id="cart-final-total">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <button
+                        id="checkout-button"
+                        class="checkout-button"
+                        type="button"
+                    >
+                        PROCEED TO CHECKOUT
+                        <span>→</span>
+                    </button>
+
+
+                    <p class="secure-checkout-text">
+                        🔒 Secure checkout • Your order details are protected
+                    </p>
+
+                </div>
+
+
+                <div class="cart-help-card">
+
+                    <div class="help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Need Help?
+                        </h3>
+
+                        <p>
+                            Have questions about your custom order?
+                            Contact THREADVERSE and we'll help you.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+        </section>
+
+
+
+        <!-- SHOPPING BENEFITS -->
+        <section class="cart-benefits">
+
+
+            <div class="benefit-item">
+
+                <div class="benefit-icon">
+                    ✦
+                </div>
+
+                <div>
+
+                    <h3>
+                        Custom Made
+                    </h3>
+
+                    <p>
+                        Wear designs that represent you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="benefit-item">
+
+                <div class="benefit-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <h3>
+                        Quality Focused
+                    </h3>
+
+                    <p>
+                        Premium custom wear made with care.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="benefit-item">
+
+                <div class="benefit-icon">
+                    ♡
+                </div>
+
+                <div>
+
+                    <h3>
+                        Made For You
+                    </h3>
+
+                    <p>
+                        Create clothing with your own identity.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
 
     </main>
 
 
-    <!-- FOOTER -->
-    <footer>
-        <h2>THREADVERSE</h2>
-        <p>A World of Custom Wear</p>
-        <p>© 2026 THREADVERSE. All rights reserved.</p>
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+    <footer class="main-footer">
+
+        <div class="footer-logo">
+            THREADVERSE
+        </div>
+
+        <p>
+            A World of Custom Wear
+        </p>
+
+        <p class="footer-copyright">
+            © 2026 THREADVERSE. All rights reserved.
+        </p>
+
     </footer>
 
 
-    <!-- JAVASCRIPT -->
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
     <script src="cart.js"></script>
+
+
+    <!-- Sync summary total with existing cart total -->
+    <script>
+
+        function syncCartTotals() {
+
+            const cartTotal =
+                document.getElementById("cart-total");
+
+            const cartFinalTotal =
+                document.getElementById("cart-final-total");
+
+
+            if (!cartTotal || !cartFinalTotal) {
+                return;
+            }
+
+
+            cartFinalTotal.textContent =
+                cartTotal.textContent;
+
+        }
+
+
+        const cartObserver =
+            new MutationObserver(function () {
+
+                syncCartTotals();
+
+            });
+
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const cartTotal =
+                    document.getElementById("cart-total");
+
+
+                if (cartTotal) {
+
+                    cartObserver.observe(
+                        cartTotal,
+                        {
+                            childList: true,
+                            characterData: true,
+                            subtree: true
+                        }
+                    );
+
+                }
+
+
+                syncCartTotals();
+
+            }
+        );
+
+    </script>
+
 
 </body>
 
