@@ -13,11 +13,11 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
 
-
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const supabaseClient =
+    supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 // ==========================================
@@ -79,8 +79,10 @@ function loadCheckout() {
         document.getElementById("checkout-total-price");
 
 
-    // Check required elements
-    if (!checkoutItems || !checkoutTotalPrice) {
+    if (
+        !checkoutItems ||
+        !checkoutTotalPrice
+    ) {
 
         console.error(
             "Checkout elements not found in checkout.html"
@@ -93,17 +95,13 @@ function loadCheckout() {
 
     const cart = getCart();
 
-
     console.log(
         "Checkout cart:",
         cart
     );
 
 
-    // ======================================
     // EMPTY CART
-    // ======================================
-
     if (cart.length === 0) {
 
         checkoutItems.innerHTML = `
@@ -116,7 +114,6 @@ function loadCheckout() {
             </div>
         `;
 
-
         checkoutTotalPrice.textContent =
             "₹0";
 
@@ -125,10 +122,7 @@ function loadCheckout() {
     }
 
 
-    // ======================================
-    // DISPLAY PRODUCTS
-    // ======================================
-
+    // DISPLAY CART ITEMS
     checkoutItems.innerHTML = "";
 
     let totalAmount = 0;
@@ -145,19 +139,18 @@ function loadCheckout() {
         const itemTotal =
             price * quantity;
 
-
         totalAmount += itemTotal;
 
 
         const checkoutItem =
             document.createElement("div");
 
-
         checkoutItem.className =
             "checkout-item";
 
 
         checkoutItem.innerHTML = `
+
             <div class="checkout-item-image">
 
                 <img
@@ -186,6 +179,7 @@ function loadCheckout() {
                 </strong>
 
             </div>
+
         `;
 
 
@@ -196,10 +190,6 @@ function loadCheckout() {
     });
 
 
-    // ======================================
-    // UPDATE TOTAL
-    // ======================================
-
     checkoutTotalPrice.textContent =
         "₹" + totalAmount.toFixed(0);
 
@@ -207,7 +197,7 @@ function loadCheckout() {
 
 
 // ==========================================
-// 5. CHECKOUT FORM
+// 5. SETUP CHECKOUT FORM
 // ==========================================
 
 function setupCheckoutForm() {
@@ -216,7 +206,6 @@ function setupCheckoutForm() {
         document.getElementById("checkout-form");
 
 
-    // Check if form exists
     if (!checkoutForm) {
 
         console.error(
@@ -227,10 +216,6 @@ function setupCheckoutForm() {
 
     }
 
-
-    // ======================================
-    // FORM SUBMIT
-    // ======================================
 
     checkoutForm.addEventListener(
         "submit",
@@ -266,96 +251,43 @@ function setupCheckoutForm() {
 
 
             // ==================================
-            // GET CUSTOMER FORM ELEMENTS
-            // ==================================
-
-            const customerNameElement =
-                document.getElementById(
-                    "customer-name"
-                );
-
-            const customerEmailElement =
-                document.getElementById(
-                    "customer-email"
-                );
-
-            const customerPhoneElement =
-                document.getElementById(
-                    "customer-phone"
-                );
-
-            const addressElement =
-                document.getElementById(
-                    "address"
-                );
-
-            const cityElement =
-                document.getElementById(
-                    "city"
-                );
-
-            const stateElement =
-                document.getElementById(
-                    "state"
-                );
-
-            const pincodeElement =
-                document.getElementById(
-                    "pincode"
-                );
-
-
-            // ==================================
-            // CHECK FORM FIELDS
-            // ==================================
-
-            if (
-                !customerNameElement ||
-                !customerEmailElement ||
-                !customerPhoneElement ||
-                !addressElement ||
-                !cityElement ||
-                !stateElement ||
-                !pincodeElement
-            ) {
-
-                console.error(
-                    "One or more checkout form fields are missing."
-                );
-
-                alert(
-                    "Checkout form is incomplete. Please check the page."
-                );
-
-                return;
-
-            }
-
-
-            // ==================================
             // GET CUSTOMER DETAILS
             // ==================================
 
             const customerName =
-                customerNameElement.value.trim();
+                document.getElementById(
+                    "customer-name"
+                ).value.trim();
 
             const customerEmail =
-                customerEmailElement.value.trim();
+                document.getElementById(
+                    "customer-email"
+                ).value.trim();
 
             const customerPhone =
-                customerPhoneElement.value.trim();
+                document.getElementById(
+                    "customer-phone"
+                ).value.trim();
 
             const address =
-                addressElement.value.trim();
+                document.getElementById(
+                    "address"
+                ).value.trim();
 
             const city =
-                cityElement.value.trim();
+                document.getElementById(
+                    "city"
+                ).value.trim();
 
             const state =
-                stateElement.value.trim();
+                document.getElementById(
+                    "state"
+                ).value.trim();
 
             const pincode =
-                pincodeElement.value.trim();
+                document.getElementById(
+                    "pincode"
+                ).value.trim();
 
 
             // ==================================
@@ -396,7 +328,6 @@ function setupCheckoutForm() {
                 const quantity =
                     Number(item.quantity) || 1;
 
-
                 totalAmount +=
                     price * quantity;
 
@@ -430,26 +361,27 @@ function setupCheckoutForm() {
                 // SAVE ORDER TO SUPABASE
                 // ==================================
 
-             const { error } =
-    await supabaseClient
-        .from("orders")
-        .insert([
-            {
-                customer_name: customerName,
-                customer_email: customerEmail,
-                customer_phone: customerPhone,
-                address: address,
-                city: city,
-                state: state,
-                pincode: pincode,
-                items: cart,
-                total_amount: totalAmount
-            }
-        ]);
+                const { data, error } =
+                    await supabaseClient
+                        .from("orders")
+                        .insert([
+                            {
+                                customer_name: customerName,
+                                customer_email: customerEmail,
+                                customer_phone: customerPhone,
+                                address: address,
+                                city: city,
+                                state: state,
+                                pincode: pincode,
+                                items: cart,
+                                total_amount: totalAmount
+                            }
+                        ])
+                        .select();
 
 
                 // ==================================
-                // HANDLE ERROR
+                // HANDLE DATABASE ERROR
                 // ==================================
 
                 if (error) {
@@ -480,27 +412,32 @@ function setupCheckoutForm() {
 
 
                 // ==================================
-                // CHECK SAVED ORDER
+                // CHECK ORDER DATA
                 // ==================================
 
-                if (!data || data.length === 0) {
+                if (
+                    !data ||
+                    data.length === 0
+                ) {
 
                     console.error(
-                        "Order saved but no order data was returned."
+                        "Order saved but no data returned."
                     );
 
                     alert(
-                        "Your order was received successfully!"
+                        "Order was saved, but confirmation details could not be loaded."
                     );
 
 
-                    localStorage.removeItem(
-                        "threadverseCart"
-                    );
+                    if (placeOrderButton) {
 
+                        placeOrderButton.disabled =
+                            false;
 
-                    window.location.href =
-                        "order-success.html";
+                        placeOrderButton.textContent =
+                            "PLACE ORDER";
+
+                    }
 
                     return;
 
@@ -511,7 +448,8 @@ function setupCheckoutForm() {
                 // GET ORDER ID
                 // ==================================
 
-                
+                const orderId =
+                    data[0].id;
 
 
                 console.log(
@@ -519,8 +457,8 @@ function setupCheckoutForm() {
                 );
 
                 console.log(
-                    "Order data:",
-                    data
+                    "Saved order:",
+                    data[0]
                 );
 
                 console.log(
@@ -533,29 +471,48 @@ function setupCheckoutForm() {
                 // SAVE ORDER DETAILS LOCALLY
                 // ==================================
 
-                window.location.href =
-    "order-success.html?id=" + orderId;
+                const lastOrder = {
+
+                    id: orderId,
+
+                    customerName:
+                        customerName,
+
+                    customerEmail:
+                        customerEmail,
+
+                    customerPhone:
+                        customerPhone,
+
+                    address:
+                        address,
+
+                    city:
+                        city,
+
+                    state:
+                        state,
+
+                    pincode:
+                        pincode,
+
+                    items:
+                        cart,
+
+                    totalAmount:
+                        totalAmount
+
+                };
 
 
                 localStorage.setItem(
                     "threadverseLastOrder",
-                    JSON.stringify({
-                        id: orderId,
-                        customerName: customerName,
-                        customerEmail: customerEmail,
-                        customerPhone: customerPhone,
-                        address: address,
-                        city: city,
-                        state: state,
-                        pincode: pincode,
-                        items: cart,
-                        totalAmount: totalAmount
-                    })
+                    JSON.stringify(lastOrder)
                 );
 
 
                 // ==================================
-                // CLEAR CART
+                // CLEAR SHOPPING CART
                 // ==================================
 
                 localStorage.removeItem(
