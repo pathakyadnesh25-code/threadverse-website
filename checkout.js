@@ -108,20 +108,17 @@ function loadCheckout() {
 
         checkoutItems.innerHTML = `
             <div class="empty-checkout">
-
                 <p>Your cart is empty.</p>
 
                 <a href="index.html#products">
                     CONTINUE SHOPPING
                 </a>
-
             </div>
         `;
 
 
         checkoutTotalPrice.textContent =
             "₹0";
-
 
         return;
 
@@ -161,7 +158,6 @@ function loadCheckout() {
 
 
         checkoutItem.innerHTML = `
-
             <div class="checkout-item-image">
 
                 <img
@@ -171,7 +167,6 @@ function loadCheckout() {
 
             </div>
 
-
             <div class="checkout-item-info">
 
                 <h3>
@@ -179,13 +174,11 @@ function loadCheckout() {
                 </h3>
 
                 <p>
-                    Size:
-                    ${item.size || "Not selected"}
+                    Size: ${item.size || "Not selected"}
                 </p>
 
                 <p>
-                    Quantity:
-                    ${quantity}
+                    Quantity: ${quantity}
                 </p>
 
                 <strong>
@@ -193,7 +186,6 @@ function loadCheckout() {
                 </strong>
 
             </div>
-
         `;
 
 
@@ -236,6 +228,10 @@ function setupCheckoutForm() {
     }
 
 
+    // ======================================
+    // FORM SUBMIT
+    // ======================================
+
     checkoutForm.addEventListener(
         "submit",
         async function (event) {
@@ -270,7 +266,7 @@ function setupCheckoutForm() {
 
 
             // ==================================
-            // GET CUSTOMER DETAILS
+            // GET CUSTOMER FORM ELEMENTS
             // ==================================
 
             const customerNameElement =
@@ -309,7 +305,10 @@ function setupCheckoutForm() {
                 );
 
 
-            // Check customer fields
+            // ==================================
+            // CHECK FORM FIELDS
+            // ==================================
+
             if (
                 !customerNameElement ||
                 !customerEmailElement ||
@@ -332,6 +331,10 @@ function setupCheckoutForm() {
 
             }
 
+
+            // ==================================
+            // GET CUSTOMER DETAILS
+            // ==================================
 
             const customerName =
                 customerNameElement.value.trim();
@@ -356,7 +359,7 @@ function setupCheckoutForm() {
 
 
             // ==================================
-            // VALIDATE CUSTOMER DETAILS
+            // VALIDATE DETAILS
             // ==================================
 
             if (
@@ -423,31 +426,32 @@ function setupCheckoutForm() {
 
             try {
 
-                // ==============================
+                // ==================================
                 // SAVE ORDER TO SUPABASE
-                // ==============================
+                // ==================================
 
-                const { error } =
-    await supabaseClient
-        .from("orders")
-        .insert([
-            {
-                customer_name: customerName,
-                customer_email: customerEmail,
-                customer_phone: customerPhone,
-                address: address,
-                city: city,
-                state: state,
-                pincode: pincode,
-                items: cart,
-                total_amount: totalAmount
-            }
-        ]);
+                const { data, error } =
+                    await supabaseClient
+                        .from("orders")
+                        .insert([
+                            {
+                                customer_name: customerName,
+                                customer_email: customerEmail,
+                                customer_phone: customerPhone,
+                                address: address,
+                                city: city,
+                                state: state,
+                                pincode: pincode,
+                                items: cart,
+                                total_amount: totalAmount
+                            }
+                        ])
+                        .select();
 
 
-                // ==============================
-                // HANDLE SUPABASE ERROR
-                // ==============================
+                // ==================================
+                // HANDLE ERROR
+                // ==================================
 
                 if (error) {
 
@@ -471,39 +475,105 @@ function setupCheckoutForm() {
 
                     }
 
+                    return;
+
+                }
+
+
+                // ==================================
+                // CHECK SAVED ORDER
+                // ==================================
+
+                if (!data || data.length === 0) {
+
+                    console.error(
+                        "Order saved but no order data was returned."
+                    );
+
+                    alert(
+                        "Your order was received successfully!"
+                    );
+
+
+                    localStorage.removeItem(
+                        "threadverseCart"
+                    );
+
+
+                    window.location.href =
+                        "order-success.html";
 
                     return;
 
                 }
 
 
-                // ==============================
-                // SUCCESS
-                // ==============================
+                // ==================================
+                // GET ORDER ID
+                // ==================================
+
+                const orderId =
+                    data[0].id;
+
 
                 console.log(
-                    "Order placed successfully:",
+                    "Order placed successfully!"
+                );
+
+                console.log(
+                    "Order data:",
                     data
                 );
 
+                console.log(
+                    "Order ID:",
+                    orderId
+                );
 
-                // Get order ID
-                
+
+                // ==================================
+                // SAVE ORDER DETAILS LOCALLY
+                // ==================================
+
+                localStorage.setItem(
+                    "threadverseLastOrderId",
+                    orderId
+                );
 
 
-                // Clear cart
+                localStorage.setItem(
+                    "threadverseLastOrder",
+                    JSON.stringify({
+                        id: orderId,
+                        customerName: customerName,
+                        customerEmail: customerEmail,
+                        customerPhone: customerPhone,
+                        address: address,
+                        city: city,
+                        state: state,
+                        pincode: pincode,
+                        items: cart,
+                        totalAmount: totalAmount
+                    })
+                );
+
+
+                // ==================================
+                // CLEAR CART
+                // ==================================
+
                 localStorage.removeItem(
                     "threadverseCart"
                 );
 
 
-                // Save latest order ID
-                
+                // ==================================
+                // REDIRECT TO SUCCESS PAGE
+                // ==================================
 
-
-                // Redirect
                 window.location.href =
-    "order-success.html";
+                    "order-success.html?id=" +
+                    encodeURIComponent(orderId);
 
 
             } catch (error) {
