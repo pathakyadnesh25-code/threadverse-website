@@ -1,240 +1,398 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Order Successful | THREADVERSE</title>
+    <title>Order Confirmed | THREADVERSE</title>
 
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            color: #111;
-        }
-
-        .success-container {
-            min-height: 70vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-        }
-
-        .success-box {
-            background: white;
-            max-width: 650px;
-            width: 100%;
-            text-align: center;
-            padding: 50px 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-        }
-
-        .success-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
-            background: #111;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 45px;
-            font-weight: bold;
-        }
-
-        .success-box h1 {
-            font-size: 38px;
-            margin-bottom: 15px;
-        }
-
-        .success-message {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #555;
-            margin-bottom: 25px;
-        }
-
-        .order-id-box {
-            background: #f1f1f1;
-            padding: 18px;
-            margin: 25px 0;
-            border-radius: 8px;
-        }
-
-        .order-id-box p {
-            margin: 5px 0;
-        }
-
-        #order-id {
-            font-size: 18px;
-            font-weight: bold;
-            word-break: break-all;
-        }
-
-        .continue-button {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 15px 30px;
-            background: #111;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .continue-button:hover {
-            opacity: 0.8;
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
 
 <body>
 
-    <!-- HEADER -->
 
-    <header class="header">
+    <!-- NAVIGATION -->
 
-        <div class="logo">
-            THREADVERSE
-        </div>
+    <nav>
 
-        <nav class="nav-links">
+        <a
+            href="index.html"
+            class="brand-container"
+            aria-label="THREADVERSE Home"
+        >
 
-            <a href="index.html">HOME</a>
-
-            <a href="index.html#products">SHOP</a>
-
-            <a href="cart.html">CART</a>
-
-        </nav>
-
-    </header>
-
-
-    <!-- SUCCESS SECTION -->
-
-    <main class="success-container">
-
-        <div class="success-box">
-
-            <div class="success-icon">
-                ✓
+            <div class="logo">
+                THREADVERSE
             </div>
 
-            <h1>Order Placed Successfully!</h1>
+            <div class="founder-text">
+                YADNESH PATHAK · FOUNDER & CEO
+            </div>
 
-            <p class="success-message">
-
-                Thank you for shopping with THREADVERSE.
-
-                Your order has been received successfully.
-                We will contact you soon regarding your order.
-
-            </p>
+        </a>
 
 
-            <div class="order-id-box">
+        <div class="nav-links">
 
-                <p>Your Order ID</p>
+            <a href="index.html">
+                HOME
+            </a>
 
-                <p id="order-id">
-                    Loading...
+            <a href="index.html#products">
+                SHOP
+            </a>
+
+            <a href="cart.html">
+                CART
+            </a>
+
+            <a href="index.html#about">
+                ABOUT
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ORDER SUCCESS PAGE -->
+
+    <main class="order-success-page">
+
+
+        <section class="success-container">
+
+
+            <!-- SUCCESS HEADER -->
+
+            <div class="success-header">
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+
+                <p class="success-eyebrow">
+                    ORDER CONFIRMED
+                </p>
+
+
+                <h1>
+                    Thank You For Your Order!
+                </h1>
+
+
+                <p class="success-message">
+
+                    Your order has been received successfully.
+                    We will carefully review your order and begin
+                    processing it as soon as possible.
+
                 </p>
 
             </div>
 
 
-            <p class="success-message">
 
-                Please save your Order ID for future reference.
+            <!-- ORDER ID -->
 
-            </p>
+            <div class="success-order-id-card">
+
+                <span>
+                    YOUR THREADVERSE ORDER ID
+                </span>
+
+                <strong id="success-order-id">
+                    Loading...
+                </strong>
+
+                <p>
+                    Please save this Order ID for future reference.
+                </p>
+
+            </div>
 
 
-            <a href="index.html"
-                class="continue-button">
 
-                CONTINUE SHOPPING
+            <!-- ORDER DETAILS GRID -->
 
-            </a>
+            <div class="success-details-grid">
 
-        </div>
+
+                <!-- CUSTOMER DETAILS -->
+
+                <section class="success-detail-card">
+
+                    <div class="success-card-title">
+
+                        <span class="success-card-number">
+                            01
+                        </span>
+
+                        <h2>
+                            Customer Details
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        id="success-customer-details"
+                        class="success-detail-content"
+                    >
+
+                        Loading customer details...
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- DELIVERY ADDRESS -->
+
+                <section class="success-detail-card">
+
+                    <div class="success-card-title">
+
+                        <span class="success-card-number">
+                            02
+                        </span>
+
+                        <h2>
+                            Delivery Address
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        id="success-delivery-details"
+                        class="success-detail-content"
+                    >
+
+                        Loading delivery details...
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+
+            <!-- ORDER ITEMS -->
+
+            <section class="success-items-card">
+
+
+                <div class="success-card-title">
+
+                    <span class="success-card-number">
+                        03
+                    </span>
+
+                    <h2>
+                        Your Order
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="success-order-items"
+                    class="success-order-items"
+                >
+
+                    Loading your order...
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="success-total">
+
+                    <span>
+                        Order Total
+                    </span>
+
+                    <strong id="success-order-total">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- WHAT HAPPENS NEXT -->
+
+            <section class="success-next-section">
+
+                <p class="success-eyebrow">
+                    WHAT HAPPENS NEXT?
+                </p>
+
+
+                <h2>
+                    Your THREADVERSE Order Journey
+                </h2>
+
+
+                <div class="success-steps">
+
+
+                    <div class="success-step">
+
+                        <span>
+                            01
+                        </span>
+
+                        <h3>
+                            Order Received
+                        </h3>
+
+                        <p>
+                            Your order has been safely received by THREADVERSE.
+                        </p>
+
+                    </div>
+
+
+                    <div class="success-step">
+
+                        <span>
+                            02
+                        </span>
+
+                        <h3>
+                            Order Review
+                        </h3>
+
+                        <p>
+                            Our team will review your product and order details.
+                        </p>
+
+                    </div>
+
+
+                    <div class="success-step">
+
+                        <span>
+                            03
+                        </span>
+
+                        <h3>
+                            Processing
+                        </h3>
+
+                        <p>
+                            Your order will move into the next stage of processing.
+                        </p>
+
+                    </div>
+
+
+                    <div class="success-step">
+
+                        <span>
+                            04
+                        </span>
+
+                        <h3>
+                            Delivery
+                        </h3>
+
+                        <p>
+                            You will receive further updates regarding your order.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ACTION BUTTONS -->
+
+            <div class="success-actions">
+
+                <a
+                    href="index.html#products"
+                    class="success-primary-button"
+                >
+
+                    CONTINUE SHOPPING
+
+                </a>
+
+
+                <a
+                    href="index.html"
+                    class="success-secondary-button"
+                >
+
+                    BACK TO HOME
+
+                </a>
+
+            </div>
+
+
+        </section>
+
 
     </main>
 
 
+
     <!-- FOOTER -->
 
-    <footer class="footer">
+    <footer>
 
-        <h2>THREADVERSE</h2>
-
-        <p>A World of Custom Wear</p>
+        <h2>
+            THREADVERSE
+        </h2>
 
         <p>
-            © 2026 THREADVERSE.
-            All rights reserved.
+            A World of Custom Wear
+        </p>
+
+        <p>
+            © 2026 THREADVERSE. All rights reserved.
         </p>
 
     </footer>
 
 
-    <!-- ORDER ID SCRIPT -->
 
-    <script>
+    <!-- JAVASCRIPT -->
 
-        const urlParams =
-            new URLSearchParams(
-                window.location.search
-            );
+    <script src="order-success.js"></script>
 
-        const orderId =
-            urlParams.get("id");
-
-        const savedOrderId =
-            localStorage.getItem(
-                "threadverseLastOrderId"
-            );
-
-
-        const finalOrderId =
-            orderId || savedOrderId;
-
-
-        const orderIdElement =
-            document.getElementById(
-                "order-id"
-            );
-
-
-        if (finalOrderId) {
-
-            orderIdElement.textContent =
-                finalOrderId;
-
-        } else {
-
-            orderIdElement.textContent =
-                "Order ID will be available shortly.";
-
-        }
-
-    </script>
 
 </body>
 
 </html>
+```
