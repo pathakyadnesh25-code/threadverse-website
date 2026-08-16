@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Order Successful | THREADVERSE
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <a href="index.html">
+                THREADVERSE
+            </a>
+
+        </div>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                HOME
+            </a>
+
+            <a href="index.html#products">
+                SHOP
+            </a>
+
+            <a href="cart.html">
+                CART
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ORDER SUCCESS SECTION -->
+
+    <main class="order-success-page">
+
+        <section class="order-success-card">
+
+
+            <div class="success-icon">
+
+                ✓
+
+            </div>
+
+
+            <p class="success-small-title">
+
+                THANK YOU FOR SHOPPING WITH US
+
+            </p>
+
+
+            <h1>
+
+                ORDER PLACED
+                <br>
+                SUCCESSFULLY!
+
+            </h1>
+
+
+            <p class="success-message">
+
+                Your order has been received successfully.
+                Our THREADVERSE team will review your order
+                and contact you soon.
+
+            </p>
+
+
+            <div class="order-id-box">
+
+                <span>
+                    ORDER ID
+                </span>
+
+                <strong
+                    id="success-order-id"
+                >
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="success-order-details">
+
+                <div>
+
+                    <span>
+                        CUSTOMER
+                    </span>
+
+                    <strong
+                        id="success-customer-name"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        TOTAL AMOUNT
+                    </span>
+
+                    <strong
+                        id="success-total-amount"
+                    >
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="success-buttons">
+
+                <a
+                    href="index.html#products"
+                    class="continue-shopping-button"
+                >
+                    CONTINUE SHOPPING
+                </a>
+
+
+                <a
+                    href="cart.html"
+                    class="view-cart-button"
+                >
+                    VIEW CART
+                </a>
+
+            </div>
+
+
+            <p class="success-footer-text">
+
+                A World of Custom Wear
+
+            </p>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- SUCCESS PAGE JAVASCRIPT -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const savedOrder =
+                    localStorage.getItem(
+                        "threadverseLastOrder"
+                    );
+
+
+                const orderIdElement =
+                    document.getElementById(
+                        "success-order-id"
+                    );
+
+                const customerNameElement =
+                    document.getElementById(
+                        "success-customer-name"
+                    );
+
+                const totalAmountElement =
+                    document.getElementById(
+                        "success-total-amount"
+                    );
+
+
+                if (!savedOrder) {
+
+                    orderIdElement.textContent =
+                        "Order confirmed";
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const order =
+                        JSON.parse(
+                            savedOrder
+                        );
+
+
+                    orderIdElement.textContent =
+                        "#" + order.id;
+
+
+                    customerNameElement.textContent =
+                        order.customerName ||
+                        "THREADVERSE Customer";
+
+
+                    totalAmountElement.textContent =
+                        "₹" +
+                        Number(
+                            order.totalAmount || 0
+                        ).toFixed(0);
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Error loading order details:",
+                        error
+                    );
+
+                    orderIdElement.textContent =
+                        "Order confirmed";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
