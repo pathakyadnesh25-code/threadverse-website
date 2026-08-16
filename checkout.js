@@ -427,47 +427,22 @@ function setupCheckoutForm() {
                 // SAVE ORDER TO SUPABASE
                 // ==============================
 
-                const result =
-                    await supabaseClient
-                        .from("orders")
-                        .insert([
-                            {
-                                customer_name:
-                                    customerName,
-
-                                customer_email:
-                                    customerEmail,
-
-                                customer_phone:
-                                    customerPhone,
-
-                                address:
-                                    address,
-
-                                city:
-                                    city,
-
-                                state:
-                                    state,
-
-                                pincode:
-                                    pincode,
-
-                                items:
-                                    cart,
-
-                                total_amount:
-                                    totalAmount
-                            }
-                        ])
-                        .select();
-
-
-                const data =
-                    result.data;
-
-                const error =
-                    result.error;
+                const { error } =
+    await supabaseClient
+        .from("orders")
+        .insert([
+            {
+                customer_name: customerName,
+                customer_email: customerEmail,
+                customer_phone: customerPhone,
+                address: address,
+                city: city,
+                state: state,
+                pincode: pincode,
+                items: cart,
+                total_amount: totalAmount
+            }
+        ]);
 
 
                 // ==============================
@@ -513,10 +488,7 @@ function setupCheckoutForm() {
 
 
                 // Get order ID
-                const orderId =
-                    data &&
-                    data[0] &&
-                    data[0].id;
+                
 
 
                 // Clear cart
@@ -526,22 +498,12 @@ function setupCheckoutForm() {
 
 
                 // Save latest order ID
-                if (orderId) {
-
-                    localStorage.setItem(
-                        "threadverseLastOrderId",
-                        orderId
-                    );
-
-                }
+                
 
 
                 // Redirect
                 window.location.href =
-                    "order-success.html?id=" +
-                    encodeURIComponent(
-                        orderId || ""
-                    );
+    "order-success.html";
 
 
             } catch (error) {
