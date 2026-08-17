@@ -1,4 +1,3 @@
-```javascript
 // ==========================================
 // THREADVERSE - ADMIN DASHBOARD JAVASCRIPT
 // ==========================================
@@ -23,7 +22,7 @@ const supabaseClient =
 
 
 // ==========================================
-// 2. GLOBAL ORDERS STORAGE
+// 2. GLOBAL VARIABLES
 // ==========================================
 
 let allOrders = [];
@@ -44,15 +43,9 @@ document.addEventListener(
         );
 
 
-        // ======================================
-        // FIRST CHECK ADMIN LOGIN
-        // ======================================
-
         const isAuthenticated =
             await checkAdminAuthentication();
 
-
-        // Stop everything if not logged in
 
         if (!isAuthenticated) {
 
@@ -65,10 +58,6 @@ document.addEventListener(
             "THREADVERSE Admin Dashboard started!"
         );
 
-
-        // ======================================
-        // SETUP DASHBOARD
-        // ======================================
 
         setupAdminEvents();
 
@@ -86,9 +75,7 @@ document.addEventListener(
 
 async function checkAdminAuthentication() {
 
-
     try {
-
 
         const {
             data: {
@@ -96,12 +83,10 @@ async function checkAdminAuthentication() {
             },
             error
         } =
-            await supabaseClient.auth.getSession();
+            await supabaseClient
+                .auth
+                .getSession();
 
-
-        // ==================================
-        // HANDLE SESSION ERROR
-        // ==================================
 
         if (error) {
 
@@ -116,10 +101,6 @@ async function checkAdminAuthentication() {
 
         }
 
-
-        // ==================================
-        // NO SESSION
-        // ==================================
 
         if (
             !session ||
@@ -137,10 +118,6 @@ async function checkAdminAuthentication() {
         }
 
 
-        // ==================================
-        // SESSION FOUND
-        // ==================================
-
         currentAdminUser =
             session.user;
 
@@ -153,9 +130,7 @@ async function checkAdminAuthentication() {
 
         return true;
 
-
     } catch (error) {
-
 
         console.error(
             "Unexpected authentication error:",
@@ -177,7 +152,6 @@ async function checkAdminAuthentication() {
 
 function redirectToAdminLogin() {
 
-
     window.location.replace(
         "admin-login.html"
     );
@@ -191,20 +165,16 @@ function redirectToAdminLogin() {
 
 function setupAdminLogout() {
 
-
     const logoutButton =
         document.getElementById(
             "admin-logout-button"
         );
 
 
-    // If the logout button does not exist yet,
-    // the dashboard will still work normally.
-
     if (!logoutButton) {
 
         console.log(
-            "Admin logout button not found yet."
+            "Admin logout button not found."
         );
 
         return;
@@ -215,7 +185,6 @@ function setupAdminLogout() {
     logoutButton.addEventListener(
         "click",
         async function () {
-
 
             const originalText =
                 logoutButton.textContent;
@@ -230,9 +199,10 @@ function setupAdminLogout() {
 
             try {
 
-
                 const { error } =
-                    await supabaseClient.auth.signOut();
+                    await supabaseClient
+                        .auth
+                        .signOut();
 
 
                 if (error) {
@@ -246,7 +216,6 @@ function setupAdminLogout() {
                         "Unable to sign out. Please try again."
                     );
 
-
                     logoutButton.disabled =
                         false;
 
@@ -256,11 +225,6 @@ function setupAdminLogout() {
                     return;
 
                 }
-
-
-                console.log(
-                    "Admin signed out successfully."
-                );
 
 
                 currentAdminUser =
@@ -274,12 +238,10 @@ function setupAdminLogout() {
 
             } catch (error) {
 
-
                 console.error(
                     "Unexpected logout error:",
                     error
                 );
-
 
                 alert(
                     "Something went wrong while signing out."
@@ -301,15 +263,13 @@ function setupAdminLogout() {
 
 
 // ==========================================
-// 7. SETUP BUTTONS AND CONTROLS
+// 7. SETUP ADMIN EVENTS
 // ==========================================
 
 function setupAdminEvents() {
 
 
-    // ======================================
     // TOP REFRESH BUTTON
-    // ======================================
 
     const refreshButton =
         document.getElementById(
@@ -331,9 +291,7 @@ function setupAdminEvents() {
     }
 
 
-    // ======================================
     // BOTTOM REFRESH BUTTON
-    // ======================================
 
     const bottomRefreshButton =
         document.getElementById(
@@ -355,9 +313,7 @@ function setupAdminEvents() {
     }
 
 
-    // ======================================
-    // ORDER STATUS FILTER
-    // ======================================
+    // STATUS FILTER
 
     const statusFilter =
         document.getElementById(
@@ -379,9 +335,7 @@ function setupAdminEvents() {
     }
 
 
-    // ======================================
     // ORDER SEARCH
-    // ======================================
 
     const orderSearch =
         document.getElementById(
@@ -403,9 +357,7 @@ function setupAdminEvents() {
     }
 
 
-    // ======================================
     // CLOSE MODAL BUTTON
-    // ======================================
 
     const closeModalButton =
         document.getElementById(
@@ -427,9 +379,7 @@ function setupAdminEvents() {
     }
 
 
-    // ======================================
-    // CLOSE MODAL OVERLAY
-    // ======================================
+    // CLOSE MODAL WHEN CLICKING OUTSIDE
 
     const modalOverlay =
         document.querySelector(
@@ -460,11 +410,10 @@ function setupAdminEvents() {
 
 
 // ==========================================
-// 8. LOAD REAL ORDERS FROM SUPABASE
+// 8. LOAD ORDERS FROM SUPABASE
 // ==========================================
 
 async function loadAdminOrders() {
-
 
     console.log(
         "Loading THREADVERSE orders..."
@@ -475,7 +424,6 @@ async function loadAdminOrders() {
 
 
     try {
-
 
         const { data, error } =
             await supabaseClient
@@ -488,10 +436,6 @@ async function loadAdminOrders() {
                     }
                 );
 
-
-        // ==================================
-        // HANDLE DATABASE ERROR
-        // ==================================
 
         if (error) {
 
@@ -510,10 +454,6 @@ async function loadAdminOrders() {
         }
 
 
-        // ==================================
-        // SAVE ORDERS
-        // ==================================
-
         allOrders =
             Array.isArray(data)
                 ? data
@@ -526,10 +466,6 @@ async function loadAdminOrders() {
         );
 
 
-        // ==================================
-        // UPDATE DASHBOARD
-        // ==================================
-
         updateDashboardStats(
             allOrders
         );
@@ -540,12 +476,10 @@ async function loadAdminOrders() {
 
     } catch (error) {
 
-
         console.error(
             "Unexpected admin error:",
             error
         );
-
 
         showAdminError(
             "Something went wrong while loading orders."
@@ -562,7 +496,6 @@ async function loadAdminOrders() {
 
 function filterAndDisplayOrders() {
 
-
     const statusFilter =
         document.getElementById(
             "order-status-filter"
@@ -577,7 +510,7 @@ function filterAndDisplayOrders() {
 
     const selectedStatus =
         statusFilter
-            ? statusFilter.value
+            ? String(statusFilter.value).toLowerCase()
             : "all";
 
 
@@ -593,9 +526,6 @@ function filterAndDisplayOrders() {
         allOrders.filter(
             function (order) {
 
-
-                // STATUS FILTER
-
                 const orderStatus =
                     String(
                         order.status ||
@@ -608,12 +538,17 @@ function filterAndDisplayOrders() {
                     orderStatus === selectedStatus;
 
 
-                // SEARCH
-
                 const orderId =
                     String(
                         order.id || ""
                     ).toLowerCase();
+
+
+                const shortOrderId =
+                    orderId.slice(
+                        0,
+                        8
+                    );
 
 
                 const customerName =
@@ -638,6 +573,10 @@ function filterAndDisplayOrders() {
                     !searchText ||
 
                     orderId.includes(
+                        searchText
+                    ) ||
+
+                    shortOrderId.includes(
                         searchText
                     ) ||
 
@@ -671,11 +610,10 @@ function filterAndDisplayOrders() {
 
 
 // ==========================================
-// 10. DISPLAY ORDERS IN TABLE
+// 10. DISPLAY ORDERS
 // ==========================================
 
 function displayOrders(orders) {
-
 
     const loadingElement =
         document.getElementById(
@@ -720,9 +658,7 @@ function displayOrders(orders) {
     }
 
 
-    // ======================================
-    // EMPTY ORDERS
-    // ======================================
+    // NO ORDERS
 
     if (
         !orders ||
@@ -752,9 +688,7 @@ function displayOrders(orders) {
     }
 
 
-    // ======================================
-    // SHOW TABLE
-    // ======================================
+    // SHOW ORDERS TABLE
 
     if (emptyElement) {
 
@@ -778,20 +712,22 @@ function displayOrders(orders) {
     orders.forEach(
         function (order) {
 
-
             const row =
-                document.createElement("tr");
+                document.createElement(
+                    "tr"
+                );
 
 
             const orderId =
                 order.id || "N/A";
 
 
+            // ONLY FIRST 8 CHARACTERS
+            // Example: #12345678
+
             const shortOrderId =
-                String(orderId).slice(
-                    0,
-                    8
-                );
+                String(orderId)
+                    .slice(0, 8);
 
 
             const customerName =
@@ -832,19 +768,9 @@ function displayOrders(orders) {
             row.innerHTML = `
 
                 <td>
-                    <div class="admin-order-id">
-
-                        <strong>
-                            #${escapeHTML(shortOrderId)}
-                        </strong>
-
-                        <span>
-                            ${escapeHTML(
-                                String(orderId)
-                            )}
-                        </span>
-
-                    </div>
+                    <strong>
+                        #${escapeHTML(shortOrderId)}
+                    </strong>
                 </td>
 
 
@@ -916,7 +842,7 @@ function displayOrders(orders) {
     );
 
 
-    // VIEW BUTTON EVENTS
+    // VIEW ORDER BUTTON EVENTS
 
     const viewButtons =
         document.querySelectorAll(
@@ -949,7 +875,6 @@ function displayOrders(orders) {
 // ==========================================
 
 function updateDashboardStats(orders) {
-
 
     const totalOrdersElement =
         document.getElementById(
@@ -1100,7 +1025,6 @@ function updateDashboardStats(orders) {
 
 function openOrderDetails(orderId) {
 
-
     const selectedOrder =
         allOrders.find(
             function (order) {
@@ -1171,17 +1095,19 @@ function openOrderDetails(orderId) {
 
     } else {
 
-
         items.forEach(
             function (item) {
 
-
                 const quantity =
-                    Number(item.quantity) || 1;
+                    Number(
+                        item.quantity
+                    ) || 1;
 
 
                 const price =
-                    Number(item.price) || 0;
+                    Number(
+                        item.price
+                    ) || 0;
 
 
                 const itemTotal =
@@ -1269,21 +1195,28 @@ function openOrderDetails(orderId) {
             <div class="admin-modal-info-grid">
 
                 <div>
-                    <span>Order ID</span>
+
+                    <span>
+                        Order ID
+                    </span>
 
                     <strong>
                         #${escapeHTML(
                             String(
                                 selectedOrder.id ||
                                 "N/A"
-                            )
+                            ).slice(0, 8)
                         )}
                     </strong>
+
                 </div>
 
 
                 <div>
-                    <span>Order Date</span>
+
+                    <span>
+                        Order Date
+                    </span>
 
                     <strong>
                         ${escapeHTML(
@@ -1292,11 +1225,15 @@ function openOrderDetails(orderId) {
                             )
                         )}
                     </strong>
+
                 </div>
 
 
                 <div>
-                    <span>Order Status</span>
+
+                    <span>
+                        Order Status
+                    </span>
 
                     <strong>
                         ${escapeHTML(
@@ -1306,11 +1243,15 @@ function openOrderDetails(orderId) {
                             )
                         )}
                     </strong>
+
                 </div>
 
 
                 <div>
-                    <span>Payment Status</span>
+
+                    <span>
+                        Payment Status
+                    </span>
 
                     <strong>
                         ${escapeHTML(
@@ -1320,6 +1261,7 @@ function openOrderDetails(orderId) {
                             )
                         )}
                     </strong>
+
                 </div>
 
             </div>
@@ -1336,7 +1278,10 @@ function openOrderDetails(orderId) {
             <div class="admin-modal-info-grid">
 
                 <div>
-                    <span>Full Name</span>
+
+                    <span>
+                        Full Name
+                    </span>
 
                     <strong>
                         ${escapeHTML(
@@ -1344,11 +1289,15 @@ function openOrderDetails(orderId) {
                             "Not available"
                         )}
                     </strong>
+
                 </div>
 
 
                 <div>
-                    <span>Email</span>
+
+                    <span>
+                        Email
+                    </span>
 
                     <strong>
                         ${escapeHTML(
@@ -1356,11 +1305,15 @@ function openOrderDetails(orderId) {
                             "Not available"
                         )}
                     </strong>
+
                 </div>
 
 
                 <div>
-                    <span>Phone</span>
+
+                    <span>
+                        Phone
+                    </span>
 
                     <strong>
                         ${escapeHTML(
@@ -1368,6 +1321,7 @@ function openOrderDetails(orderId) {
                             "Not available"
                         )}
                     </strong>
+
                 </div>
 
             </div>
@@ -1552,7 +1506,6 @@ function openOrderDetails(orderId) {
 
 async function updateOrderStatus(orderId) {
 
-
     const statusSelect =
         document.getElementById(
             "admin-order-status-select"
@@ -1588,7 +1541,6 @@ async function updateOrderStatus(orderId) {
 
 
     try {
-
 
         const { data, error } =
             await supabaseClient
@@ -1671,20 +1623,16 @@ async function updateOrderStatus(orderId) {
 
     } catch (error) {
 
-
         console.error(
             "Unexpected status update error:",
             error
         );
 
-
         alert(
             "Something went wrong while updating the order."
         );
 
-
     } finally {
-
 
         if (updateButton) {
 
@@ -1706,7 +1654,6 @@ async function updateOrderStatus(orderId) {
 // ==========================================
 
 function closeOrderModal() {
-
 
     const modal =
         document.getElementById(
@@ -1733,7 +1680,6 @@ function closeOrderModal() {
 // ==========================================
 
 function showLoadingState() {
-
 
     const loadingElement =
         document.getElementById(
@@ -1784,7 +1730,6 @@ function showLoadingState() {
 // ==========================================
 
 function showAdminError(message) {
-
 
     const loadingElement =
         document.getElementById(
@@ -1856,7 +1801,6 @@ function showAdminError(message) {
 
 function formatOrderDate(dateValue) {
 
-
     if (!dateValue) {
 
         return "Not available";
@@ -1865,7 +1809,6 @@ function formatOrderDate(dateValue) {
 
 
     try {
-
 
         const date =
             new Date(
@@ -1895,7 +1838,6 @@ function formatOrderDate(dateValue) {
             }
         );
 
-
     } catch (error) {
 
         return "Not available";
@@ -1910,7 +1852,6 @@ function formatOrderDate(dateValue) {
 // ==========================================
 
 function capitalizeText(value) {
-
 
     const text =
         String(
@@ -1941,7 +1882,6 @@ function capitalizeText(value) {
 
 function escapeHTML(value) {
 
-
     const text =
         String(
             value ?? ""
@@ -1969,7 +1909,6 @@ function escapeHTML(value) {
 
 function escapeAttribute(value) {
 
-
     return escapeHTML(value)
         .replace(
             /"/g,
@@ -1981,4 +1920,3 @@ function escapeAttribute(value) {
         );
 
 }
-```
