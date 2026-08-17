@@ -372,11 +372,132 @@
 
             </div>
 
+        <!-- =====================================
+             PRODUCT MANAGEMENT
+        ====================================== -->
+
+        <section class="admin-products-section">
+
+            <div class="admin-section-header">
+
+                <div>
+
+                    <p class="admin-eyebrow">
+                        PRODUCT MANAGEMENT
+                    </p>
+
+                    <h2>
+                        Manage Products
+                    </h2>
+
+                    <p class="admin-description">
+
+                        Add, edit and manage the products
+                        displayed on your THREADVERSE store.
+
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="add-product-button"
+                    class="admin-add-product-button"
+                    type="button"
+                >
+                    + ADD PRODUCT
+                </button>
+
+            </div>
+
+
+            <!-- PRODUCT LOADING -->
+
+            <div
+                id="admin-products-loading"
+                class="admin-loading"
+                style="display: none;"
+            >
+
+                <div class="admin-loader"></div>
+
+                <p>
+                    Loading THREADVERSE products...
+                </p>
+
+            </div>
+
+
+            <!-- EMPTY PRODUCTS -->
+
+            <div
+                id="admin-empty-products"
+                class="admin-empty-orders"
+                style="display: none;"
+            >
+
+                <h3>
+                    No Products Found
+                </h3>
+
+                <p>
+                    Add your first THREADVERSE product
+                    to start selling.
+                </p>
+
+            </div>
+
+
+            <!-- PRODUCTS TABLE -->
+
+            <div
+                id="admin-products-wrapper"
+                class="admin-orders-wrapper"
+            >
+
+                <div class="admin-table-scroll">
+
+                    <table class="admin-orders-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>IMAGE</th>
+
+                                <th>PRODUCT</th>
+
+                                <th>CATEGORY</th>
+
+                                <th>PRICE</th>
+
+                                <th>DESCRIPTION</th>
+
+                                <th>ACTION</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody
+                            id="admin-products-table-body"
+                        >
+
+                            <!-- Products added by admin.js -->
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
         </section>
-
-
-
+            
+        
+        
         <!-- =====================================
              QUICK BUSINESS ACTIONS
         ====================================== -->
