@@ -1,0 +1,205 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Login | THREADVERSE</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body class="admin-login-body">
+
+
+    <main class="admin-login-page">
+
+
+        <!-- LEFT BRAND SECTION -->
+
+        <section class="admin-login-brand">
+
+            <a
+                href="index.html"
+                class="admin-login-logo"
+            >
+                THREADVERSE
+            </a>
+
+
+            <p class="admin-login-founder">
+
+                YADNESH PATHAK<br>
+                FOUNDER AND CEO OF THREADVERSE
+
+            </p>
+
+
+            <div class="admin-login-brand-content">
+
+                <p class="admin-login-eyebrow">
+                    SECURE BUSINESS MANAGEMENT
+                </p>
+
+
+                <h1>
+                    Manage Your<br>
+                    <span>THREADVERSE</span>
+                </h1>
+
+
+                <p class="admin-login-description">
+
+                    Secure access to your business dashboard,
+                    customer orders and order management system.
+
+                </p>
+
+            </div>
+
+
+            <div class="admin-login-brand-footer">
+
+                <span class="admin-security-dot"></span>
+
+                SECURE ADMIN ACCESS
+
+            </div>
+
+        </section>
+
+
+
+        <!-- RIGHT LOGIN SECTION -->
+
+        <section class="admin-login-form-side">
+
+
+            <div class="admin-login-card">
+
+
+                <div class="admin-login-heading">
+
+                    <p>
+                        ADMINISTRATION
+                    </p>
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <span>
+                        Sign in to access the THREADVERSE
+                        Admin Dashboard.
+                    </span>
+
+                </div>
+
+
+
+                <!-- LOGIN FORM -->
+
+                <form id="admin-login-form">
+
+
+                    <label for="admin-email">
+                        EMAIL ADDRESS
+                    </label>
+
+                    <input
+                        type="email"
+                        id="admin-email"
+                        placeholder="Enter your admin email"
+                        autocomplete="email"
+                        required
+                    >
+
+
+
+                    <label for="admin-password">
+                        PASSWORD
+                    </label>
+
+                    <div class="admin-password-wrapper">
+
+                        <input
+                            type="password"
+                            id="admin-password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="toggle-admin-password"
+                            class="toggle-password-button"
+                            aria-label="Show password"
+                        >
+                            SHOW
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- ERROR / SUCCESS MESSAGE -->
+
+                    <div
+                        id="admin-login-message"
+                        class="admin-login-message"
+                    ></div>
+
+
+
+                    <button
+                        type="submit"
+                        id="admin-login-button"
+                        class="admin-login-button"
+                    >
+                        SIGN IN TO DASHBOARD
+                    </button>
+
+
+                </form>
+
+
+
+                <a
+                    href="index.html"
+                    class="admin-back-to-store"
+                >
+                    ← BACK TO THREADVERSE STORE
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- SUPABASE -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- ADMIN LOGIN JAVASCRIPT -->
+    <script src="admin-login.js"></script>
+
+
+</body>
+
+</html>
+```
