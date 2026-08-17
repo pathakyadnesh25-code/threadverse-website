@@ -27,7 +27,6 @@ const supabaseClient =
 // ==========================================
 
 let allOrders = [];
-
 let currentAdminUser = null;
 
 
@@ -78,15 +77,16 @@ async function checkAdminAuthentication() {
 
     try {
 
-        const {
-            data: {
-                session
-            },
-            error
-        } =
-            await supabaseClient
-                .auth
-                .getSession();
+        const result =
+            await supabaseClient.auth.getSession();
+
+
+        const session =
+            result.data.session;
+
+
+        const error =
+            result.error;
 
 
         if (error) {
@@ -172,9 +172,8 @@ function setupAdminLogout() {
         );
 
 
-    // Logout button is optional.
-    // Do nothing if it is not present in admin.html.
-
+    // Your current admin.html does not contain
+    // a logout button, so do nothing.
     if (!logoutButton) {
 
         return;
@@ -186,23 +185,30 @@ function setupAdminLogout() {
         "click",
         async function () {
 
+            const originalText =
+                logoutButton.textContent;
+
+
             logoutButton.disabled =
                 true;
+
+            logoutButton.textContent =
+                "SIGNING OUT...";
 
 
             try {
 
-                const { error } =
+                const result =
                     await supabaseClient
                         .auth
                         .signOut();
 
 
-                if (error) {
+                if (result.error) {
 
                     console.error(
                         "Admin logout error:",
-                        error
+                        result.error
                     );
 
                     alert(
@@ -211,6 +217,9 @@ function setupAdminLogout() {
 
                     logoutButton.disabled =
                         false;
+
+                    logoutButton.textContent =
+                        originalText;
 
                     return;
 
@@ -233,12 +242,17 @@ function setupAdminLogout() {
                     error
                 );
 
+
                 alert(
                     "Something went wrong while signing out."
                 );
 
+
                 logoutButton.disabled =
                     false;
+
+                logoutButton.textContent =
+                    originalText;
 
             }
 
@@ -253,7 +267,6 @@ function setupAdminLogout() {
 // ==========================================
 
 function setupAdminEvents() {
-
 
     const refreshButton =
         document.getElementById(
@@ -345,7 +358,11 @@ function setupAdminEvents() {
 
         closeModalButton.addEventListener(
             "click",
-            closeOrderModal
+            function () {
+
+                closeOrderModal();
+
+            }
         );
 
     }
@@ -363,14 +380,8 @@ function setupAdminEvents() {
             "click",
             function (event) {
 
-                // Close when clicking the dark
-                // background overlay only.
-
                 if (
-                    event.target === modal ||
-                    event.target.classList.contains(
-                        "order-modal-overlay"
-                    )
+                    event.target === modal
                 ) {
 
                     closeOrderModal();
@@ -417,7 +428,7 @@ async function loadAdminOrders() {
 
     try {
 
-        const { data, error } =
+        const result =
             await supabaseClient
                 .from("orders")
                 .select("*")
@@ -427,6 +438,14 @@ async function loadAdminOrders() {
                         ascending: false
                     }
                 );
+
+
+        const data =
+            result.data;
+
+
+        const error =
+            result.error;
 
 
         if (error) {
@@ -472,6 +491,7 @@ async function loadAdminOrders() {
             "Unexpected admin error:",
             error
         );
+
 
         showAdminError(
             "Something went wrong while loading orders."
@@ -532,29 +552,46 @@ function filterAndDisplayOrders() {
                     orderStatus === selectedStatus;
 
 
-                const searchableText =
-                    (
-                        String(
-                            order.id || ""
-                        ) +
-                        " " +
-                        String(
-                            order.customer_name || ""
-                        ) +
-                        " " +
-                        String(
-                            order.customer_email || ""
-                        ) +
-                        " " +
-                        String(
-                            order.customer_phone || ""
-                        )
+                const orderId =
+                    String(
+                        order.id || ""
+                    ).toLowerCase();
+
+
+                const customerName =
+                    String(
+                        order.customer_name || ""
+                    ).toLowerCase();
+
+
+                const customerEmail =
+                    String(
+                        order.customer_email || ""
+                    ).toLowerCase();
+
+
+                const customerPhone =
+                    String(
+                        order.customer_phone || ""
                     ).toLowerCase();
 
 
                 const searchMatches =
                     !searchText ||
-                    searchableText.includes(
+
+                    orderId.includes(
+                        searchText
+                    ) ||
+
+                    customerName.includes(
+                        searchText
+                    ) ||
+
+                    customerEmail.includes(
+                        searchText
+                    ) ||
+
+                    customerPhone.includes(
                         searchText
                     );
 
@@ -713,8 +750,19 @@ function displayOrders(orders) {
                 ).toLowerCase();
 
 
-            row.innerHTML = `
+            const formattedStatus =
+                capitalizeText(
+                    orderStatus
+                );
 
+
+            const formattedDate =
+                formatOrderDate(
+                    order.created_at
+                );
+
+
+            row.innerHTML = `
                 <td>
                     <strong>
                         #${escapeHTML(shortOrderId)}
@@ -722,7 +770,6 @@ function displayOrders(orders) {
                 </td>
 
                 <td>
-
                     <div class="admin-customer-name">
                         ${escapeHTML(customerName)}
                     </div>
@@ -732,7 +779,6 @@ function displayOrders(orders) {
                             order.customer_email || ""
                         )}
                     </div>
-
                 </td>
 
                 <td>
@@ -746,39 +792,24 @@ function displayOrders(orders) {
                 </td>
 
                 <td>
-
-                    <span
-                        class="admin-status-badge status-${escapeAttribute(
-                            orderStatus
-                        )}"
-                    >
-                        ${escapeHTML(
-                            capitalizeText(orderStatus)
-                        )}
+                    <span class="admin-status-badge status-${escapeAttribute(orderStatus)}">
+                        ${escapeHTML(formattedStatus)}
                     </span>
-
                 </td>
 
                 <td>
-                    ${escapeHTML(
-                        formatOrderDate(order.created_at)
-                    )}
+                    ${escapeHTML(formattedDate)}
                 </td>
 
                 <td>
-
                     <button
                         class="admin-view-order-button"
                         type="button"
-                        data-order-id="${escapeAttribute(
-                            String(orderId)
-                        )}"
+                        data-order-id="${escapeAttribute(String(orderId))}"
                     >
                         VIEW
                     </button>
-
                 </td>
-
             `;
 
 
@@ -790,40 +821,28 @@ function displayOrders(orders) {
     );
 
 
-    // One click listener on the table body.
-    // This also works after refreshes and filtering.
-
-    tableBody.onclick =
-        function (event) {
-
-            const viewButton =
-                event.target.closest(
-                    ".admin-view-order-button"
-                );
+    const viewButtons =
+        document.querySelectorAll(
+            ".admin-view-order-button"
+        );
 
 
-            if (!viewButton) {
+    viewButtons.forEach(
+        function (button) {
 
-                return;
+            button.addEventListener(
+                "click",
+                function () {
 
-            }
+                    openOrderDetails(
+                        this.dataset.orderId
+                    );
 
-
-            const orderId =
-                viewButton.dataset.orderId;
-
-
-            console.log(
-                "Opening order details:",
-                orderId
+                }
             );
 
-
-            openOrderDetails(
-                orderId
-            );
-
-        };
+        }
+    );
 
 }
 
@@ -870,8 +889,8 @@ function updateDashboardStats(orders) {
                     String(
                         order.status ||
                         "pending"
-                    ).toLowerCase()
-                    === "pending"
+                    ).toLowerCase() ===
+                    "pending"
                 );
 
             }
@@ -980,12 +999,6 @@ function updateDashboardStats(orders) {
 
 function openOrderDetails(orderId) {
 
-    console.log(
-        "Searching for order:",
-        orderId
-    );
-
-
     const selectedOrder =
         allOrders.find(
             function (order) {
@@ -1000,11 +1013,6 @@ function openOrderDetails(orderId) {
 
 
     if (!selectedOrder) {
-
-        console.error(
-            "Order not found:",
-            orderId
-        );
 
         alert(
             "Order details could not be found."
@@ -1033,7 +1041,7 @@ function openOrderDetails(orderId) {
     ) {
 
         console.error(
-            "Order details modal elements not found."
+            "Order details modal not found."
         );
 
         return;
@@ -1083,44 +1091,31 @@ function openOrderDetails(orderId) {
 
                 const productName =
                     item.name ||
-                    item.product_name ||
                     "THREADVERSE Product";
 
 
-                const imageUrl =
-                    item.image ||
-                    item.image_url ||
-                    "";
+                const imageHTML =
+                    item.image
+                        ? `
+                            <img
+                                src="${escapeAttribute(item.image)}"
+                                alt="${escapeAttribute(productName)}"
+                            >
+                        `
+                        : `
+                            <div class="admin-product-placeholder">
+                                THREADVERSE
+                            </div>
+                        `;
 
 
                 itemsHTML += `
-
                     <div class="admin-modal-product">
 
                         <div class="admin-modal-product-left">
 
                             <div class="admin-modal-product-image">
-
-                                ${
-                                    imageUrl
-                                        ? `
-                                            <img
-                                                src="${escapeAttribute(
-                                                    imageUrl
-                                                )}"
-                                                alt="${escapeAttribute(
-                                                    productName
-                                                )}"
-                                                onerror="this.style.display='none'"
-                                            >
-                                        `
-                                        : `
-                                            <div class="admin-product-placeholder">
-                                                THREADVERSE
-                                            </div>
-                                        `
-                                }
-
+                                ${imageHTML}
                             </div>
 
                             <div>
@@ -1151,7 +1146,6 @@ function openOrderDetails(orderId) {
                         </strong>
 
                     </div>
-
                 `;
 
             }
@@ -1175,7 +1169,8 @@ function openOrderDetails(orderId) {
                     <strong>
                         #${escapeHTML(
                             String(
-                                selectedOrder.id || "N/A"
+                                selectedOrder.id ||
+                                "N/A"
                             ).slice(0, 8)
                         )}
                     </strong>
@@ -1274,23 +1269,27 @@ function openOrderDetails(orderId) {
 
                 <p>
                     ${escapeHTML(
-                        selectedOrder.address || ""
+                        selectedOrder.address ||
+                        "Not available"
                     )}
                 </p>
 
                 <p>
                     ${escapeHTML(
-                        selectedOrder.city || ""
+                        selectedOrder.city ||
+                        ""
                     )},
                     ${escapeHTML(
-                        selectedOrder.state || ""
+                        selectedOrder.state ||
+                        ""
                     )}
                 </p>
 
                 <p>
                     PIN Code:
                     ${escapeHTML(
-                        selectedOrder.pincode || ""
+                        selectedOrder.pincode ||
+                        "Not available"
                     )}
                 </p>
 
@@ -1331,17 +1330,13 @@ function openOrderDetails(orderId) {
 
         <div class="admin-status-update-section">
 
-            <label
-                for="admin-order-status-select"
-            >
+            <label for="admin-order-status-select">
                 UPDATE ORDER STATUS
             </label>
 
             <div class="admin-status-update-row">
 
-                <select
-                    id="admin-order-status-select"
-                >
+                <select id="admin-order-status-select">
 
                     <option value="pending">
                         PENDING
@@ -1369,7 +1364,6 @@ function openOrderDetails(orderId) {
 
                 </select>
 
-
                 <button
                     id="update-order-status-button"
                     type="button"
@@ -1383,7 +1377,6 @@ function openOrderDetails(orderId) {
             </div>
 
         </div>
-
     `;
 
 
@@ -1395,15 +1388,11 @@ function openOrderDetails(orderId) {
 
     if (statusSelect) {
 
-        const currentStatus =
+        statusSelect.value =
             String(
                 selectedOrder.status ||
                 "pending"
             ).toLowerCase();
-
-
-        statusSelect.value =
-            currentStatus;
 
     }
 
@@ -1436,11 +1425,6 @@ function openOrderDetails(orderId) {
 
     document.body.style.overflow =
         "hidden";
-
-
-    console.log(
-        "Order details modal opened successfully."
-    );
 
 }
 
@@ -1494,7 +1478,7 @@ async function updateOrderStatus(orderId) {
 
     try {
 
-        const { data, error } =
+        const result =
             await supabaseClient
                 .from("orders")
                 .update(
@@ -1509,6 +1493,14 @@ async function updateOrderStatus(orderId) {
                 )
                 .select()
                 .single();
+
+
+        const data =
+            result.data;
+
+
+        const error =
+            result.error;
 
 
         if (error) {
@@ -1577,6 +1569,7 @@ async function updateOrderStatus(orderId) {
             "Unexpected status update error:",
             error
         );
+
 
         alert(
             "Something went wrong while updating the order."
@@ -1722,7 +1715,6 @@ function showAdminError(message) {
 
 
         emptyElement.innerHTML = `
-
             <h3>
                 Unable to Load Orders
             </h3>
@@ -1737,7 +1729,6 @@ function showAdminError(message) {
             >
                 TRY AGAIN
             </button>
-
         `;
 
 
@@ -1800,19 +1791,14 @@ function formatOrderDate(dateValue) {
             {
                 timeZone:
                     "Asia/Kolkata",
-
                 day:
                     "2-digit",
-
                 month:
                     "short",
-
                 year:
                     "numeric",
-
                 hour:
                     "2-digit",
-
                 minute:
                     "2-digit"
             }
@@ -1867,6 +1853,12 @@ function capitalizeText(value) {
 
 function escapeHTML(value) {
 
+    const text =
+        String(
+            value ?? ""
+        );
+
+
     const element =
         document.createElement(
             "div"
@@ -1874,9 +1866,7 @@ function escapeHTML(value) {
 
 
     element.textContent =
-        String(
-            value ?? ""
-        );
+        text;
 
 
     return element.innerHTML;
@@ -1901,4 +1891,4 @@ function escapeAttribute(value) {
         );
 
 }
-```
+
