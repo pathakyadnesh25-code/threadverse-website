@@ -73,7 +73,123 @@ document.addEventListener(
 // 4. CHECK ADMIN AUTHENTICATION
 // ==========================================
 
+// ==========================================
+// ADMIN AUTHENTICATION AND ACCESS CONTROL
+// ==========================================
+
 async function checkAdminAuthentication() {
+
+    try {
+
+        // Get current Supabase session
+
+        const {
+            data: {
+                session
+            },
+            error
+        } = await supabaseClient
+            .auth
+            .getSession();
+
+
+        // ======================================
+        // NO LOGIN SESSION
+        // ======================================
+
+        if (error || !session || !session.user) {
+
+            console.log(
+                "No valid admin session found."
+            );
+
+            window.location.href =
+                "admin-login.html";
+
+            return false;
+
+        }
+
+
+        // ======================================
+        // AUTHORIZED ADMIN EMAIL
+        // ======================================
+
+        const ADMIN_EMAIL =
+            "pathakyadnesh25@gmail.com";
+
+
+        const loggedInEmail =
+            String(
+                session.user.email || ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        // ======================================
+        // CHECK ADMIN ACCESS
+        // ======================================
+
+        if (
+            loggedInEmail !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            console.warn(
+                "Unauthorized user attempted admin access:",
+                loggedInEmail
+            );
+
+
+            // Sign out unauthorized user
+
+            await supabaseClient
+                .auth
+                .signOut();
+
+
+            alert(
+                "Access denied. You are not authorized to access the THREADVERSE Admin Dashboard."
+            );
+
+
+            window.location.href =
+                "admin-login.html";
+
+            return false;
+
+        }
+
+
+        // ======================================
+        // ADMIN VERIFIED
+        // ======================================
+
+        console.log(
+            "Authorized THREADVERSE admin verified:",
+            loggedInEmail
+        );
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin authentication error:",
+            error
+        );
+
+
+        window.location.href =
+            "admin-login.html";
+
+        return false;
+
+    }
+
+}
 
     try {
 
