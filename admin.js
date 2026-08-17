@@ -26,7 +26,7 @@ const supabaseClient =
 // ==========================================
 
 let allOrders = [];
-
+let allProducts = [];
 let currentAdminUser = null;
 
 
@@ -64,6 +64,8 @@ document.addEventListener(
         setupAdminLogout();
 
         await loadAdminOrders();
+
+        await loadAdminProducts();
 
     }
 );
@@ -2070,5 +2072,500 @@ function escapeAttribute(value) {
             /'/g,
             "&#039;"
         );
+
+}
+
+
+// ==========================================
+// 21. LOAD PRODUCTS FROM SUPABASE
+// ==========================================
+
+async function loadAdminProducts() {
+
+    console.log(
+        "Loading THREADVERSE products..."
+    );
+
+
+    const loadingElement =
+        document.getElementById(
+            "admin-products-loading"
+        );
+
+
+    const emptyElement =
+        document.getElementById(
+            "admin-empty-products"
+        );
+
+
+    const wrapperElement =
+        document.getElementById(
+            "admin-products-wrapper"
+        );
+
+
+    if (loadingElement) {
+
+        loadingElement.style.display =
+            "block";
+
+    }
+
+
+    if (emptyElement) {
+
+        emptyElement.style.display =
+            "none";
+
+    }
+
+
+    if (wrapperElement) {
+
+        wrapperElement.style.display =
+            "none";
+
+    }
+
+
+    try {
+
+        const result =
+            await supabaseClient
+                .from("products")
+                .select("*")
+                .order(
+                    "id",
+                    {
+                        ascending: true
+                    }
+                );
+
+
+        const data =
+            result.data;
+
+
+        const error =
+            result.error;
+
+
+        if (error) {
+
+            console.error(
+                "Error loading products:",
+                error
+            );
+
+
+            showProductsError(
+                error.message ||
+                "Unable to load products."
+            );
+
+            return;
+
+        }
+
+
+        allProducts =
+            Array.isArray(data)
+                ? data
+                : [];
+
+
+        console.log(
+            "Products loaded successfully:",
+            allProducts
+        );
+
+
+        displayAdminProducts(
+            allProducts
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Unexpected product loading error:",
+            error
+        );
+
+
+        showProductsError(
+            "Something went wrong while loading products."
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// 22. DISPLAY ADMIN PRODUCTS
+// ==========================================
+
+function displayAdminProducts(products) {
+
+    const loadingElement =
+        document.getElementById(
+            "admin-products-loading"
+        );
+
+
+    const emptyElement =
+        document.getElementById(
+            "admin-empty-products"
+        );
+
+
+    const wrapperElement =
+        document.getElementById(
+            "admin-products-wrapper"
+        );
+
+
+    const tableBody =
+        document.getElementById(
+            "admin-products-table-body"
+        );
+
+
+    if (loadingElement) {
+
+        loadingElement.style.display =
+            "none";
+
+    }
+
+
+    if (!tableBody) {
+
+        console.error(
+            "Admin products table body not found."
+        );
+
+        return;
+
+    }
+
+
+    // ======================================
+    // NO PRODUCTS
+    // ======================================
+
+    if (
+        !products ||
+        products.length === 0
+    ) {
+
+        tableBody.innerHTML =
+            "";
+
+
+        if (wrapperElement) {
+
+            wrapperElement.style.display =
+                "none";
+
+        }
+
+
+        if (emptyElement) {
+
+            emptyElement.style.display =
+                "block";
+
+        }
+
+
+        return;
+
+    }
+
+
+    // ======================================
+    // SHOW PRODUCTS TABLE
+    // ======================================
+
+    if (emptyElement) {
+
+        emptyElement.style.display =
+            "none";
+
+    }
+
+
+    if (wrapperElement) {
+
+        wrapperElement.style.display =
+            "block";
+
+    }
+
+
+    tableBody.innerHTML =
+        "";
+
+
+    // ======================================
+    // CREATE PRODUCT ROWS
+    // ======================================
+
+    products.forEach(
+        function (product) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const productId =
+                product.id ||
+                "N/A";
+
+
+            const productName =
+                product.name ||
+                "THREADVERSE Product";
+
+
+            const productPrice =
+                Number(
+                    product.price
+                ) || 0;
+
+
+            const productCategory =
+                product.category ||
+                "Not available";
+
+
+            const productDescription =
+                product.description ||
+                "No description";
+
+
+            const productImage =
+                product.image ||
+                "";
+
+
+            const imageHTML =
+                productImage
+                    ? `
+                        <img
+                            src="${escapeAttribute(
+                                productImage
+                            )}"
+                            alt="${escapeAttribute(
+                                productName
+                            )}"
+                            class="admin-product-table-image"
+                        >
+                    `
+                    : `
+                        <div
+                            class="admin-product-table-placeholder"
+                        >
+                            NO IMAGE
+                        </div>
+                    `;
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    ${imageHTML}
+
+                </td>
+
+
+                <td>
+
+                    <strong>
+
+                        ${escapeHTML(
+                            productName
+                        )}
+
+                    </strong>
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(
+                        productCategory
+                    )}
+
+                </td>
+
+
+                <td>
+
+                    <strong>
+
+                        ₹${productPrice.toFixed(0)}
+
+                    </strong>
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(
+                        productDescription
+                    )}
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="admin-edit-product-button"
+                        type="button"
+                        data-product-id="${escapeAttribute(
+                            String(productId)
+                        )}"
+                    >
+
+                        EDIT
+
+                    </button>
+
+
+                    <button
+                        class="admin-delete-product-button"
+                        type="button"
+                        data-product-id="${escapeAttribute(
+                            String(productId)
+                        )}"
+                    >
+
+                        DELETE
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    console.log(
+        "Product table displayed successfully."
+    );
+
+}
+
+
+// ==========================================
+// 23. SHOW PRODUCT ERROR
+// ==========================================
+
+function showProductsError(message) {
+
+    const loadingElement =
+        document.getElementById(
+            "admin-products-loading"
+        );
+
+
+    const emptyElement =
+        document.getElementById(
+            "admin-empty-products"
+        );
+
+
+    const wrapperElement =
+        document.getElementById(
+            "admin-products-wrapper"
+        );
+
+
+    if (loadingElement) {
+
+        loadingElement.style.display =
+            "none";
+
+    }
+
+
+    if (wrapperElement) {
+
+        wrapperElement.style.display =
+            "none";
+
+    }
+
+
+    if (emptyElement) {
+
+        emptyElement.style.display =
+            "block";
+
+
+        emptyElement.innerHTML = `
+
+            <h3>
+                Unable to Load Products
+            </h3>
+
+            <p>
+
+                ${escapeHTML(
+                    message
+                )}
+
+            </p>
+
+
+            <button
+                id="admin-products-try-again"
+                type="button"
+            >
+
+                TRY AGAIN
+
+            </button>
+
+        `;
+
+
+        const tryAgainButton =
+            document.getElementById(
+                "admin-products-try-again"
+            );
+
+
+        if (tryAgainButton) {
+
+            tryAgainButton.addEventListener(
+                "click",
+                async function () {
+
+                    await loadAdminProducts();
+
+                }
+            );
+
+        }
+
+    }
 
 }
