@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +11,11 @@
 
     <title>Admin Dashboard | THREADVERSE</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
 
@@ -273,9 +276,7 @@
 
 
 
-            <!-- =================================
-                 LOADING STATE
-            ================================== -->
+            <!-- LOADING STATE -->
 
             <div
                 id="admin-orders-loading"
@@ -292,9 +293,7 @@
 
 
 
-            <!-- =================================
-                 EMPTY STATE
-            ================================== -->
+            <!-- EMPTY STATE -->
 
             <div
                 id="admin-empty-orders"
@@ -315,9 +314,7 @@
 
 
 
-            <!-- =================================
-                 ORDERS TABLE
-            ================================== -->
+            <!-- ORDERS TABLE -->
 
             <div
                 id="admin-orders-wrapper"
@@ -333,33 +330,19 @@
 
                             <tr>
 
-                                <th>
-                                    ORDER
-                                </th>
+                                <th>ORDER</th>
 
-                                <th>
-                                    CUSTOMER
-                                </th>
+                                <th>CUSTOMER</th>
 
-                                <th>
-                                    PHONE
-                                </th>
+                                <th>PHONE</th>
 
-                                <th>
-                                    AMOUNT
-                                </th>
+                                <th>AMOUNT</th>
 
-                                <th>
-                                    STATUS
-                                </th>
+                                <th>STATUS</th>
 
-                                <th>
-                                    DATE
-                                </th>
+                                <th>DATE</th>
 
-                                <th>
-                                    ACTION
-                                </th>
+                                <th>ACTION</th>
 
                             </tr>
 
@@ -370,8 +353,7 @@
                             id="admin-orders-table-body"
                         >
 
-                            <!-- Orders will be added
-                                 here by admin.js -->
+                            <!-- Orders added by admin.js -->
 
                         </tbody>
 
@@ -404,6 +386,8 @@
             <div class="admin-quick-grid">
 
 
+                <!-- VIEW PRODUCTS -->
+
                 <a
                     href="index.html#products"
                     class="admin-quick-card"
@@ -425,6 +409,8 @@
                 </a>
 
 
+
+                <!-- REFRESH ORDERS -->
 
                 <button
                     class="admin-quick-card admin-quick-button"
@@ -448,6 +434,8 @@
                 </button>
 
 
+
+                <!-- OPEN STORE -->
 
                 <a
                     href="index.html"
@@ -481,6 +469,7 @@
 
     <!-- =========================================
          ORDER DETAILS MODAL
+         IMPORTANT: ONLY ONE MODAL
     ========================================== -->
 
     <div
@@ -489,15 +478,27 @@
         style="display: none;"
     >
 
-        <div class="order-modal-overlay"></div>
+
+        <!-- BACKGROUND OVERLAY -->
+
+        <div
+            class="order-modal-overlay"
+        ></div>
 
 
-        <div class="order-modal-content">
+
+        <!-- MODAL CONTENT -->
+
+        <div
+            class="order-modal-content"
+        >
 
 
             <!-- MODAL HEADER -->
 
-            <div class="order-modal-header">
+            <div
+                class="order-modal-header"
+            >
 
                 <div>
 
@@ -532,8 +533,10 @@
                 class="order-modal-body"
             >
 
-                <!-- admin.js will load
-                     complete order details here -->
+                <!--
+                    admin.js loads complete
+                    order details here
+                -->
 
             </div>
 
@@ -576,17 +579,21 @@
          JAVASCRIPT
     ========================================== -->
 
-    <!-- SUPABASE -->
+
+    <!-- SUPABASE LIBRARY -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
     ></script>
 
 
     <!-- ADMIN JAVASCRIPT -->
-    <script src="admin.js"></script>
+
+    <script
+        src="admin.js"
+    ></script>
 
 
 </body>
 
 </html>
-```
