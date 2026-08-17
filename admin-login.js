@@ -1,4 +1,4 @@
-```javascript
+
 // ==========================================
 // THREADVERSE - ADMIN LOGIN JAVASCRIPT
 // ==========================================
@@ -383,4 +383,4 @@ function setupPasswordToggle() {
     );
 
 }
-```
+
