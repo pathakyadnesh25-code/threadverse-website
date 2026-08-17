@@ -635,7 +635,44 @@ function setupAdminEvents() {
         }
     );
 
+    // ======================================
+    // ADD PRODUCT BUTTON
+    // ======================================
 
+    const addProductButton =
+        document.getElementById(
+            "add-product-button"
+        );
+
+
+    if (addProductButton) {
+
+        addProductButton.addEventListener(
+            "click",
+            function () {
+
+                console.log(
+                    "ADD PRODUCT button clicked."
+                );
+
+
+                openAddProductModal();
+
+            }
+        );
+
+
+        console.log(
+            "ADD PRODUCT button event is active."
+        );
+
+    } else {
+
+        console.error(
+            "add-product-button was not found."
+        );
+
+    }
     console.log(
         "Admin events setup completed."
     );
