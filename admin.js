@@ -1,4 +1,3 @@
-
 // ==========================================
 // THREADVERSE - ADMIN DASHBOARD JAVASCRIPT
 // ==========================================
@@ -27,6 +26,7 @@ const supabaseClient =
 // ==========================================
 
 let allOrders = [];
+
 let currentAdminUser = null;
 
 
@@ -78,7 +78,9 @@ async function checkAdminAuthentication() {
     try {
 
         const result =
-            await supabaseClient.auth.getSession();
+            await supabaseClient
+                .auth
+                .getSession();
 
 
         const session =
@@ -172,9 +174,11 @@ function setupAdminLogout() {
         );
 
 
-    // Your current admin.html does not contain
-    // a logout button, so do nothing.
     if (!logoutButton) {
+
+        console.log(
+            "Admin logout button not found."
+        );
 
         return;
 
@@ -215,6 +219,7 @@ function setupAdminLogout() {
                         "Unable to sign out. Please try again."
                     );
 
+
                     logoutButton.disabled =
                         false;
 
@@ -233,7 +238,6 @@ function setupAdminLogout() {
                 window.location.replace(
                     "admin-login.html"
                 );
-
 
             } catch (error) {
 
@@ -268,6 +272,15 @@ function setupAdminLogout() {
 
 function setupAdminEvents() {
 
+    console.log(
+        "Setting up admin events..."
+    );
+
+
+    // ======================================
+    // TOP REFRESH BUTTON
+    // ======================================
+
     const refreshButton =
         document.getElementById(
             "refresh-orders-button"
@@ -280,6 +293,10 @@ function setupAdminEvents() {
             "click",
             async function () {
 
+                console.log(
+                    "Top refresh button clicked."
+                );
+
                 await loadAdminOrders();
 
             }
@@ -287,6 +304,10 @@ function setupAdminEvents() {
 
     }
 
+
+    // ======================================
+    // BOTTOM REFRESH BUTTON
+    // ======================================
 
     const bottomRefreshButton =
         document.getElementById(
@@ -300,6 +321,10 @@ function setupAdminEvents() {
             "click",
             async function () {
 
+                console.log(
+                    "Bottom refresh button clicked."
+                );
+
                 await loadAdminOrders();
 
             }
@@ -307,6 +332,10 @@ function setupAdminEvents() {
 
     }
 
+
+    // ======================================
+    // ORDER STATUS FILTER
+    // ======================================
 
     const statusFilter =
         document.getElementById(
@@ -328,6 +357,10 @@ function setupAdminEvents() {
     }
 
 
+    // ======================================
+    // ORDER SEARCH
+    // ======================================
+
     const orderSearch =
         document.getElementById(
             "order-search"
@@ -347,6 +380,84 @@ function setupAdminEvents() {
 
     }
 
+
+    // ======================================
+    // VIEW BUTTON EVENT DELEGATION
+    // IMPORTANT:
+    // Works even when buttons are created
+    // dynamically after orders are loaded.
+    // ======================================
+
+    const tableBody =
+        document.getElementById(
+            "admin-orders-table-body"
+        );
+
+
+    if (tableBody) {
+
+        console.log(
+            "VIEW button event delegation is active."
+        );
+
+
+        tableBody.addEventListener(
+            "click",
+            function (event) {
+
+                const viewButton =
+                    event.target.closest(
+                        ".admin-view-order-button"
+                    );
+
+
+                if (!viewButton) {
+
+                    return;
+
+                }
+
+
+                const orderId =
+                    viewButton.dataset.orderId;
+
+
+                console.log(
+                    "VIEW button clicked. Order ID:",
+                    orderId
+                );
+
+
+                if (!orderId) {
+
+                    console.error(
+                        "VIEW button has no order ID."
+                    );
+
+                    return;
+
+                }
+
+
+                openOrderDetails(
+                    orderId
+                );
+
+            }
+        );
+
+    } else {
+
+        console.error(
+            "admin-orders-table-body was not found. VIEW buttons cannot work."
+        );
+
+    }
+
+
+    // ======================================
+    // CLOSE MODAL BUTTON
+    // ======================================
 
     const closeModalButton =
         document.getElementById(
@@ -368,6 +479,10 @@ function setupAdminEvents() {
     }
 
 
+    // ======================================
+    // CLOSE MODAL WHEN CLICKING OVERLAY
+    // ======================================
+
     const modal =
         document.getElementById(
             "order-details-modal"
@@ -381,7 +496,10 @@ function setupAdminEvents() {
             function (event) {
 
                 if (
-                    event.target === modal
+                    event.target === modal ||
+                    event.target.classList.contains(
+                        "order-modal-overlay"
+                    )
                 ) {
 
                     closeOrderModal();
@@ -393,6 +511,10 @@ function setupAdminEvents() {
 
     }
 
+
+    // ======================================
+    // ESCAPE KEY CLOSES MODAL
+    // ======================================
 
     document.addEventListener(
         "keydown",
@@ -407,6 +529,11 @@ function setupAdminEvents() {
             }
 
         }
+    );
+
+
+    console.log(
+        "Admin events setup completed."
     );
 
 }
@@ -473,6 +600,7 @@ async function loadAdminOrders() {
 
         console.log(
             "Orders loaded successfully:",
+            allOrders.length,
             allOrders
         );
 
@@ -483,7 +611,6 @@ async function loadAdminOrders() {
 
 
         filterAndDisplayOrders();
-
 
     } catch (error) {
 
@@ -530,7 +657,9 @@ function filterAndDisplayOrders() {
 
     const searchText =
         orderSearch
-            ? orderSearch.value
+            ? String(
+                orderSearch.value
+            )
                 .trim()
                 .toLowerCase()
             : "";
@@ -605,6 +734,12 @@ function filterAndDisplayOrders() {
         );
 
 
+    console.log(
+        "Displaying filtered orders:",
+        filteredOrders.length
+    );
+
+
     displayOrders(
         filteredOrders
     );
@@ -666,7 +801,8 @@ function displayOrders(orders) {
         orders.length === 0
     ) {
 
-        tableBody.innerHTML = "";
+        tableBody.innerHTML =
+            "";
 
 
         if (wrapperElement) {
@@ -706,7 +842,8 @@ function displayOrders(orders) {
     }
 
 
-    tableBody.innerHTML = "";
+    tableBody.innerHTML =
+        "";
 
 
     orders.forEach(
@@ -719,7 +856,7 @@ function displayOrders(orders) {
 
 
             const orderId =
-                order.id || "N/A";
+                order.id || "";
 
 
             const shortOrderId =
@@ -821,27 +958,8 @@ function displayOrders(orders) {
     );
 
 
-    const viewButtons =
-        document.querySelectorAll(
-            ".admin-view-order-button"
-        );
-
-
-    viewButtons.forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    openOrderDetails(
-                        this.dataset.orderId
-                    );
-
-                }
-            );
-
-        }
+    console.log(
+        "Order table created successfully."
     );
 
 }
@@ -999,6 +1117,12 @@ function updateDashboardStats(orders) {
 
 function openOrderDetails(orderId) {
 
+    console.log(
+        "openOrderDetails called with ID:",
+        orderId
+    );
+
+
     const selectedOrder =
         allOrders.find(
             function (order) {
@@ -1014,6 +1138,12 @@ function openOrderDetails(orderId) {
 
     if (!selectedOrder) {
 
+        console.error(
+            "Order was not found in allOrders:",
+            orderId
+        );
+
+
         alert(
             "Order details could not be found."
         );
@@ -1021,6 +1151,12 @@ function openOrderDetails(orderId) {
         return;
 
     }
+
+
+    console.log(
+        "Selected order found:",
+        selectedOrder
+    );
 
 
     const modal =
@@ -1035,13 +1171,21 @@ function openOrderDetails(orderId) {
         );
 
 
-    if (
-        !modal ||
-        !modalBody
-    ) {
+    if (!modal) {
 
         console.error(
-            "Order details modal not found."
+            "order-details-modal not found in admin.html."
+        );
+
+        return;
+
+    }
+
+
+    if (!modalBody) {
+
+        console.error(
+            "order-modal-body not found in admin.html."
         );
 
         return;
@@ -1057,7 +1201,8 @@ function openOrderDetails(orderId) {
             : [];
 
 
-    let itemsHTML = "";
+    let itemsHTML =
+        "";
 
 
     if (items.length === 0) {
@@ -1091,6 +1236,7 @@ function openOrderDetails(orderId) {
 
                 const productName =
                     item.name ||
+                    item.product_name ||
                     "THREADVERSE Product";
 
 
@@ -1388,11 +1534,15 @@ function openOrderDetails(orderId) {
 
     if (statusSelect) {
 
-        statusSelect.value =
+        const currentStatus =
             String(
                 selectedOrder.status ||
                 "pending"
             ).toLowerCase();
+
+
+        statusSelect.value =
+            currentStatus;
 
     }
 
@@ -1419,12 +1569,29 @@ function openOrderDetails(orderId) {
     }
 
 
+    // ======================================
+    // SHOW MODAL
+    // ======================================
+
     modal.style.display =
         "flex";
 
 
+    modal.style.visibility =
+        "visible";
+
+
+    modal.style.opacity =
+        "1";
+
+
     document.body.style.overflow =
         "hidden";
+
+
+    console.log(
+        "Order details modal opened successfully."
+    );
 
 }
 
@@ -1562,7 +1729,6 @@ async function updateOrderStatus(orderId) {
 
         closeOrderModal();
 
-
     } catch (error) {
 
         console.error(
@@ -1608,6 +1774,12 @@ function closeOrderModal() {
 
         modal.style.display =
             "none";
+
+        modal.style.visibility =
+            "";
+
+        modal.style.opacity =
+            "";
 
     }
 
@@ -1772,7 +1944,9 @@ function formatOrderDate(dateValue) {
     try {
 
         const date =
-            new Date(dateValue);
+            new Date(
+                dateValue
+            );
 
 
         if (
@@ -1791,14 +1965,19 @@ function formatOrderDate(dateValue) {
             {
                 timeZone:
                     "Asia/Kolkata",
+
                 day:
                     "2-digit",
+
                 month:
                     "short",
+
                 year:
                     "numeric",
+
                 hour:
                     "2-digit",
+
                 minute:
                     "2-digit"
             }
@@ -1880,7 +2059,9 @@ function escapeHTML(value) {
 
 function escapeAttribute(value) {
 
-    return escapeHTML(value)
+    return escapeHTML(
+        value
+    )
         .replace(
             /"/g,
             "&quot;"
@@ -1891,4 +2072,3 @@ function escapeAttribute(value) {
         );
 
 }
-
