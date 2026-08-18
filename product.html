@@ -1,54 +1,1837 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Product | THREADVERSE</title>
 
-    <link rel="stylesheet" href="style.css">
+    <!-- Main Website CSS -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
+
+    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        /* ==========================================
+           PRODUCT PAGE
+        ========================================== */
+
+        body {
+            margin: 0;
+        }
+
+
+        .product-page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 120px 40px 80px;
+            min-height: 70vh;
+        }
+
+
+        .back-to-shop {
+            display: inline-block;
+            margin-bottom: 35px;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+
+        .single-product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+
+        .single-product-image-container {
+            width: 100%;
+        }
+
+
+        .single-product-image {
+            width: 100%;
+            max-height: 650px;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px;
+        }
+
+
+        .single-product-details {
+            padding: 10px 0;
+        }
+
+
+        .single-product-category {
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+
+        .single-product-name {
+            font-size: 42px;
+            margin: 0 0 20px;
+            line-height: 1.15;
+        }
+
+
+        .single-product-price {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+
+        .single-product-description {
+            line-height: 1.8;
+            margin-bottom: 30px;
+            opacity: 0.85;
+        }
+
+
+        .option-title {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 25px 0 12px;
+        }
+
+
+        /* ==========================================
+           SIZE BUTTONS
+        ========================================== */
+
+        .size-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+
+        .size-button {
+            min-width: 55px;
+            height: 45px;
+            padding: 0 15px;
+            cursor: pointer;
+            border: 1px solid currentColor;
+            background: transparent;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+
+        .size-button.selected-size {
+            transform: scale(1.05);
+        }
+
+
+        /* ==========================================
+           QUANTITY CONTROLS
+        ========================================== */
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: fit-content;
+            border: 1px solid currentColor;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+
+        .quantity-button {
+            width: 48px;
+            height: 45px;
+            border: none;
+            cursor: pointer;
+            font-size: 22px;
+            background: transparent;
+        }
+
+
+        .quantity-value {
+            width: 55px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+
+        /* ==========================================
+           PRODUCT ACTION BUTTONS
+        ========================================== */
+
+        .product-action-buttons {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+
+        .add-cart-button,
+        .buy-now-button {
+            width: 100%;
+            min-height: 55px;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 7px;
+        }
+
+
+        .add-cart-button {
+            border: 1px solid currentColor;
+            background: transparent;
+        }
+
+
+        .buy-now-button {
+            border: none;
+            cursor: pointer;
+        }
+
+
+        /* ==========================================
+           AFTER ADD TO CART
+        ========================================== */
+
+        .cart-quantity-controls {
+            width: 100%;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid currentColor;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+
+        .cart-quantity-button {
+            width: 33.33%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 25px;
+        }
+
+
+        #cartQuantityValue {
+            width: 33.33%;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+
+        /* ==========================================
+           LOADING / ERROR
+        ========================================== */
+
+        .product-message {
+            text-align: center;
+            padding: 100px 20px;
+            font-size: 20px;
+        }
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 768px) {
+
+            .product-page {
+                padding: 100px 20px 60px;
+            }
+
+
+            .single-product-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+
+            .single-product-name {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- NAVIGATION -->
+
+    <!-- ==========================================
+         NAVIGATION
+    ========================================== -->
+
     <nav>
-        <div class="logo">THREADVERSE</div>
+
+        <div class="logo">
+
+            THREADVERSE
+
+        </div>
+
 
         <div class="nav-links">
-            <a href="index.html">HOME</a>
-            <a href="index.html#products">SHOP</a>
-            <a href="index.html#custom">CUSTOM DESIGN</a>
-            <a href="index.html#about">ABOUT</a>
+
+            <a href="index.html#home">
+                HOME
+            </a>
+
+            <a href="index.html#shop">
+                SHOP
+            </a>
+
+            <a href="cart.html">
+                CART
+            </a>
+
+            <a href="index.html#custom">
+                CUSTOM
+            </a>
+
+            <a href="index.html#about">
+                ABOUT
+            </a>
+
         </div>
+
     </nav>
 
 
-    <!-- PRODUCT DETAILS -->
+    <!-- ==========================================
+         PRODUCT PAGE
+    ========================================== -->
+
     <main class="product-page">
 
-        <p id="loading-message">Loading product...</p>
 
-        <div id="product-details"></div>
+        <a
+            href="index.html#shop"
+            class="back-to-shop"
+        >
+
+            ← BACK TO SHOP
+
+        </a>
+
+
+        <!-- Product content will load here -->
+
+        <div id="productContainer">
+
+            <div class="product-message">
+
+                Loading product...
+
+            </div>
+
+        </div>
+
 
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- ==========================================
+         FOOTER
+    ========================================== -->
+
     <footer>
-        <h2>THREADVERSE</h2>
-        <p>A World of Custom Wear</p>
-        <p>© 2026 THREADVERSE. All rights reserved.</p>
+
+        <h2>
+            THREADVERSE
+        </h2>
+
+
+        <p>
+            A World of Custom Wear
+        </p>
+
+
+        <p>
+            © 2026 THREADVERSE. All Rights Reserved.
+        </p>
+
     </footer>
 
 
-    <script src="product.js"></script>
+
+    <script>
+
+
+        // ==========================================
+        // 1. SUPABASE CONFIGURATION
+        // ==========================================
+
+        const SUPABASE_URL =
+            "https://gguzdxgxtpibbsfqtxjm.supabase.co";
+
+
+        const SUPABASE_KEY =
+            "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
+
+
+        const supabaseClient =
+            supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        // ==========================================
+        // 2. GLOBAL VARIABLES
+        // ==========================================
+
+        let currentProduct = null;
+
+        let selectedSize = null;
+
+        let selectedQuantity = 1;
+
+        let productAlreadyInCart = false;
+
+
+        // ==========================================
+        // 3. GET PRODUCT ID FROM URL
+        // Example:
+        // product.html?id=1
+        // ==========================================
+
+        function getProductId() {
+
+            const urlParameters =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            return urlParameters.get("id");
+
+        }
+
+
+        // ==========================================
+        // 4. LOAD PRODUCT FROM SUPABASE
+        // ==========================================
+
+        async function loadProduct() {
+
+
+            const productId =
+                getProductId();
+
+
+            const productContainer =
+                document.getElementById(
+                    "productContainer"
+                );
+
+
+            // No product ID
+
+            if (!productId) {
+
+                productContainer.innerHTML = `
+
+                    <div class="product-message">
+
+                        Product not found.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            try {
+
+
+                const { data, error } =
+                    await supabaseClient
+                        .from("products")
+                        .select("*")
+                        .eq("id", productId)
+                        .single();
+
+
+                if (error) {
+
+                    console.error(
+                        "Product loading error:",
+                        error
+                    );
+
+
+                    productContainer.innerHTML = `
+
+                        <div class="product-message">
+
+                            Unable to load this product.
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                // Save current product
+
+                currentProduct = data;
+
+
+                // Check cart before displaying
+
+                checkIfProductAlreadyInCart();
+
+
+                // Display product
+
+                displayProduct();
+
+
+                console.log(
+                    "Product loaded successfully:",
+                    currentProduct
+                );
+
+
+            } catch (error) {
+
+
+                console.error(
+                    "Unexpected product error:",
+                    error
+                );
+
+
+                productContainer.innerHTML = `
+
+                    <div class="product-message">
+
+                        Something went wrong while
+                        loading this product.
+
+                    </div>
+
+                `;
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 5. CHECK WHETHER PRODUCT IS ALREADY IN CART
+        // ==========================================
+
+        function checkIfProductAlreadyInCart() {
+
+
+            const cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "threadverseCart"
+                    )
+                ) || [];
+
+
+            // Find first matching product
+
+            const existingProduct =
+                cart.find(
+                    function (item) {
+
+                        return String(item.id) ===
+                            String(currentProduct.id);
+
+                    }
+                );
+
+
+            if (existingProduct) {
+
+                productAlreadyInCart = true;
+
+                selectedQuantity =
+                    existingProduct.quantity || 1;
+
+                selectedSize =
+                    existingProduct.size || null;
+
+            } else {
+
+                productAlreadyInCart = false;
+
+                selectedQuantity = 1;
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 6. DISPLAY PRODUCT
+        // ==========================================
+
+        function displayProduct() {
+
+
+            const productContainer =
+                document.getElementById(
+                    "productContainer"
+                );
+
+
+            const imageHTML =
+                currentProduct.image
+                    ? `
+
+                        <img
+                            src="${currentProduct.image}"
+                            alt="${currentProduct.name}"
+                            class="single-product-image"
+                        >
+
+                      `
+                    : `
+
+                        <div
+                            class="product-message"
+                        >
+
+                            IMAGE COMING SOON
+
+                        </div>
+
+                      `;
+
+
+            productContainer.innerHTML = `
+
+
+                <div
+                    class="single-product-container"
+                >
+
+
+                    <!-- Product Image -->
+
+                    <div
+                        class="single-product-image-container"
+                    >
+
+                        ${imageHTML}
+
+                    </div>
+
+
+                    <!-- Product Details -->
+
+                    <div
+                        class="single-product-details"
+                    >
+
+
+                        <p
+                            class="single-product-category"
+                        >
+
+                            ${
+                                currentProduct.category ||
+                                "THREADVERSE"
+                            }
+
+                        </p>
+
+
+                        <h1
+                            class="single-product-name"
+                        >
+
+                            ${
+                                currentProduct.name ||
+                                "THREADVERSE Product"
+                            }
+
+                        </h1>
+
+
+                        <p
+                            class="single-product-price"
+                        >
+
+                            ₹${
+                                currentProduct.price || 0
+                            }
+
+                        </p>
+
+
+                        <p
+                            class="single-product-description"
+                        >
+
+                            ${
+                                currentProduct.description ||
+                                "Premium custom wear by THREADVERSE."
+                            }
+
+                        </p>
+
+
+                        <!-- SIZE -->
+
+                        <p class="option-title">
+
+                            SELECT SIZE
+
+                        </p>
+
+
+                        <div
+                            class="size-options"
+                        >
+
+                            <button
+                                class="size-button"
+                                data-size="S"
+                            >
+                                S
+                            </button>
+
+
+                            <button
+                                class="size-button"
+                                data-size="M"
+                            >
+                                M
+                            </button>
+
+
+                            <button
+                                class="size-button"
+                                data-size="L"
+                            >
+                                L
+                            </button>
+
+
+                            <button
+                                class="size-button"
+                                data-size="XL"
+                            >
+                                XL
+                            </button>
+
+
+                            <button
+                                class="size-button"
+                                data-size="XXL"
+                            >
+                                XXL
+                            </button>
+
+                        </div>
+
+
+                        <!-- QUANTITY -->
+
+                        <p class="option-title">
+
+                            QUANTITY
+
+                        </p>
+
+
+                        <div
+                            class="quantity-controls"
+                        >
+
+
+                            <button
+                                class="quantity-button"
+                                id="decreaseQuantity"
+                            >
+                                −
+                            </button>
+
+
+                            <span
+                                class="quantity-value"
+                                id="quantityValue"
+                            >
+
+                                ${selectedQuantity}
+
+                            </span>
+
+
+                            <button
+                                class="quantity-button"
+                                id="increaseQuantity"
+                            >
+                                +
+
+                            </button>
+
+
+                        </div>
+
+
+                        <!-- ACTION BUTTONS -->
+
+                        <div
+                            class="product-action-buttons"
+                        >
+
+                            ${createCartButtonHTML()}
+
+
+                            <button
+                                id="buyNowButton"
+                                class="buy-now-button"
+                            >
+
+                                BUY NOW
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            `;
+
+
+            // Setup all buttons
+
+            setupSizeButtons();
+
+            setupQuantityButtons();
+
+            setupCartButtons();
+
+            setupBuyNowButton();
+
+            restoreSelectedSize();
+
+
+        }
+
+
+        // ==========================================
+        // 7. CREATE ADD CART / QUANTITY HTML
+        // ==========================================
+
+        function createCartButtonHTML() {
+
+
+            if (productAlreadyInCart) {
+
+                return `
+
+                    <div
+                        class="cart-quantity-controls"
+                    >
+
+
+                        <button
+                            id="cartDecreaseButton"
+                            class="cart-quantity-button"
+                        >
+
+                            −
+
+                        </button>
+
+
+                        <span
+                            id="cartQuantityValue"
+                        >
+
+                            ${selectedQuantity}
+
+                        </span>
+
+
+                        <button
+                            id="cartIncreaseButton"
+                            class="cart-quantity-button"
+                        >
+
+                            +
+
+                        </button>
+
+
+                    </div>
+
+                `;
+
+            }
+
+
+            return `
+
+                <button
+                    id="addToCartButton"
+                    class="add-cart-button"
+                >
+
+                    ADD TO CART
+
+                </button>
+
+            `;
+
+
+        }
+
+
+        // ==========================================
+        // 8. SIZE SELECTION
+        // ==========================================
+
+        function setupSizeButtons() {
+
+
+            const sizeButtons =
+                document.querySelectorAll(
+                    ".size-button"
+                );
+
+
+            sizeButtons.forEach(
+                function (button) {
+
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+
+                            selectedSize =
+                                this.getAttribute(
+                                    "data-size"
+                                );
+
+
+                            sizeButtons.forEach(
+                                function (sizeButton) {
+
+                                    sizeButton.classList.remove(
+                                        "selected-size"
+                                    );
+
+                                }
+                            );
+
+
+                            this.classList.add(
+                                "selected-size"
+                            );
+
+
+                            console.log(
+                                "Selected size:",
+                                selectedSize
+                            );
+
+
+                            // Update size in cart
+                            // if already added
+
+                            if (
+                                productAlreadyInCart
+                            ) {
+
+                                updateCartSize();
+
+                            }
+
+
+                        }
+                    );
+
+
+                }
+            );
+
+
+        }
+
+
+        // ==========================================
+        // 9. RESTORE SELECTED SIZE
+        // ==========================================
+
+        function restoreSelectedSize() {
+
+
+            if (!selectedSize) {
+
+                return;
+
+            }
+
+
+            const selectedButton =
+                document.querySelector(
+                    `.size-button[data-size="${selectedSize}"]`
+                );
+
+
+            if (selectedButton) {
+
+                selectedButton.classList.add(
+                    "selected-size"
+                );
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 10. MAIN QUANTITY BUTTONS
+        // ==========================================
+
+        function setupQuantityButtons() {
+
+
+            const decreaseButton =
+                document.getElementById(
+                    "decreaseQuantity"
+                );
+
+
+            const increaseButton =
+                document.getElementById(
+                    "increaseQuantity"
+                );
+
+
+            const quantityValue =
+                document.getElementById(
+                    "quantityValue"
+                );
+
+
+            decreaseButton.addEventListener(
+                "click",
+                function () {
+
+
+                    if (
+                        selectedQuantity > 1
+                    ) {
+
+
+                        selectedQuantity--;
+
+
+                        quantityValue.textContent =
+                            selectedQuantity;
+
+
+                        updateCartQuantityIfExists();
+
+
+                    }
+
+
+                }
+            );
+
+
+            increaseButton.addEventListener(
+                "click",
+                function () {
+
+
+                    selectedQuantity++;
+
+
+                    quantityValue.textContent =
+                        selectedQuantity;
+
+
+                    updateCartQuantityIfExists();
+
+
+                }
+            );
+
+
+        }
+
+
+        // ==========================================
+        // 11. ADD TO CART OR CART CONTROLS
+        // ==========================================
+
+        function setupCartButtons() {
+
+
+            const addToCartButton =
+                document.getElementById(
+                    "addToCartButton"
+                );
+
+
+            // If product is not in cart
+
+            if (addToCartButton) {
+
+
+                addToCartButton.addEventListener(
+                    "click",
+                    function () {
+
+
+                        addCurrentProductToCart();
+
+
+                    }
+                );
+
+
+                return;
+
+            }
+
+
+            // If product is already in cart
+
+            const cartDecreaseButton =
+                document.getElementById(
+                    "cartDecreaseButton"
+                );
+
+
+            const cartIncreaseButton =
+                document.getElementById(
+                    "cartIncreaseButton"
+                );
+
+
+            const cartQuantityValue =
+                document.getElementById(
+                    "cartQuantityValue"
+                );
+
+
+            if (cartIncreaseButton) {
+
+
+                cartIncreaseButton.addEventListener(
+                    "click",
+                    function () {
+
+
+                        selectedQuantity++;
+
+
+                        updateAllQuantityDisplays();
+
+
+                        updateCartQuantity();
+
+
+                    }
+                );
+
+
+            }
+
+
+            if (cartDecreaseButton) {
+
+
+                cartDecreaseButton.addEventListener(
+                    "click",
+                    function () {
+
+
+                        if (
+                            selectedQuantity > 1
+                        ) {
+
+
+                            selectedQuantity--;
+
+
+                            updateAllQuantityDisplays();
+
+
+                            updateCartQuantity();
+
+
+                        } else {
+
+
+                            removeCurrentProductFromCart();
+
+
+                        }
+
+
+                    }
+                );
+
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 12. ADD CURRENT PRODUCT TO CART
+        // ==========================================
+
+        function addCurrentProductToCart() {
+
+
+            // Require size first
+
+            if (!selectedSize) {
+
+                alert(
+                    "Please select a size first."
+                );
+
+                return;
+
+            }
+
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "threadverseCart"
+                    )
+                ) || [];
+
+
+            // Check exact product + size
+
+            const existingProduct =
+                cart.find(
+                    function (item) {
+
+                        return (
+                            String(item.id) ===
+                            String(currentProduct.id)
+                            &&
+                            item.size === selectedSize
+                        );
+
+                    }
+                );
+
+
+            if (existingProduct) {
+
+
+                existingProduct.quantity =
+                    selectedQuantity;
+
+
+            } else {
+
+
+                cart.push({
+
+                    id:
+                        currentProduct.id,
+
+                    name:
+                        currentProduct.name,
+
+                    price:
+                        currentProduct.price,
+
+                    image:
+                        currentProduct.image,
+
+                    category:
+                        currentProduct.category,
+
+                    description:
+                        currentProduct.description,
+
+                    size:
+                        selectedSize,
+
+                    quantity:
+                        selectedQuantity
+
+                });
+
+
+            }
+
+
+            localStorage.setItem(
+                "threadverseCart",
+                JSON.stringify(cart)
+            );
+
+
+            console.log(
+                "Product added to cart:",
+                cart
+            );
+
+
+            // IMPORTANT:
+            // No success popup here
+
+            productAlreadyInCart = true;
+
+
+            // Replace ADD TO CART
+            // with − quantity +
+
+            replaceAddToCartWithControls();
+
+
+        }
+
+
+        // ==========================================
+        // 13. REPLACE ADD BUTTON WITH − 1 +
+        // ==========================================
+
+        function replaceAddToCartWithControls() {
+
+
+            const addToCartButton =
+                document.getElementById(
+                    "addToCartButton"
+                );
+
+
+            if (!addToCartButton) {
+
+                return;
+
+            }
+
+
+            addToCartButton.outerHTML = `
+
+                <div
+                    class="cart-quantity-controls"
+                >
+
+
+                    <button
+                        id="cartDecreaseButton"
+                        class="cart-quantity-button"
+                    >
+
+                        −
+
+                    </button>
+
+
+                    <span
+                        id="cartQuantityValue"
+                    >
+
+                        ${selectedQuantity}
+
+                    </span>
+
+
+                    <button
+                        id="cartIncreaseButton"
+                        class="cart-quantity-button"
+                    >
+
+                        +
+
+                    </button>
+
+
+                </div>
+
+            `;
+
+
+            // Setup new buttons
+
+            setupCartButtons();
+
+
+        }
+
+
+        // ==========================================
+        // 14. UPDATE ALL QUANTITY DISPLAYS
+        // ==========================================
+
+        function updateAllQuantityDisplays() {
+
+
+            const quantityValue =
+                document.getElementById(
+                    "quantityValue"
+                );
+
+
+            const cartQuantityValue =
+                document.getElementById(
+                    "cartQuantityValue"
+                );
+
+
+            if (quantityValue) {
+
+                quantityValue.textContent =
+                    selectedQuantity;
+
+            }
+
+
+            if (cartQuantityValue) {
+
+                cartQuantityValue.textContent =
+                    selectedQuantity;
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 15. UPDATE CART QUANTITY
+        // ==========================================
+
+        function updateCartQuantity() {
+
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "threadverseCart"
+                    )
+                ) || [];
+
+
+            const productIndex =
+                cart.findIndex(
+                    function (item) {
+
+                        return (
+                            String(item.id) ===
+                            String(currentProduct.id)
+                            &&
+                            item.size === selectedSize
+                        );
+
+                    }
+                );
+
+
+            if (
+                productIndex !== -1
+            ) {
+
+
+                cart[
+                    productIndex
+                ].quantity =
+                    selectedQuantity;
+
+
+                localStorage.setItem(
+                    "threadverseCart",
+                    JSON.stringify(cart)
+                );
+
+
+                console.log(
+                    "Cart quantity updated:",
+                    selectedQuantity
+                );
+
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 16. UPDATE QUANTITY IF PRODUCT EXISTS
+        // ==========================================
+
+        function updateCartQuantityIfExists() {
+
+
+            if (
+                productAlreadyInCart
+            ) {
+
+                updateCartQuantity();
+
+            }
+
+
+            const cartQuantityValue =
+                document.getElementById(
+                    "cartQuantityValue"
+                );
+
+
+            if (cartQuantityValue) {
+
+                cartQuantityValue.textContent =
+                    selectedQuantity;
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 17. UPDATE CART SIZE
+        // ==========================================
+
+        function updateCartSize() {
+
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "threadverseCart"
+                    )
+                ) || [];
+
+
+            const productIndex =
+                cart.findIndex(
+                    function (item) {
+
+                        return (
+                            String(item.id) ===
+                            String(currentProduct.id)
+                        );
+
+                    }
+                );
+
+
+            if (
+                productIndex !== -1
+            ) {
+
+
+                cart[
+                    productIndex
+                ].size =
+                    selectedSize;
+
+
+                cart[
+                    productIndex
+                ].quantity =
+                    selectedQuantity;
+
+
+                localStorage.setItem(
+                    "threadverseCart",
+                    JSON.stringify(cart)
+                );
+
+
+            }
+
+
+        }
+
+
+        // ==========================================
+        // 18. REMOVE PRODUCT FROM CART
+        // ==========================================
+
+        function removeCurrentProductFromCart() {
+
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "threadverseCart"
+                    )
+                ) || [];
+
+
+            cart =
+                cart.filter(
+                    function (item) {
+
+                        return !(
+                            String(item.id) ===
+                            String(currentProduct.id)
+                            &&
+                            item.size === selectedSize
+                        );
+
+                    }
+                );
+
+
+            localStorage.setItem(
+                "threadverseCart",
+                JSON.stringify(cart)
+            );
+
+
+            console.log(
+                "Product removed from cart."
+            );
+
+
+            productAlreadyInCart = false;
+
+            selectedQuantity = 1;
+
+
+            // Replace − 1 + back to ADD TO CART
+
+            const cartControls =
+                document.querySelector(
+                    ".cart-quantity-controls"
+                );
+
+
+            if (cartControls) {
+
+
+                cartControls.outerHTML = `
+
+                    <button
+                        id="addToCartButton"
+                        class="add-cart-button"
+                    >
+
+                        ADD TO CART
+
+                    </button>
+
+                `;
+
+
+                setupCartButtons();
+
+
+            }
+
+
+            updateAllQuantityDisplays();
+
+
+        }
+
+
+        // ==========================================
+        // 19. BUY NOW
+        // ==========================================
+
+        function setupBuyNowButton() {
+
+
+            const buyNowButton =
+                document.getElementById(
+                    "buyNowButton"
+                );
+
+
+            if (!buyNowButton) {
+
+                return;
+
+            }
+
+
+            buyNowButton.addEventListener(
+                "click",
+                function () {
+
+
+                    // Size required
+
+                    if (!selectedSize) {
+
+                        alert(
+                            "Please select a size first."
+                        );
+
+                        return;
+
+                    }
+
+
+                    // Add/update cart
+
+                    let cart =
+                        JSON.parse(
+                            localStorage.getItem(
+                                "threadverseCart"
+                            )
+                        ) || [];
+
+
+                    const existingProduct =
+                        cart.find(
+                            function (item) {
+
+                                return (
+                                    String(item.id) ===
+                                    String(currentProduct.id)
+                                    &&
+                                    item.size === selectedSize
+                                );
+
+                            }
+                        );
+
+
+                    if (existingProduct) {
+
+
+                        existingProduct.quantity =
+                            selectedQuantity;
+
+
+                    } else {
+
+
+                        cart.push({
+
+                            id:
+                                currentProduct.id,
+
+                            name:
+                                currentProduct.name,
+
+                            price:
+                                currentProduct.price,
+
+                            image:
+                                currentProduct.image,
+
+                            category:
+                                currentProduct.category,
+
+                            description:
+                                currentProduct.description,
+
+                            size:
+                                selectedSize,
+
+                            quantity:
+                                selectedQuantity
+
+                        });
+
+
+                    }
+
+
+                    localStorage.setItem(
+                        "threadverseCart",
+                        JSON.stringify(cart)
+                    );
+
+
+                    // Open cart immediately
+
+                    window.location.href =
+                        "cart.html";
+
+
+                }
+            );
+
+
+        }
+
+
+        // ==========================================
+        // 20. WEBSITE START
+        // ==========================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+
+                console.log(
+                    "THREADVERSE Product Page started."
+                );
+
+
+                loadProduct();
+
+
+            }
+        );
+
+
+    </script>
+
 
 </body>
 
 </html>
-```
