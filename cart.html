@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,83 +8,143 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>Your Cart | THREADVERSE</title>
+    <meta name="description"
+        content="View your THREADVERSE shopping cart and review your custom wear order before checkout.">
 
-    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color"
+        content="#111111">
+
+    <title>Shopping Cart | THREADVERSE</title>
+
+    <link rel="stylesheet"
+        href="style.css">
 </head>
+
 
 <body>
 
 
-    <!-- =========================================
-         NAVIGATION
-    ========================================== -->
-    <nav class="main-navbar">
+    <!-- =====================================================
+         HEADER / NAVIGATION
+    ====================================================== -->
 
-        <a href="index.html" class="logo">
-            THREADVERSE
-        </a>
+    <header class="main-navbar">
 
+        <div class="navbar-container">
 
-        <div class="nav-links">
+            <!-- BRAND -->
+            <a href="index.html"
+                class="logo"
+                aria-label="THREADVERSE Home">
 
-            <a href="index.html">
-                HOME
+                THREADVERSE
+
             </a>
 
-            <a href="index.html#products">
-                SHOP
-            </a>
 
-            <a href="cart.html" class="active-nav">
-                CART
-            </a>
+            <!-- NAVIGATION -->
+            <nav class="nav-links"
+                aria-label="Main navigation">
 
-            <a href="index.html#about">
-                ABOUT
-            </a>
+                <a href="index.html">
+                    HOME
+                </a>
+
+                <a href="index.html#products">
+                    SHOP
+                </a>
+
+                <a href="cart.html"
+                    class="active-nav"
+                    aria-current="page">
+
+                    CART
+                    <span id="nav-cart-count"
+                        class="nav-cart-count">
+                        0
+                    </span>
+
+                </a>
+
+                <a href="index.html#about">
+                    ABOUT
+                </a>
+
+            </nav>
+
+
+            <!-- MOBILE MENU BUTTON -->
+            <button id="mobile-menu-button"
+                class="mobile-menu-button"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
 
         </div>
 
-    </nav>
+    </header>
 
 
 
-    <!-- =========================================
-         CART PAGE
-    ========================================== -->
+    <!-- =====================================================
+         MAIN CART PAGE
+    ====================================================== -->
+
     <main class="cart-page">
 
 
-        <!-- PAGE HEADER -->
+        <!-- =================================================
+             CART HERO
+        ================================================== -->
+
         <section class="cart-hero">
 
-            <p class="cart-eyebrow">
-                YOUR THREADVERSE
-            </p>
+            <div class="cart-hero-content">
 
-            <h1>
-                Shopping Cart
-            </h1>
+                <p class="cart-eyebrow">
+                    THREADVERSE / YOUR BAG
+                </p>
 
-            <p class="cart-subtitle">
-                Review your custom wear before checkout.
-            </p>
+                <h1>
+                    Your Shopping Cart
+                </h1>
+
+                <p class="cart-subtitle">
+                    Review your custom wear and get ready to make it yours.
+                </p>
+
+            </div>
 
         </section>
 
 
 
-        <!-- CART CONTENT -->
+        <!-- =================================================
+             CART CONTENT
+        ================================================== -->
+
         <section class="cart-layout">
 
 
-            <!-- LEFT SIDE: PRODUCTS -->
+            <!-- =============================================
+                 LEFT — CART ITEMS
+            ============================================== -->
+
             <div class="cart-products-section">
+
+
+                <!-- SECTION HEADER -->
 
                 <div class="cart-section-header">
 
                     <div>
+
                         <p class="section-label">
                             YOUR SELECTION
                         </p>
@@ -91,24 +152,58 @@
                         <h2>
                             Cart Items
                         </h2>
+
+                        <p id="cart-item-count"
+                            class="cart-item-count">
+
+                            0 items
+
+                        </p>
+
                     </div>
+
 
                     <a href="index.html#products"
                         class="continue-shopping-link">
-                        ← CONTINUE SHOPPING
+
+                        ← Continue Shopping
+
                     </a>
 
                 </div>
 
 
-                <!-- CART PRODUCTS
-                     cart.js will insert products here -->
+
+                <!-- =========================================
+                     CART MESSAGE / STATUS
+                ========================================== -->
+
+                <div id="cart-message"
+                    class="cart-message"
+                    role="status"
+                    aria-live="polite">
+                </div>
+
+
+
+                <!-- =========================================
+                     CART PRODUCTS
+
+                     cart.js will dynamically generate
+                     product cards inside this container.
+                ========================================== -->
+
                 <div id="cart-container"
                     class="cart-container">
 
+
+                    <!-- INITIAL LOADING STATE -->
+
                     <div class="cart-loading">
 
-                        <div class="loading-spinner"></div>
+                        <div class="loading-spinner"
+                            aria-hidden="true">
+                        </div>
 
                         <p>
                             Loading your THREADVERSE cart...
@@ -116,18 +211,63 @@
 
                     </div>
 
+
                 </div>
+
+
+
+                <!-- =========================================
+                     EMPTY CART STATE
+
+                     JavaScript can display this when
+                     there are no products.
+                ========================================== -->
+
+                <div id="empty-cart"
+                    class="empty-cart"
+                    style="display: none;">
+
+                    <div class="empty-cart-icon">
+                        🛍
+                    </div>
+
+                    <h2>
+                        Your cart is empty
+                    </h2>
+
+                    <p>
+                        Looks like you haven't added anything yet.
+                        Explore our collection and find something
+                        made for you.
+                    </p>
+
+                    <a href="index.html#products"
+                        class="empty-cart-button">
+
+                        Explore Collection
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
 
             </div>
 
 
 
-            <!-- RIGHT SIDE: ORDER SUMMARY -->
-            <aside id="cart-summary"
-                class="cart-summary">
+            <!-- =============================================
+                 RIGHT — ORDER SUMMARY
+            ============================================== -->
+
+            <aside class="cart-summary"
+                aria-label="Order summary">
 
 
                 <div class="cart-summary-card">
+
+
+                    <!-- SUMMARY HEADER -->
 
                     <p class="section-label">
                         ORDER SUMMARY
@@ -138,8 +278,28 @@
                     </h2>
 
 
+
                     <div class="summary-divider"></div>
 
+
+
+                    <!-- ITEM COUNT -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Items
+                        </span>
+
+                        <span id="summary-item-count">
+                            0
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- SUBTOTAL -->
 
                     <div class="summary-row">
 
@@ -147,12 +307,15 @@
                             Subtotal
                         </span>
 
-                        <span id="cart-total">
+                        <strong id="cart-total">
                             ₹0
-                        </span>
+                        </strong>
 
                     </div>
 
+
+
+                    <!-- SHIPPING -->
 
                     <div class="summary-row shipping-row">
 
@@ -160,15 +323,19 @@
                             Shipping
                         </span>
 
-                        <span>
+                        <span id="shipping-cost">
                             Calculated at checkout
                         </span>
 
                     </div>
 
 
+
                     <div class="summary-divider"></div>
 
+
+
+                    <!-- TOTAL -->
 
                     <div class="summary-total">
 
@@ -183,28 +350,54 @@
                     </div>
 
 
-                    <button
-                        id="checkout-button"
+
+                    <!-- CHECKOUT BUTTON -->
+
+                    <button id="checkout-button"
                         class="checkout-button"
                         type="button"
-                    >
-                        PROCEED TO CHECKOUT
-                        <span>→</span>
+                        disabled>
+
+                        <span>
+                            Proceed to Checkout
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
                     </button>
 
 
+
+                    <!-- SECURITY -->
+
                     <p class="secure-checkout-text">
-                        🔒 Secure checkout • Your order details are protected
+
+                        🔒 Secure checkout
+
+                        <br>
+
+                        Your order information is handled securely.
+
                     </p>
+
 
                 </div>
 
 
+
+                <!-- =========================================
+                     HELP CARD
+                ========================================== -->
+
                 <div class="cart-help-card">
+
 
                     <div class="help-icon">
                         ?
                     </div>
+
 
                     <div>
 
@@ -213,13 +406,67 @@
                         </h3>
 
                         <p>
-                            Have questions about your custom order?
-                            Contact THREADVERSE and we'll help you.
+                            Questions about sizing, customization,
+                            bulk orders or your cart?
+                        </p>
+
+                        <a href="index.html#contact">
+                            Contact THREADVERSE →
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+                     TRUST INFORMATION
+                ========================================== -->
+
+                <div class="cart-trust-card">
+
+                    <div class="trust-item">
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Quality-focused custom wear
+                        </p>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Custom designs made for you
+                        </p>
+
+                    </div>
+
+
+                    <div class="trust-item">
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Support available for your order
                         </p>
 
                     </div>
 
                 </div>
+
 
             </aside>
 
@@ -228,9 +475,14 @@
 
 
 
-        <!-- SHOPPING BENEFITS -->
+        <!-- =================================================
+             BENEFITS
+        ================================================== -->
+
         <section class="cart-benefits">
 
+
+            <!-- BENEFIT 1 -->
 
             <div class="benefit-item">
 
@@ -245,13 +497,16 @@
                     </h3>
 
                     <p>
-                        Wear designs that represent you.
+                        Wear designs that represent your identity.
                     </p>
 
                 </div>
 
             </div>
 
+
+
+            <!-- BENEFIT 2 -->
 
             <div class="benefit-item">
 
@@ -266,13 +521,16 @@
                     </h3>
 
                     <p>
-                        Premium custom wear made with care.
+                        Premium custom wear made with attention to detail.
                     </p>
 
                 </div>
 
             </div>
 
+
+
+            <!-- BENEFIT 3 -->
 
             <div class="benefit-item">
 
@@ -287,7 +545,7 @@
                     </h3>
 
                     <p>
-                        Create clothing with your own identity.
+                        Create clothing that feels uniquely yours.
                     </p>
 
                 </div>
@@ -298,67 +556,84 @@
         </section>
 
 
+
     </main>
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          FOOTER
-    ========================================== -->
+    ====================================================== -->
+
     <footer class="main-footer">
 
-        <div class="footer-logo">
-            THREADVERSE
+        <div class="footer-container">
+
+
+            <div class="footer-brand">
+
+                <div class="footer-logo">
+                    THREADVERSE
+                </div>
+
+                <p>
+                    A World of Custom Wear
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="index.html#products">
+                    Shop
+                </a>
+
+                <a href="cart.html">
+                    Cart
+                </a>
+
+                <a href="index.html#about">
+                    About
+                </a>
+
+            </div>
+
+
+            <p class="footer-copyright">
+
+                © 2026 THREADVERSE.
+                All rights reserved.
+
+            </p>
+
+
         </div>
-
-        <p>
-            A World of Custom Wear
-        </p>
-
-        <p class="footer-copyright">
-            © 2026 THREADVERSE. All rights reserved.
-        </p>
 
     </footer>
 
 
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
+    <!-- =====================================================
+         CART JAVASCRIPT
+    ====================================================== -->
+
     <script src="cart.js"></script>
 
 
-    <!-- Sync summary total with existing cart total -->
+
+    <!-- =====================================================
+         CART PAGE SUPPORT SCRIPT
+
+         This keeps the summary total synchronized with
+         the total generated by cart.js.
+    ====================================================== -->
+
     <script>
-
-        function syncCartTotals() {
-
-            const cartTotal =
-                document.getElementById("cart-total");
-
-            const cartFinalTotal =
-                document.getElementById("cart-final-total");
-
-
-            if (!cartTotal || !cartFinalTotal) {
-                return;
-            }
-
-
-            cartFinalTotal.textContent =
-                cartTotal.textContent;
-
-        }
-
-
-        const cartObserver =
-            new MutationObserver(function () {
-
-                syncCartTotals();
-
-            });
-
 
         document.addEventListener(
             "DOMContentLoaded",
@@ -367,10 +642,94 @@
                 const cartTotal =
                     document.getElementById("cart-total");
 
+                const cartFinalTotal =
+                    document.getElementById("cart-final-total");
+
+                const checkoutButton =
+                    document.getElementById("checkout-button");
+
+                const cartContainer =
+                    document.getElementById("cart-container");
+
+                const emptyCart =
+                    document.getElementById("empty-cart");
+
+
+                /*
+                 * ------------------------------------------------
+                 * SYNCHRONIZE TOTAL
+                 * ------------------------------------------------
+                 */
+
+                function syncCartTotals() {
+
+                    if (!cartTotal || !cartFinalTotal) {
+                        return;
+                    }
+
+                    cartFinalTotal.textContent =
+                        cartTotal.textContent;
+
+                }
+
+
+                /*
+                 * ------------------------------------------------
+                 * CHECK CART STATE
+                 * ------------------------------------------------
+                 */
+
+                function updateCartState() {
+
+                    if (!cartContainer) {
+                        return;
+                    }
+
+                    const cartItems =
+                        cartContainer.querySelectorAll(
+                            ".cart-item, .cart-product, [data-cart-item]"
+                        );
+
+
+                    /*
+                     * If cart.js has rendered products,
+                     * enable checkout.
+                     */
+
+                    if (cartItems.length > 0) {
+
+                        if (checkoutButton) {
+                            checkoutButton.disabled = false;
+                        }
+
+                        if (emptyCart) {
+                            emptyCart.style.display = "none";
+                        }
+
+                    }
+
+                    syncCartTotals();
+
+                }
+
+
+                /*
+                 * ------------------------------------------------
+                 * OBSERVE CART CHANGES
+                 * ------------------------------------------------
+                 */
 
                 if (cartTotal) {
 
-                    cartObserver.observe(
+                    const totalObserver =
+                        new MutationObserver(function () {
+
+                            syncCartTotals();
+
+                        });
+
+
+                    totalObserver.observe(
                         cartTotal,
                         {
                             childList: true,
@@ -382,9 +741,118 @@
                 }
 
 
+                /*
+                 * ------------------------------------------------
+                 * OBSERVE CART CONTAINER
+                 * ------------------------------------------------
+                 */
+
+                if (cartContainer) {
+
+                    const cartObserver =
+                        new MutationObserver(function () {
+
+                            updateCartState();
+
+                        });
+
+
+                    cartObserver.observe(
+                        cartContainer,
+                        {
+                            childList: true,
+                            subtree: true
+                        });
+
+                }
+
+
+                /*
+                 * ------------------------------------------------
+                 * CHECKOUT BUTTON
+                 * ------------------------------------------------
+                 */
+
+                if (checkoutButton) {
+
+                    checkoutButton.addEventListener(
+                        "click",
+                        function () {
+
+                            if (checkoutButton.disabled) {
+                                return;
+                            }
+
+
+                            /*
+                             * Change this later to your
+                             * actual checkout page.
+                             */
+
+                            window.location.href =
+                                "checkout.html";
+
+                        }
+                    );
+
+                }
+
+
+                /*
+                 * ------------------------------------------------
+                 * MOBILE NAVIGATION
+                 * ------------------------------------------------
+                 */
+
+                const mobileMenuButton =
+                    document.getElementById(
+                        "mobile-menu-button"
+                    );
+
+                const navLinks =
+                    document.querySelector(
+                        ".nav-links"
+                    );
+
+
+                if (
+                    mobileMenuButton &&
+                    navLinks
+                ) {
+
+                    mobileMenuButton.addEventListener(
+                        "click",
+                        function () {
+
+                            const isOpen =
+                                navLinks.classList.toggle(
+                                    "mobile-nav-open"
+                                );
+
+
+                            mobileMenuButton.setAttribute(
+                                "aria-expanded",
+                                isOpen
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /*
+                 * ------------------------------------------------
+                 * INITIALIZE
+                 * ------------------------------------------------
+                 */
+
                 syncCartTotals();
 
+                updateCartState();
+
             }
+
         );
 
     </script>
@@ -393,3 +861,4 @@
 </body>
 
 </html>
+
