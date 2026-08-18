@@ -2829,4 +2829,322 @@ footer p {
     }
 
 }
-```
+
+/* =========================================
+   THREADVERSE PRODUCT MODAL - ADMIN
+========================================= */
+
+#admin-product-modal {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    display: none;
+    align-items: center;
+    justify-content: center;
+    
+    z-index: 99999 !important;
+}
+
+
+/* =========================================
+   DARK BACKGROUND
+========================================= */
+
+.threadverse-product-modal-overlay {
+    position: absolute;
+    
+    top: 0;
+    left: 0;
+    
+    width: 100%;
+    height: 100%;
+    
+    background: rgba(0, 0, 0, 0.75);
+    
+    z-index: 1;
+}
+
+
+/* =========================================
+   MODAL BOX
+========================================= */
+
+.threadverse-product-modal-content {
+    position: relative;
+    
+    width: 90%;
+    max-width: 650px;
+    
+    max-height: 90vh;
+    overflow-y: auto;
+    
+    background: #ffffff;
+    
+    z-index: 2;
+    
+    border-radius: 16px;
+    
+    padding: 30px;
+    
+    box-sizing: border-box;
+    
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================================
+   MODAL HEADER
+========================================= */
+
+.threadverse-product-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    
+    gap: 20px;
+    
+    margin-bottom: 30px;
+    
+    padding-bottom: 20px;
+    
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+.threadverse-product-modal-header p {
+    margin: 0 0 8px;
+    
+    font-size: 11px;
+    font-weight: 700;
+    
+    letter-spacing: 2px;
+    
+    color: #777777;
+}
+
+
+.threadverse-product-modal-header h2 {
+    margin: 0;
+    
+    font-size: 28px;
+    
+    color: #111111;
+}
+
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+#close-product-modal {
+    width: 40px;
+    height: 40px;
+    
+    border: none;
+    
+    background: #f3f3f3;
+    
+    border-radius: 50%;
+    
+    cursor: pointer;
+    
+    font-size: 28px;
+    line-height: 40px;
+    
+    transition: 0.2s;
+}
+
+
+#close-product-modal:hover {
+    background: #111111;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+#admin-product-form {
+    width: 100%;
+}
+
+
+.threadverse-product-form-group {
+    display: flex;
+    flex-direction: column;
+    
+    margin-bottom: 20px;
+}
+
+
+.threadverse-product-form-group label {
+    margin-bottom: 8px;
+    
+    font-size: 12px;
+    font-weight: 700;
+    
+    letter-spacing: 1px;
+    
+    color: #333333;
+}
+
+
+.threadverse-product-form-group input,
+.threadverse-product-form-group textarea {
+    width: 100%;
+    
+    padding: 14px;
+    
+    box-sizing: border-box;
+    
+    border: 1px solid #dddddd;
+    
+    border-radius: 8px;
+    
+    font-size: 14px;
+    
+    outline: none;
+    
+    font-family: inherit;
+}
+
+
+.threadverse-product-form-group input:focus,
+.threadverse-product-form-group textarea:focus {
+    border-color: #111111;
+}
+
+
+.threadverse-product-form-group textarea {
+    min-height: 120px;
+    
+    resize: vertical;
+}
+
+
+/* =========================================
+   TWO COLUMN ROW
+========================================= */
+
+.threadverse-product-form-row {
+    display: grid;
+    
+    grid-template-columns: 1fr 1fr;
+    
+    gap: 20px;
+}
+
+
+/* =========================================
+   MODAL BUTTONS
+========================================= */
+
+.threadverse-product-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    
+    gap: 12px;
+    
+    margin-top: 30px;
+    
+    padding-top: 20px;
+    
+    border-top: 1px solid #e5e5e5;
+}
+
+
+#cancel-product-button,
+#save-product-button {
+    border: none;
+    
+    padding: 14px 22px;
+    
+    border-radius: 8px;
+    
+    font-size: 12px;
+    font-weight: 700;
+    
+    letter-spacing: 1px;
+    
+    cursor: pointer;
+    
+    transition: 0.2s;
+}
+
+
+#cancel-product-button {
+    background: #eeeeee;
+    
+    color: #111111;
+}
+
+
+#cancel-product-button:hover {
+    background: #dddddd;
+}
+
+
+#save-product-button {
+    background: #111111;
+    
+    color: #ffffff;
+}
+
+
+#save-product-button:hover {
+    transform: translateY(-2px);
+    
+    opacity: 0.9;
+}
+
+
+#save-product-button:disabled {
+    opacity: 0.6;
+    
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .threadverse-product-modal-content {
+        width: 95%;
+        
+        padding: 20px;
+        
+        max-height: 92vh;
+    }
+
+
+    .threadverse-product-form-row {
+        grid-template-columns: 1fr;
+        
+        gap: 0;
+    }
+
+
+    .threadverse-product-modal-header h2 {
+        font-size: 22px;
+    }
+
+
+    .threadverse-product-modal-actions {
+        flex-direction: column;
+    }
+
+
+    #cancel-product-button,
+    #save-product-button {
+        width: 100%;
+    }
+
+}
