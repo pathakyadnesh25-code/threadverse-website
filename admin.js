@@ -1,3 +1,4 @@
+
 // ==========================================
 // THREADVERSE - ADMIN DASHBOARD JAVASCRIPT
 // ==========================================
@@ -44,9 +45,11 @@ document.addEventListener(
         );
 
 
+        // Create the product modal first
         createProductModal();
 
 
+        // Check login
         const isAuthenticated =
             await checkAdminAuthentication();
 
@@ -63,13 +66,21 @@ document.addEventListener(
         );
 
 
+        // Setup all buttons and events
         setupAdminEvents();
 
         setupAdminLogout();
 
+
+        // Load orders and products
         await loadAdminOrders();
 
         await loadAdminProducts();
+
+
+        console.log(
+            "THREADVERSE Admin Dashboard fully loaded."
+        );
 
     }
 );
@@ -93,15 +104,11 @@ async function checkAdminAuthentication() {
             result.data.session;
 
 
-        const error =
-            result.error;
-
-
-        if (error) {
+        if (result.error) {
 
             console.error(
                 "Authentication session error:",
-                error
+                result.error
             );
 
             redirectToAdminLogin();
@@ -182,7 +189,7 @@ function setupAdminLogout() {
 
     if (!logoutButton) {
 
-        console.log(
+        console.error(
             "Admin logout button not found."
         );
 
@@ -194,6 +201,11 @@ function setupAdminLogout() {
     logoutButton.addEventListener(
         "click",
         async function () {
+
+            console.log(
+                "Admin logout button clicked."
+            );
+
 
             const originalText =
                 logoutButton.textContent;
@@ -222,7 +234,8 @@ function setupAdminLogout() {
                     );
 
                     alert(
-                        "Unable to sign out. Please try again."
+                        "Unable to sign out: " +
+                        result.error.message
                     );
 
 
@@ -269,6 +282,11 @@ function setupAdminLogout() {
         }
     );
 
+
+    console.log(
+        "Logout event is active."
+    );
+
 }
 
 
@@ -299,7 +317,27 @@ function setupAdminEvents() {
             "click",
             async function () {
 
+                console.log(
+                    "Top refresh button clicked."
+                );
+
+                refreshButton.disabled =
+                    true;
+
+                refreshButton.textContent =
+                    "REFRESHING...";
+
+
                 await loadAdminOrders();
+
+                await loadAdminProducts();
+
+
+                refreshButton.disabled =
+                    false;
+
+                refreshButton.textContent =
+                    "↻ REFRESH ORDERS";
 
             }
         );
@@ -323,7 +361,13 @@ function setupAdminEvents() {
             "click",
             async function () {
 
+                console.log(
+                    "Bottom refresh button clicked."
+                );
+
                 await loadAdminOrders();
+
+                await loadAdminProducts();
 
             }
         );
@@ -380,7 +424,7 @@ function setupAdminEvents() {
 
 
     // ======================================
-    // ORDER VIEW BUTTON
+    // ORDER VIEW BUTTON EVENT DELEGATION
     // ======================================
 
     const orderTableBody =
@@ -419,11 +463,17 @@ function setupAdminEvents() {
             }
         );
 
+
+        console.log(
+            "VIEW button event delegation is active."
+        );
+
     }
 
 
     // ======================================
     // ADD PRODUCT BUTTON
+    // IMPORTANT: DECLARED ONLY ONCE
     // ======================================
 
     const addProductButton =
@@ -438,9 +488,24 @@ function setupAdminEvents() {
             "click",
             function () {
 
+                console.log(
+                    "ADD PRODUCT button clicked."
+                );
+
                 openAddProductModal();
 
             }
+        );
+
+
+        console.log(
+            "ADD PRODUCT button event is active."
+        );
+
+    } else {
+
+        console.error(
+            "add-product-button was not found."
         );
 
     }
@@ -611,6 +676,11 @@ function setupAdminEvents() {
             }
         );
 
+
+        console.log(
+            "Product form submit event is active."
+        );
+
     }
 
 
@@ -635,44 +705,7 @@ function setupAdminEvents() {
         }
     );
 
-    // ======================================
-    // ADD PRODUCT BUTTON
-    // ======================================
 
-    const addProductButton =
-        document.getElementById(
-            "add-product-button"
-        );
-
-
-    if (addProductButton) {
-
-        addProductButton.addEventListener(
-            "click",
-            function () {
-
-                console.log(
-                    "ADD PRODUCT button clicked."
-                );
-
-
-                openAddProductModal();
-
-            }
-        );
-
-
-        console.log(
-            "ADD PRODUCT button event is active."
-        );
-
-    } else {
-
-        console.error(
-            "add-product-button was not found."
-        );
-
-    }
     console.log(
         "Admin events setup completed."
     );
@@ -732,7 +765,8 @@ async function loadAdminOrders() {
 
         console.log(
             "Orders loaded successfully:",
-            allOrders.length
+            allOrders.length,
+            allOrders
         );
 
 
@@ -836,6 +870,12 @@ function filterAndDisplayOrders() {
         );
 
 
+    console.log(
+        "Displaying filtered orders:",
+        filteredOrders.length
+    );
+
+
     displayOrders(
         filteredOrders
     );
@@ -882,6 +922,10 @@ function displayOrders(orders) {
 
 
     if (!tableBody) {
+
+        console.error(
+            "Orders table body not found."
+        );
 
         return;
 
@@ -1041,6 +1085,11 @@ function displayOrders(orders) {
         }
     );
 
+
+    console.log(
+        "Order table created successfully."
+    );
+
 }
 
 
@@ -1127,15 +1176,18 @@ function updateDashboardStats(orders) {
             "total-orders"
         );
 
+
     const pendingOrdersElement =
         document.getElementById(
             "pending-orders"
         );
 
+
     const totalSalesElement =
         document.getElementById(
             "total-sales"
         );
+
 
     const todayOrdersElement =
         document.getElementById(
@@ -1563,6 +1615,7 @@ function openOrderDetails(orderId) {
     modal.style.display =
         "flex";
 
+
     document.body.style.overflow =
         "hidden";
 
@@ -1667,15 +1720,20 @@ async function updateOrderStatus(orderId) {
 
         filterAndDisplayOrders();
 
+
         alert(
             "Order status updated successfully!"
         );
+
 
         closeOrderModal();
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Order status update error:",
+            error
+        );
 
         alert(
             "Something went wrong while updating the order."
@@ -1725,7 +1783,7 @@ function closeOrderModal() {
 
 
 // ==========================================
-// 15. PRODUCT MODAL
+// 15. CREATE PRODUCT MODAL
 // ==========================================
 
 function createProductModal() {
@@ -1778,6 +1836,7 @@ function createProductModal() {
                 <button
                     id="close-product-modal"
                     type="button"
+                    aria-label="Close product modal"
                 >
                     ×
                 </button>
@@ -1815,6 +1874,7 @@ function createProductModal() {
                             id="product-price"
                             type="number"
                             min="0"
+                            step="1"
                             required
                             placeholder="699"
                         >
@@ -1900,6 +1960,7 @@ function createProductModal() {
     );
 
 
+    // Overlay close
     const overlay =
         modal.querySelector(
             ".threadverse-product-modal-overlay"
@@ -1920,6 +1981,28 @@ function createProductModal() {
     }
 
 
+    // Close button
+    const closeButton =
+        document.getElementById(
+            "close-product-modal"
+        );
+
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            "click",
+            function () {
+
+                closeProductModal();
+
+            }
+        );
+
+    }
+
+
+    // Cancel button
     const cancelButton =
         document.getElementById(
             "cancel-product-button"
@@ -1939,6 +2022,34 @@ function createProductModal() {
 
     }
 
+
+    // Form submit
+    const productForm =
+        document.getElementById(
+            "admin-product-form"
+        );
+
+
+    if (productForm) {
+
+        productForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+                await saveProduct();
+
+            }
+        );
+
+    }
+
+
+    console.log(
+        "Product modal created successfully."
+    );
+
 }
 
 
@@ -1947,6 +2058,11 @@ function createProductModal() {
 // ==========================================
 
 function openAddProductModal() {
+
+    console.log(
+        "Opening Add Product modal..."
+    );
+
 
     currentEditingProductId =
         null;
@@ -1976,6 +2092,17 @@ function openAddProductModal() {
         );
 
 
+    if (!modal) {
+
+        console.error(
+            "Product modal was not found."
+        );
+
+        return;
+
+    }
+
+
     if (form) {
 
         form.reset();
@@ -1999,15 +2126,12 @@ function openAddProductModal() {
     }
 
 
-    if (modal) {
+    modal.style.display =
+        "flex";
 
-        modal.style.display =
-            "flex";
 
-        document.body.style.overflow =
-            "hidden";
-
-    }
+    document.body.style.overflow =
+        "hidden";
 
 }
 
@@ -2062,34 +2186,74 @@ function openEditProductModal(productId) {
         );
 
 
-    document.getElementById(
-        "product-name"
-    ).value =
-        product.name || "";
+    const nameInput =
+        document.getElementById(
+            "product-name"
+        );
 
 
-    document.getElementById(
-        "product-price"
-    ).value =
-        Number(product.price) || 0;
+    const priceInput =
+        document.getElementById(
+            "product-price"
+        );
 
 
-    document.getElementById(
-        "product-category"
-    ).value =
-        product.category || "";
+    const categoryInput =
+        document.getElementById(
+            "product-category"
+        );
 
 
-    document.getElementById(
-        "product-image"
-    ).value =
-        product.image || "";
+    const imageInput =
+        document.getElementById(
+            "product-image"
+        );
 
 
-    document.getElementById(
-        "product-description"
-    ).value =
-        product.description || "";
+    const descriptionInput =
+        document.getElementById(
+            "product-description"
+        );
+
+
+    if (nameInput) {
+
+        nameInput.value =
+            product.name || "";
+
+    }
+
+
+    if (priceInput) {
+
+        priceInput.value =
+            Number(product.price) || 0;
+
+    }
+
+
+    if (categoryInput) {
+
+        categoryInput.value =
+            product.category || "";
+
+    }
+
+
+    if (imageInput) {
+
+        imageInput.value =
+            product.image || "";
+
+    }
+
+
+    if (descriptionInput) {
+
+        descriptionInput.value =
+            product.description || "";
+
+    }
 
 
     if (title) {
@@ -2157,42 +2321,79 @@ function closeProductModal() {
 
 async function saveProduct() {
 
-    const name =
+    const nameInput =
         document.getElementById(
             "product-name"
-        ).value.trim();
-
-
-    const price =
-        Number(
-            document.getElementById(
-                "product-price"
-            ).value
         );
 
 
-    const category =
+    const priceInput =
+        document.getElementById(
+            "product-price"
+        );
+
+
+    const categoryInput =
         document.getElementById(
             "product-category"
-        ).value.trim();
+        );
 
 
-    const image =
+    const imageInput =
         document.getElementById(
             "product-image"
-        ).value.trim();
+        );
 
 
-    const description =
+    const descriptionInput =
         document.getElementById(
             "product-description"
-        ).value.trim();
+        );
 
 
     const saveButton =
         document.getElementById(
             "save-product-button"
         );
+
+
+    if (
+        !nameInput ||
+        !priceInput ||
+        !categoryInput ||
+        !imageInput ||
+        !descriptionInput
+    ) {
+
+        alert(
+            "Product form could not be found."
+        );
+
+        return;
+
+    }
+
+
+    const name =
+        nameInput.value.trim();
+
+
+    const price =
+        Number(
+            priceInput.value
+        );
+
+
+    const category =
+        categoryInput.value.trim();
+
+
+    const image =
+        imageInput.value.trim();
+
+
+    const description =
+        descriptionInput.value.trim();
 
 
     if (
@@ -2213,13 +2414,17 @@ async function saveProduct() {
     }
 
 
+    const editingProductId =
+        currentEditingProductId;
+
+
     if (saveButton) {
 
         saveButton.disabled =
             true;
 
         saveButton.textContent =
-            currentEditingProductId
+            editingProductId
                 ? "UPDATING..."
                 : "SAVING...";
 
@@ -2242,11 +2447,7 @@ async function saveProduct() {
         let result;
 
 
-        // ======================================
-        // UPDATE EXISTING PRODUCT
-        // ======================================
-
-        if (currentEditingProductId) {
+        if (editingProductId) {
 
             result =
                 await supabaseClient
@@ -2254,18 +2455,12 @@ async function saveProduct() {
                     .update(productData)
                     .eq(
                         "id",
-                        currentEditingProductId
+                        editingProductId
                     )
                     .select()
                     .single();
 
-        }
-
-        // ======================================
-        // ADD NEW PRODUCT
-        // ======================================
-
-        else {
+        } else {
 
             result =
                 await supabaseClient
@@ -2303,7 +2498,7 @@ async function saveProduct() {
 
 
         alert(
-            currentEditingProductId
+            editingProductId
                 ? "Product updated successfully!"
                 : "Product added successfully!"
         );
@@ -2333,9 +2528,7 @@ async function saveProduct() {
                 false;
 
             saveButton.textContent =
-                currentEditingProductId
-                    ? "UPDATE PRODUCT"
-                    : "SAVE PRODUCT";
+                "SAVE PRODUCT";
 
         }
 
@@ -2523,6 +2716,7 @@ async function loadAdminProducts() {
 
         console.log(
             "Products loaded successfully:",
+            allProducts.length,
             allProducts
         );
 
@@ -2586,6 +2780,10 @@ function displayAdminProducts(products) {
 
 
     if (!tableBody) {
+
+        console.error(
+            "Products table body not found."
+        );
 
         return;
 
@@ -2862,10 +3060,12 @@ function showLoadingState() {
             "admin-orders-loading"
         );
 
+
     const emptyElement =
         document.getElementById(
             "admin-empty-orders"
         );
+
 
     const wrapperElement =
         document.getElementById(
@@ -2910,10 +3110,12 @@ function showAdminError(message) {
             "admin-orders-loading"
         );
 
+
     const emptyElement =
         document.getElementById(
             "admin-empty-orders"
         );
+
 
     const wrapperElement =
         document.getElementById(
@@ -3102,3 +3304,4 @@ function escapeAttribute(value) {
         );
 
 }
+
