@@ -1,0 +1,518 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Custom Order | THREADVERSE</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
+
+    <nav class="main-navbar">
+
+        <a href="index.html" class="logo">
+            THREADVERSE
+        </a>
+
+        <div class="nav-links">
+
+            <a href="index.html">HOME</a>
+
+            <a href="index.html#shop">SHOP</a>
+
+            <a href="cart.html">CART</a>
+
+            <a href="index.html#about">ABOUT</a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================
+         CUSTOM ORDER PAGE
+    ========================================== -->
+
+    <main class="custom-order-page">
+
+
+        <!-- PAGE INTRO -->
+
+        <section class="custom-order-hero">
+
+            <p class="custom-order-eyebrow">
+                CREATE SOMETHING UNIQUE
+            </p>
+
+            <h1>
+                CREATE YOUR OWN DESIGN
+            </h1>
+
+            <p>
+                Tell us what you want, upload your artwork, and let
+                THREADVERSE help turn your idea into premium custom wear.
+            </p>
+
+        </section>
+
+
+
+        <!-- CUSTOM ORDER FORM -->
+
+        <section class="custom-order-form-section">
+
+            <form id="custom-order-form" class="custom-order-form">
+
+
+                <!-- CUSTOMER DETAILS -->
+
+                <div class="custom-form-block">
+
+                    <p class="form-step-number">
+                        01
+                    </p>
+
+                    <div>
+
+                        <p class="section-label">
+                            CUSTOMER DETAILS
+                        </p>
+
+                        <h2>
+                            Tell Us About You
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="custom-form-grid">
+
+                    <div class="form-group">
+
+                        <label for="customer-name">
+                            FULL NAME *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customer-name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            EMAIL ADDRESS *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            PHONE NUMBER *
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="Enter your phone number"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ORDER DETAILS -->
+
+                <div class="custom-form-block">
+
+                    <p class="form-step-number">
+                        02
+                    </p>
+
+                    <div>
+
+                        <p class="section-label">
+                            YOUR CUSTOM ORDER
+                        </p>
+
+                        <h2>
+                            Choose Your Style
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="custom-form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="product-type">
+                            PRODUCT TYPE *
+                        </label>
+
+                        <select id="product-type" required>
+
+                            <option value="">
+                                Choose a product
+                            </option>
+
+                            <option value="Custom T-Shirt">
+                                Custom T-Shirt
+                            </option>
+
+                            <option value="Oversized T-Shirt">
+                                Oversized T-Shirt
+                            </option>
+
+                            <option value="Polo T-Shirt">
+                                Polo T-Shirt
+                            </option>
+
+                            <option value="Full Sleeve T-Shirt">
+                                Full Sleeve T-Shirt
+                            </option>
+
+                            <option value="Hoodie">
+                                Hoodie
+                            </option>
+
+                            <option value="Sweatshirt">
+                                Sweatshirt
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="style">
+                            STYLE / FIT
+                        </label>
+
+                        <input
+                            type="text"
+                            id="style"
+                            placeholder="Example: Regular fit, oversized, etc."
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="size">
+                            SIZE *
+                        </label>
+
+                        <select id="size" required>
+
+                            <option value="">
+                                Choose size
+                            </option>
+
+                            <option value="S">
+                                Small (S)
+                            </option>
+
+                            <option value="M">
+                                Medium (M)
+                            </option>
+
+                            <option value="L">
+                                Large (L)
+                            </option>
+
+                            <option value="XL">
+                                Extra Large (XL)
+                            </option>
+
+                            <option value="XXL">
+                                Double Extra Large (XXL)
+                            </option>
+
+                            <option value="Multiple Sizes">
+                                Multiple Sizes
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label for="quantity">
+                            QUANTITY *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            min="1"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- DESIGN DETAILS -->
+
+                <div class="custom-form-block">
+
+                    <p class="form-step-number">
+                        03
+                    </p>
+
+                    <div>
+
+                        <p class="section-label">
+                            YOUR DESIGN
+                        </p>
+
+                        <h2>
+                            Share Your Idea
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="custom-form-grid">
+
+
+                    <div class="form-group custom-form-full-width">
+
+                        <label for="design-image">
+                            UPLOAD ARTWORK / LOGO / DESIGN
+                        </label>
+
+                        <input
+                            type="file"
+                            id="design-image"
+                            accept="image/png, image/jpeg, image/jpg, image/webp"
+                        >
+
+                        <p class="form-help-text">
+                            Upload your logo, artwork, reference image or design.
+                            PNG, JPG and WEBP files are supported.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="form-group custom-form-full-width">
+
+                        <label for="design-description">
+                            DESIGN DESCRIPTION *
+                        </label>
+
+                        <textarea
+                            id="design-description"
+                            rows="6"
+                            placeholder="Describe your design idea, colours, text, logo placement, printing requirements or anything else we should know..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <div class="custom-order-submit-area">
+
+                    <button
+                        type="submit"
+                        id="submit-custom-order"
+                        class="custom-submit-button"
+                    >
+                        SUBMIT CUSTOM ORDER
+                        <span>→</span>
+                    </button>
+
+
+                    <p id="custom-order-message"
+                        class="custom-order-message">
+                    </p>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- PROCESS -->
+
+        <section class="custom-process-section">
+
+            <p class="section-label">
+                HOW IT WORKS
+            </p>
+
+            <h2>
+                FROM YOUR IDEA TO YOUR IDENTITY
+            </h2>
+
+
+            <div class="custom-process-grid">
+
+
+                <div class="custom-process-item">
+
+                    <span>01</span>
+
+                    <h3>
+                        Submit Your Idea
+                    </h3>
+
+                    <p>
+                        Share your requirements and upload your artwork.
+                    </p>
+
+                </div>
+
+
+                <div class="custom-process-item">
+
+                    <span>02</span>
+
+                    <h3>
+                        We Review It
+                    </h3>
+
+                    <p>
+                        THREADVERSE reviews your design and requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="custom-process-item">
+
+                    <span>03</span>
+
+                    <h3>
+                        We Contact You
+                    </h3>
+
+                    <p>
+                        We'll contact you regarding your custom order.
+                    </p>
+
+                </div>
+
+
+                <div class="custom-process-item">
+
+                    <span>04</span>
+
+                    <h3>
+                        Wear Your Identity
+                    </h3>
+
+                    <p>
+                        Your custom wear is prepared for you.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="main-footer">
+
+        <div class="footer-logo">
+            THREADVERSE
+        </div>
+
+        <p>
+            A World of Custom Wear
+        </p>
+
+        <p class="footer-copyright">
+            © 2026 THREADVERSE. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="custom-order.js"></script>
+
+</body>
+
+</html>
+```
