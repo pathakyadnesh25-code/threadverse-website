@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,32 +14,33 @@
 
     <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
 <body>
 
-    <!-- =========================
+    <!-- =========================================
          NAVIGATION
-    ========================== -->
+    ========================================== -->
+    <nav class="main-navbar">
 
-    <nav>
-        <div class="logo">
+        <a href="#home" class="logo">
             THREADVERSE
+        </a>
+
         <div class="nav-links">
-    <a href="#home">HOME</a>
-    <a href="#products">SHOP</a>
-    <a href="cart.html">CART</a>
-    <a href="#custom">CUSTOM</a>
-    <a href="#about">ABOUT</a>
-</div>
+            <a href="#home">HOME</a>
+            <a href="#shop">SHOP</a>
+            <a href="cart.html">CART</a>
+            <a href="#custom">CUSTOM</a>
+            <a href="#about">ABOUT</a>
+        </div>
+
     </nav>
 
 
-    <!-- =========================
+    <!-- =========================================
          HERO SECTION
-    ========================== -->
-
+    ========================================== -->
     <section id="home" class="hero">
 
         <div class="hero-content">
@@ -63,7 +65,7 @@
                     SHOP NOW
                 </a>
 
-                <a href="#custom" class="btn custom-order">
+                <a href="custom-order.html" class="btn custom-order">
                     CREATE YOUR DESIGN
                 </a>
 
@@ -74,15 +76,16 @@
     </section>
 
 
-    <!-- =========================
+    <!-- =========================================
          SHOP SECTION
-    ========================== -->
-
+    ========================================== -->
     <section id="shop" class="products-section">
 
         <div class="section-heading">
 
-            <p>EXPLORE THREADVERSE</p>
+            <p>
+                EXPLORE THREADVERSE
+            </p>
 
             <h2>
                 OUR COLLECTION
@@ -95,97 +98,29 @@
         </div>
 
 
+        <!-- Products are loaded automatically
+             from Supabase by script.js -->
         <div class="products-grid">
 
-            <div class="product-card">
-
-                <div class="product-image">
-                    CUSTOM T-SHIRT
-                </div>
-
-                <h3>Custom T-Shirts</h3>
-
-                <p>
-                    Create a T-shirt with your own design.
-                </p>
-
-                <button class="product-button">
-                    CUSTOMIZE NOW
-                </button>
-
-            </div>
-
-
-            <div class="product-card">
-
-                <div class="product-image">
-                    OVERSIZED WEAR
-                </div>
-
-                <h3>Oversized Streetwear</h3>
-
-                <p>
-                    Premium oversized clothing for modern style.
-                </p>
-
-                <button class="product-button">
-                    EXPLORE
-                </button>
-
-            </div>
-
-
-            <div class="product-card">
-
-                <div class="product-image">
-                    PERSONALIZED
-                </div>
-
-                <h3>Personalized Wear</h3>
-
-                <p>
-                    Make your clothing truly unique.
-                </p>
-
-                <button class="product-button">
-                    PERSONALIZE
-                </button>
-
-            </div>
-
-
-            <div class="product-card">
-
-                <div class="product-image">
-                    BRAND MERCH
-                </div>
-
-                <h3>Brand Merchandise</h3>
-
-                <p>
-                    Custom apparel for businesses and brands.
-                </p>
-
-                <button class="product-button">
-                    GET STARTED
-                </button>
-
-            </div>
+            <p class="products-loading">
+                Loading THREADVERSE products...
+            </p>
 
         </div>
 
     </section>
 
 
-    <!-- =========================
+    <!-- =========================================
          CUSTOM DESIGN SECTION
-    ========================== -->
-
+    ========================================== -->
     <section id="custom" class="custom-section">
 
         <div class="section-heading">
 
-            <p>CREATE SOMETHING UNIQUE</p>
+            <p>
+                CREATE SOMETHING UNIQUE
+            </p>
 
             <h2>
                 CREATE YOUR OWN DESIGN
@@ -200,11 +135,14 @@
 
         <div class="steps-container">
 
+            <!-- STEP 1 -->
             <div class="step">
 
                 <span>01</span>
 
-                <h3>Choose Your Style</h3>
+                <h3>
+                    Choose Your Style
+                </h3>
 
                 <p>
                     Select the product and style you want.
@@ -213,11 +151,14 @@
             </div>
 
 
+            <!-- STEP 2 -->
             <div class="step">
 
                 <span>02</span>
 
-                <h3>Add Your Artwork</h3>
+                <h3>
+                    Add Your Artwork
+                </h3>
 
                 <p>
                     Upload your design or share your idea.
@@ -226,11 +167,14 @@
             </div>
 
 
+            <!-- STEP 3 -->
             <div class="step">
 
                 <span>03</span>
 
-                <h3>We Create Your Design</h3>
+                <h3>
+                    We Create Your Design
+                </h3>
 
                 <p>
                     Your design is prepared for premium printing.
@@ -239,11 +183,14 @@
             </div>
 
 
+            <!-- STEP 4 -->
             <div class="step">
 
                 <span>04</span>
 
-                <h3>Wear Your Identity</h3>
+                <h3>
+                    Wear Your Identity
+                </h3>
 
                 <p>
                     Receive clothing made uniquely for you.
@@ -254,28 +201,34 @@
         </div>
 
 
-        <a href="custom-order.html" class="btn custom-order">
-    START CUSTOM ORDER
-</a>
+        <div class="custom-order-action">
+
+            <a href="custom-order.html" class="btn custom-order">
+                START CUSTOM ORDER
+            </a>
+
+        </div>
 
     </section>
 
 
-    <!-- =========================
+    <!-- =========================================
          ABOUT SECTION
-    ========================== -->
-
+    ========================================== -->
     <section id="about" class="about-section">
 
         <div class="section-heading">
 
-            <p>ABOUT THREADVERSE</p>
+            <p>
+                ABOUT THREADVERSE
+            </p>
 
             <h2>
                 MORE THAN JUST CLOTHING
             </h2>
 
         </div>
+
 
         <p class="about-description">
 
@@ -288,13 +241,14 @@
     </section>
 
 
-    <!-- =========================
+    <!-- =========================================
          FOOTER
-    ========================== -->
+    ========================================== -->
+    <footer class="main-footer">
 
-    <footer>
-
-        <h2>THREADVERSE</h2>
+        <h2>
+            THREADVERSE
+        </h2>
 
         <p>
             A World of Custom Wear
@@ -307,12 +261,12 @@
     </footer>
 
 
-    <!-- =========================
+    <!-- =========================================
          MAIN JAVASCRIPT
-    ========================== -->
-
+    ========================================== -->
     <script src="script.js"></script>
 
 </body>
 
 </html>
+
