@@ -11,6 +11,7 @@ const SUPABASE_URL = "https://gguzdxgxtpibbsfqtxjm.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
 
+
 const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
@@ -25,52 +26,97 @@ async function loadProducts() {
 
     const productsGrid = document.querySelector(".products-grid");
 
+
     if (!productsGrid) {
+
         console.error("Products grid not found in index.html");
+
         return;
+
     }
+
 
     try {
 
-        productsGrid.innerHTML = "<p>Loading products...</p>";
+        // Loading message
+        productsGrid.innerHTML = `
+            <p class="products-loading">
+                Loading THREADVERSE products...
+            </p>
+        `;
 
+
+        // Get products from Supabase
         const { data, error } = await supabaseClient
             .from("products")
             .select("*")
-            .order("id", { ascending: true });
+            .order("id", {
+                ascending: true
+            });
 
+
+        // Check for Supabase error
         if (error) {
-            console.error("Supabase product error:", error.message);
+
+            console.error(
+                "Supabase product error:",
+                error.message
+            );
+
 
             productsGrid.innerHTML = `
-                <p>Unable to load products right now.</p>
+                <p class="products-error">
+                    Unable to load products right now.
+                </p>
             `;
 
             return;
+
         }
 
-        console.log("Products loaded successfully:", data);
-        console.log("Total products:", data.length);
 
+        console.log(
+            "Products loaded successfully:",
+            data
+        );
+
+        console.log(
+            "Total products:",
+            data.length
+        );
+
+
+        // No products found
         if (!data || data.length === 0) {
+
             productsGrid.innerHTML = `
-                <p>No products available yet.</p>
+                <p class="products-empty">
+                    No products available yet.
+                </p>
             `;
 
             return;
+
         }
 
 
-        // Clear old manually created products
+        // Clear loading message
         productsGrid.innerHTML = "";
 
 
-        // Create product cards
+        // ======================================
+        // CREATE PRODUCT CARDS
+        // ======================================
+
         data.forEach(function (product) {
 
-            const productCard = document.createElement("div");
 
-            productCard.className = "product-card";
+            const productCard =
+                document.createElement("div");
+
+
+            productCard.className =
+                "product-card";
 
 
             // Product image
@@ -80,16 +126,19 @@ async function loadProducts() {
                         src="${product.image}"
                         alt="${product.name || "THREADVERSE Product"}"
                         class="real-product-image"
+                        loading="lazy"
                     >
-                  `
+                `
                 : `
                     <div class="product-image">
                         IMAGE COMING SOON
                     </div>
-                  `;
+                `;
 
 
+            // Product card content
             productCard.innerHTML = `
+
                 ${imageHTML}
 
                 <div class="product-details">
@@ -107,42 +156,63 @@ async function loadProducts() {
                     </p>
 
                     <p class="product-price">
-                        ₹${product.price || "0"}
+                        ₹${Number(product.price || 0).toLocaleString("en-IN")}
                     </p>
 
-                    <button class="product-button" data-product-id="${product.id}">
-    VIEW PRODUCT
-</button>
+                    <button
+                        class="product-button"
+                        data-product-id="${product.id}"
+                        type="button"
+                    >
+                        VIEW PRODUCT
+                    </button>
 
                 </div>
             `;
 
 
-            productsGrid.appendChild(productCard);
+            // Open product details page
+            const productButton =
+                productCard.querySelector(".product-button");
+
+
+            productButton.addEventListener(
+                "click",
+                function () {
+
+                    window.location.href =
+                        `product.html?id=${product.id}`;
+
+                }
+            );
+
+
+            // Add card to website
+            productsGrid.appendChild(
+                productCard
+            );
+
 
         });
 
 
-        // Add click events after products are created
-        const productButtons = document.querySelectorAll(".product-button");
-
-productButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-
-        const productId = this.getAttribute("data-product-id");
-
-        window.location.href = `product.html?id=${productId}`;
-
-    });
-});
+        console.log(
+            "THREADVERSE products displayed successfully."
+        );
 
 
     } catch (error) {
 
-        console.error("Unexpected error:", error);
+        console.error(
+            "Unexpected product loading error:",
+            error
+        );
+
 
         productsGrid.innerHTML = `
-            <p>Something went wrong while loading products.</p>
+            <p class="products-error">
+                Something went wrong while loading products.
+            </p>
         `;
 
     }
@@ -154,43 +224,108 @@ productButtons.forEach(function (button) {
 // 3. WEBSITE START
 // ==========================================
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("THREADVERSE website started successfully!");
-
-    // Load products from Supabase
-    loadProducts();
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
 
-    // ======================================
-    // SMOOTH SCROLLING
-    // ======================================
+        console.log(
+            "THREADVERSE website started successfully!"
+        );
 
-    const navLinks = document.querySelectorAll('a[href^="#"]');
 
-    navLinks.forEach(function (link) {
+        // ======================================
+        // LOAD PRODUCTS
+        // ======================================
 
-        link.addEventListener("click", function (event) {
+        loadProducts();
 
-            const targetId = this.getAttribute("href");
 
-            if (targetId && targetId !== "#") {
+        // ======================================
+        // SMOOTH SCROLLING
+        // ======================================
 
-                const targetElement = document.querySelector(targetId);
+        const navLinks =
+            document.querySelectorAll('a[href^="#"]');
 
-                if (targetElement) {
 
-                    event.preventDefault();
+        navLinks.forEach(function (link) {
 
-                    targetElement.scrollIntoView({
-                        behavior: "smooth"
-                    });
+
+            link.addEventListener(
+                "click",
+                function (event) {
+
+
+                    const targetId =
+                        this.getAttribute("href");
+
+
+                    if (
+                        targetId &&
+                        targetId !== "#"
+                    ) {
+
+
+                        const targetElement =
+                            document.querySelector(targetId);
+
+
+                        if (targetElement) {
+
+
+                            event.preventDefault();
+
+
+                            targetElement.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+
+
+                        }
+
+                    }
+
 
                 }
+            );
 
-            }
 
         });
 
-    });
 
+        // ======================================
+        // CUSTOM ORDER BUTTONS
+        // ======================================
+
+        const customButtons =
+            document.querySelectorAll(".custom-order");
+
+
+        customButtons.forEach(function (button) {
+
+
+            button.addEventListener(
+                "click",
+                function () {
+
+
+                    window.location.href =
+                        "custom-order.html";
+
+
+                }
+            );
+
+
+        });
+
+
+        console.log(
+            "THREADVERSE website fully initialized!"
+        );
+
+
+    }
+);
