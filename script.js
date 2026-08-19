@@ -194,21 +194,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-
-    // ======================================
-    // CUSTOM DESIGN BUTTON
-    // ======================================
-
-    const customButtons = document.querySelectorAll(".custom-order");
-
-    customButtons.forEach(function (button) {
-
-        button.addEventListener("click", function () {
-
-            alert("Welcome to THREADVERSE Custom Design!");
-
-        });
-
-    });
-
-});
