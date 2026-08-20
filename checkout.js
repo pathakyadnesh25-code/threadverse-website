@@ -1,3 +1,4 @@
+
 // ==========================================
 // THREADVERSE - CHECKOUT JAVASCRIPT
 // ==========================================
@@ -12,6 +13,7 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
     "sb_publishable_kli1NoCH59sG0Sa3I2-hTw_W909MSZX";
+
 
 const supabaseClient =
     supabase.createClient(
@@ -102,7 +104,21 @@ function calculateCartTotal(cart) {
 
 
 // ==========================================
-// 5. LOAD CART INTO CHECKOUT
+// 5. FORMAT PRICE
+// ==========================================
+
+function formatPrice(amount) {
+
+    return "₹" +
+        Number(amount || 0).toLocaleString(
+            "en-IN"
+        );
+
+}
+
+
+// ==========================================
+// 6. LOAD CART INTO CHECKOUT
 // ==========================================
 
 function loadCheckout() {
@@ -115,6 +131,11 @@ function loadCheckout() {
     const checkoutTotalPrice =
         document.getElementById(
             "checkout-total-price"
+        );
+
+    const checkoutSubtotal =
+        document.getElementById(
+            "checkout-subtotal"
         );
 
 
@@ -148,22 +169,32 @@ function loadCheckout() {
     if (cart.length === 0) {
 
         checkoutItems.innerHTML = `
+
             <div class="empty-checkout">
 
                 <p>
                     Your cart is empty.
                 </p>
 
-                <a href="index.html#products">
+                <a href="index.html#shop">
                     CONTINUE SHOPPING
                 </a>
 
             </div>
+
         `;
 
 
         checkoutTotalPrice.textContent =
             "₹0";
+
+
+        if (checkoutSubtotal) {
+
+            checkoutSubtotal.textContent =
+                "₹0";
+
+        }
 
 
         return;
@@ -225,7 +256,7 @@ function loadCheckout() {
                 </p>
 
                 <strong>
-                    ₹${itemTotal.toFixed(0)}
+                    ${formatPrice(itemTotal)}
                 </strong>
 
             </div>
@@ -249,13 +280,46 @@ function loadCheckout() {
 
 
     checkoutTotalPrice.textContent =
-        "₹" + totalAmount.toFixed(0);
+        formatPrice(totalAmount);
+
+
+    if (checkoutSubtotal) {
+
+        checkoutSubtotal.textContent =
+            formatPrice(totalAmount);
+
+    }
+
 
 }
 
 
 // ==========================================
-// 6. SETUP CHECKOUT FORM
+// 7. GET SELECTED PAYMENT METHOD
+// ==========================================
+
+function getSelectedPaymentMethod() {
+
+    const selectedPayment =
+        document.querySelector(
+            'input[name="payment-method"]:checked'
+        );
+
+
+    if (!selectedPayment) {
+
+        return null;
+
+    }
+
+
+    return selectedPayment.value;
+
+}
+
+
+// ==========================================
+// 8. SETUP CHECKOUT FORM
 // ==========================================
 
 function setupCheckoutForm() {
@@ -263,6 +327,12 @@ function setupCheckoutForm() {
     const checkoutForm =
         document.getElementById(
             "checkout-form"
+        );
+
+
+    const continuePaymentButton =
+        document.getElementById(
+            "continue-payment-button"
         );
 
 
@@ -285,7 +355,7 @@ function setupCheckoutForm() {
 
 
             console.log(
-                "THREADVERSE place order submitted"
+                "THREADVERSE checkout submitted"
             );
 
 
@@ -304,12 +374,37 @@ function setupCheckoutForm() {
 
 
                 window.location.href =
-                    "index.html#products";
+                    "index.html#shop";
 
 
                 return;
 
             }
+
+
+            // ==================================
+            // GET PAYMENT METHOD
+            // ==================================
+
+            const paymentMethod =
+                getSelectedPaymentMethod();
+
+
+            if (!paymentMethod) {
+
+                alert(
+                    "Please select a payment method."
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "Selected payment method:",
+                paymentMethod
+            );
 
 
             // ==================================
@@ -431,6 +526,21 @@ function setupCheckoutForm() {
 
 
             // ==================================
+            // VALIDATE PIN CODE
+            // ==================================
+
+            if (!/^[0-9]{6}$/.test(pincode)) {
+
+                alert(
+                    "Please enter a valid 6-digit PIN code."
+                );
+
+                return;
+
+            }
+
+
+            // ==================================
             // CALCULATE TOTAL
             // ==================================
 
@@ -447,119 +557,47 @@ function setupCheckoutForm() {
 
 
             // ==================================
-            // GET PLACE ORDER BUTTON
+            // PREVENT DOUBLE CLICK
             // ==================================
 
-            const placeOrderButton =
-                document.querySelector(
-                    ".place-order-button"
-                );
+            if (continuePaymentButton) {
 
-
-            if (placeOrderButton) {
-
-                placeOrderButton.disabled =
+                continuePaymentButton.disabled =
                     true;
 
-                placeOrderButton.textContent =
-                    "PLACING ORDER...";
+
+                continuePaymentButton.innerHTML =
+                    '<span>PROCESSING...</span>' +
+                    '<span class="button-arrow">→</span>';
 
             }
 
 
             try {
 
-                // ==================================
-                // CREATE ORDER DATA
-                // ==================================
-
-                const orderData = {
-
-                    customer_name:
-                        customerName,
-
-                    customer_email:
-                        customerEmail,
-
-                    customer_phone:
-                        customerPhone,
-
-                    address:
-                        address,
-
-                    city:
-                        city,
-
-                    state:
-                        state,
-
-                    pincode:
-                        pincode,
-
-                    shipping_address:
-                        shippingAddress,
-
-                    items:
-                        cart,
-
-                    total_amount:
-                        totalAmount,
-
-                    status:
-                        "pending",
-
-                    payment_status:
-                        "pending"
-
-                };
-
-
-                console.log(
-                    "Saving order:",
-                    orderData
-                );
-
 
                 // ==================================
-                // SAVE ORDER TO SUPABASE
+                // CASH ON DELIVERY
                 // ==================================
 
-                const { data, error } =
-                    await supabaseClient
-                        .from("orders")
-                        .insert([
-                            orderData
-                        ])
-                        .select()
-                        .single();
+                if (paymentMethod === "cod") {
 
-
-                // ==================================
-                // HANDLE DATABASE ERROR
-                // ==================================
-
-                if (error) {
-
-                    console.error(
-                        "Order saving error:",
-                        error
+                    await saveOrderAndFinish(
+                        {
+                            customerName: customerName,
+                            customerEmail: customerEmail,
+                            customerPhone: customerPhone,
+                            address: address,
+                            city: city,
+                            state: state,
+                            pincode: pincode,
+                            shippingAddress: shippingAddress,
+                            cart: cart,
+                            totalAmount: totalAmount,
+                            paymentMethod: "cod",
+                            paymentStatus: "pending"
+                        }
                     );
-
-
-                    alert(
-                        "Unable to place your order. Please try again."
-                    );
-
-
-                    if (placeOrderButton) {
-
-                        placeOrderButton.disabled =
-                            false;
-
-                        placeOrderButton.textContent =
-                            "PLACE ORDER";
-
-                    }
 
 
                     return;
@@ -568,129 +606,79 @@ function setupCheckoutForm() {
 
 
                 // ==================================
-                // CHECK SAVED ORDER
+                // ONLINE PAYMENT
                 // ==================================
+                // UPI and Card payment gateway
+                // will be connected in the next step.
 
-                if (!data) {
+                if (
+                    paymentMethod === "upi" ||
+                    paymentMethod === "card"
+                ) {
 
-                    console.error(
-                        "Order saved but no data returned."
+                    const pendingPaymentOrder = {
+
+                        customerName: customerName,
+                        customerEmail: customerEmail,
+                        customerPhone: customerPhone,
+                        address: address,
+                        city: city,
+                        state: state,
+                        pincode: pincode,
+                        shippingAddress: shippingAddress,
+                        cart: cart,
+                        totalAmount: totalAmount,
+                        paymentMethod: paymentMethod
+
+                    };
+
+
+                    // Save checkout details temporarily.
+                    // Payment gateway will use these details
+                    // in the next step.
+
+                    localStorage.setItem(
+                        "threadversePendingPayment",
+                        JSON.stringify(
+                            pendingPaymentOrder
+                        )
                     );
 
 
-                    throw new Error(
-                        "Order data was not returned by Supabase."
-                    );
+                    if (paymentMethod === "upi") {
+
+                        alert(
+                            "UPI payment gateway will open in the next step."
+                        );
+
+                    } else {
+
+                        alert(
+                            "Card payment gateway will open in the next step."
+                        );
+
+                    }
+
+
+                    // For now, restore the button
+                    // and do not create the final order yet.
+
+                    if (continuePaymentButton) {
+
+                        continuePaymentButton.disabled =
+                            false;
+
+
+                        continuePaymentButton.innerHTML =
+                            '<span>CONTINUE TO PAYMENT</span>' +
+                            '<span class="button-arrow">→</span>';
+
+                    }
+
+
+                    return;
 
                 }
-
-
-                // ==================================
-                // GET REAL SUPABASE ORDER ID
-                // ==================================
-
-                const orderId =
-                    data.id;
-
-
-                if (!orderId) {
-
-                    console.error(
-                        "Order ID missing:",
-                        data
-                    );
-
-
-                    throw new Error(
-                        "Order ID was not returned."
-                    );
-
-                }
-
-
-                console.log(
-                    "THREADVERSE ORDER SAVED SUCCESSFULLY!"
-                );
-
-                console.log(
-                    "Saved Order ID:",
-                    orderId
-                );
-
-
-                // ==================================
-                // SAVE LAST ORDER FOR SUCCESS PAGE
-                // ==================================
-
-                const lastOrder = {
-
-                    id:
-                        orderId,
-
-                    customerName:
-                        customerName,
-
-                    customerEmail:
-                        customerEmail,
-
-                    customerPhone:
-                        customerPhone,
-
-                    address:
-                        address,
-
-                    city:
-                        city,
-
-                    state:
-                        state,
-
-                    pincode:
-                        pincode,
-
-                    shippingAddress:
-                        shippingAddress,
-
-                    items:
-                        cart,
-
-                    totalAmount:
-                        totalAmount,
-
-                    status:
-                        "pending",
-
-                    paymentStatus:
-                        "pending",
-
-                    createdAt:
-                        data.created_at || null
-
-                };
-
-
-                localStorage.setItem(
-                    "threadverseLastOrder",
-                    JSON.stringify(lastOrder)
-                );
-
-
-                // ==================================
-                // CLEAR SHOPPING CART
-                // ==================================
-
-                localStorage.removeItem(
-                    "threadverseCart"
-                );
-
-
-                // ==================================
-                // REDIRECT TO SUCCESS PAGE
-                // ==================================
-
-                window.location.href =
-                    "order-success.html?id=" +
-                    encodeURIComponent(orderId);
 
 
             } catch (error) {
@@ -702,17 +690,20 @@ function setupCheckoutForm() {
 
 
                 alert(
-                    "Something went wrong while placing your order. Please try again."
+                    error.message ||
+                    "Something went wrong. Please try again."
                 );
 
 
-                if (placeOrderButton) {
+                if (continuePaymentButton) {
 
-                    placeOrderButton.disabled =
+                    continuePaymentButton.disabled =
                         false;
 
-                    placeOrderButton.textContent =
-                        "PLACE ORDER";
+
+                    continuePaymentButton.innerHTML =
+                        '<span>CONTINUE TO PAYMENT</span>' +
+                        '<span class="button-arrow">→</span>';
 
                 }
 
@@ -722,3 +713,212 @@ function setupCheckoutForm() {
     );
 
 }
+
+
+// ==========================================
+// 9. SAVE ORDER AND FINISH
+// ==========================================
+
+async function saveOrderAndFinish(orderDetails) {
+
+
+    console.log(
+        "Saving THREADVERSE order..."
+    );
+
+
+    const orderData = {
+
+        customer_name:
+            orderDetails.customerName,
+
+        customer_email:
+            orderDetails.customerEmail,
+
+        customer_phone:
+            orderDetails.customerPhone,
+
+        address:
+            orderDetails.address,
+
+        city:
+            orderDetails.city,
+
+        state:
+            orderDetails.state,
+
+        pincode:
+            orderDetails.pincode,
+
+        shipping_address:
+            orderDetails.shippingAddress,
+
+        items:
+            orderDetails.cart,
+
+        total_amount:
+            orderDetails.totalAmount,
+
+        status:
+            "pending",
+
+        payment_method:
+            orderDetails.paymentMethod,
+
+        payment_status:
+            orderDetails.paymentStatus
+
+    };
+
+
+    console.log(
+        "Order data:",
+        orderData
+    );
+
+
+    // ======================================
+    // SAVE ORDER TO SUPABASE
+    // ======================================
+
+    const { data, error } =
+        await supabaseClient
+            .from("orders")
+            .insert([
+                orderData
+            ])
+            .select()
+            .single();
+
+
+    if (error) {
+
+        console.error(
+            "Order saving error:",
+            error
+        );
+
+
+        throw new Error(
+            error.message ||
+            "Unable to place your order."
+        );
+
+    }
+
+
+    if (!data || !data.id) {
+
+        console.error(
+            "Order saved but ID is missing:",
+            data
+        );
+
+
+        throw new Error(
+            "Order ID was not returned."
+        );
+
+    }
+
+
+    const orderId =
+        data.id;
+
+
+    console.log(
+        "THREADVERSE ORDER SAVED SUCCESSFULLY!"
+    );
+
+
+    console.log(
+        "Order ID:",
+        orderId
+    );
+
+
+    // ======================================
+    // SAVE LAST ORDER FOR SUCCESS PAGE
+    // ======================================
+
+    const lastOrder = {
+
+        id:
+            orderId,
+
+        customerName:
+            orderDetails.customerName,
+
+        customerEmail:
+            orderDetails.customerEmail,
+
+        customerPhone:
+            orderDetails.customerPhone,
+
+        address:
+            orderDetails.address,
+
+        city:
+            orderDetails.city,
+
+        state:
+            orderDetails.state,
+
+        pincode:
+            orderDetails.pincode,
+
+        shippingAddress:
+            orderDetails.shippingAddress,
+
+        items:
+            orderDetails.cart,
+
+        totalAmount:
+            orderDetails.totalAmount,
+
+        status:
+            "pending",
+
+        paymentMethod:
+            orderDetails.paymentMethod,
+
+        paymentStatus:
+            orderDetails.paymentStatus,
+
+        createdAt:
+            data.created_at || null
+
+    };
+
+
+    localStorage.setItem(
+        "threadverseLastOrder",
+        JSON.stringify(lastOrder)
+    );
+
+
+    // Remove pending payment data if it exists
+    localStorage.removeItem(
+        "threadversePendingPayment"
+    );
+
+
+    // ======================================
+    // CLEAR CART
+    // ======================================
+
+    localStorage.removeItem(
+        "threadverseCart"
+    );
+
+
+    // ======================================
+    // REDIRECT TO SUCCESS PAGE
+    // ======================================
+
+    window.location.href =
+        "order-success.html?id=" +
+        encodeURIComponent(orderId);
+
+}
+
