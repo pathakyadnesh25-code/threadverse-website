@@ -1,89 +1,174 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Checkout | THREADVERSE</title>
 
+    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-    <!-- NAVIGATION -->
+
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
     <nav>
+
         <div class="logo">
             THREADVERSE
         </div>
 
         <div class="nav-links">
-            <a href="index.html">HOME</a>
-            <a href="index.html#products">SHOP</a>
-            <a href="cart.html">CART</a>
+
+            <a href="index.html">
+                HOME
+            </a>
+
+            <a href="index.html#shop">
+                SHOP
+            </a>
+
+            <a href="cart.html">
+                CART
+            </a>
+
         </div>
+
     </nav>
 
 
-    <!-- CHECKOUT PAGE -->
+
+    <!-- =========================================
+         CHECKOUT PAGE
+    ========================================== -->
     <main class="checkout-page">
 
-        <!-- PAGE HEADING -->
+
+        <!-- =====================================
+             PAGE HEADING
+        ====================================== -->
         <div class="checkout-heading">
 
             <div class="checkout-heading-content">
-                <p>SECURE CHECKOUT</p>
-                <h1>Complete Your Order</h1>
 
+                <p>
+                    SECURE CHECKOUT
+                </p>
+
+                <h1>
+                    Complete Your Order
+                </h1>
+
+
+                <!-- CHECKOUT PROGRESS -->
                 <div class="checkout-steps">
+
                     <span class="checkout-step active">
+
                         <strong>1</strong>
+
                         Cart
+
                     </span>
 
+
                     <span class="checkout-line"></span>
+
 
                     <span class="checkout-step active">
+
                         <strong>2</strong>
+
                         Details
+
                     </span>
 
+
                     <span class="checkout-line"></span>
+
+
+                    <span class="checkout-step active">
+
+                        <strong>3</strong>
+
+                        Payment
+
+                    </span>
+
+
+                    <span class="checkout-line"></span>
+
 
                     <span class="checkout-step">
-                        <strong>3</strong>
+
+                        <strong>4</strong>
+
                         Confirmation
+
                     </span>
+
                 </div>
+
             </div>
 
         </div>
 
 
-        <!-- MAIN CHECKOUT CONTAINER -->
+
+        <!-- =====================================
+             MAIN CHECKOUT CONTAINER
+        ====================================== -->
         <div class="checkout-container">
 
 
-            <!-- LEFT SIDE - CUSTOMER DETAILS -->
+            <!-- =================================
+                 LEFT SIDE - CHECKOUT FORM
+            ================================== -->
             <section class="checkout-form-section">
 
+
+                <!-- CUSTOMER DETAILS -->
                 <div class="checkout-section-header">
-                    <span class="section-number">01</span>
+
+                    <span class="section-number">
+                        01
+                    </span>
+
 
                     <div>
-                        <p>YOUR INFORMATION</p>
-                        <h2>Customer Details</h2>
+
+                        <p>
+                            YOUR INFORMATION
+                        </p>
+
+                        <h2>
+                            Customer Details
+                        </h2>
+
                     </div>
+
                 </div>
+
 
 
                 <form id="checkout-form">
 
-                    <!-- CUSTOMER DETAILS GRID -->
+
+                    <!-- CUSTOMER DETAILS -->
                     <div class="checkout-form-grid">
 
+
+                        <!-- FULL NAME -->
                         <div class="form-group">
+
                             <label for="customer-name">
                                 FULL NAME
                             </label>
@@ -94,10 +179,14 @@
                                 placeholder="Enter your full name"
                                 required
                             >
+
                         </div>
 
 
+
+                        <!-- EMAIL -->
                         <div class="form-group">
+
                             <label for="customer-email">
                                 EMAIL ADDRESS
                             </label>
@@ -108,10 +197,14 @@
                                 placeholder="Enter your email address"
                                 required
                             >
+
                         </div>
 
 
+
+                        <!-- PHONE -->
                         <div class="form-group full-width">
+
                             <label for="customer-phone">
                                 PHONE NUMBER
                             </label>
@@ -122,27 +215,46 @@
                                 placeholder="Enter your phone number"
                                 required
                             >
+
                         </div>
+
 
                     </div>
 
 
-                    <!-- DELIVERY ADDRESS -->
+
+                    <!-- =================================
+                         DELIVERY ADDRESS
+                    ================================== -->
                     <div class="checkout-section-header address-header">
 
-                        <span class="section-number">02</span>
+                        <span class="section-number">
+                            02
+                        </span>
+
 
                         <div>
-                            <p>WHERE SHOULD WE DELIVER?</p>
-                            <h2>Delivery Address</h2>
+
+                            <p>
+                                WHERE SHOULD WE DELIVER?
+                            </p>
+
+                            <h2>
+                                Delivery Address
+                            </h2>
+
                         </div>
 
                     </div>
+
 
 
                     <div class="checkout-form-grid">
 
+
+                        <!-- ADDRESS -->
                         <div class="form-group full-width">
+
                             <label for="address">
                                 FULL ADDRESS
                             </label>
@@ -153,10 +265,14 @@
                                 placeholder="House number, street, area, landmark"
                                 required
                             ></textarea>
+
                         </div>
 
 
+
+                        <!-- CITY -->
                         <div class="form-group">
+
                             <label for="city">
                                 CITY
                             </label>
@@ -167,10 +283,14 @@
                                 placeholder="Enter your city"
                                 required
                             >
+
                         </div>
 
 
+
+                        <!-- STATE -->
                         <div class="form-group">
+
                             <label for="state">
                                 STATE
                             </label>
@@ -181,10 +301,14 @@
                                 placeholder="Enter your state"
                                 required
                             >
+
                         </div>
 
 
+
+                        <!-- PIN CODE -->
                         <div class="form-group full-width">
+
                             <label for="pincode">
                                 PIN CODE
                             </label>
@@ -193,136 +317,447 @@
                                 type="text"
                                 id="pincode"
                                 placeholder="Enter your PIN code"
+                                inputmode="numeric"
                                 required
                             >
+
                         </div>
+
 
                     </div>
 
 
-                    <!-- SECURITY MESSAGE -->
-                    <div class="checkout-security">
-                        <div class="security-icon">🔒</div>
+
+                    <!-- =================================
+                         PAYMENT METHOD
+                    ================================== -->
+                    <div class="checkout-section-header payment-header">
+
+                        <span class="section-number">
+                            03
+                        </span>
+
 
                         <div>
-                            <strong>Secure Order</strong>
-                            <p>Your information is securely used to process your THREADVERSE order.</p>
+
+                            <p>
+                                HOW WOULD YOU LIKE TO PAY?
+                            </p>
+
+                            <h2>
+                                Payment Method
+                            </h2>
+
                         </div>
+
                     </div>
 
 
-                    <!-- PLACE ORDER BUTTON -->
+
+                    <div class="payment-methods">
+
+
+                        <!-- UPI -->
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment-method"
+                                value="upi"
+                                required
+                            >
+
+
+                            <div class="payment-option-content">
+
+
+                                <div class="payment-option-left">
+
+                                    <span class="payment-icon">
+                                        ₹
+                                    </span>
+
+
+                                    <div>
+
+                                        <strong>
+                                            UPI
+                                        </strong>
+
+                                        <p>
+                                            Pay securely using a supported UPI app
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <span class="payment-radio"></span>
+
+
+                            </div>
+
+                        </label>
+
+
+
+                        <!-- CARD -->
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment-method"
+                                value="card"
+                            >
+
+
+                            <div class="payment-option-content">
+
+
+                                <div class="payment-option-left">
+
+                                    <span class="payment-icon">
+                                        ▣
+                                    </span>
+
+
+                                    <div>
+
+                                        <strong>
+                                            Debit / Credit Card
+                                        </strong>
+
+                                        <p>
+                                            Pay securely using your card
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <span class="payment-radio"></span>
+
+
+                            </div>
+
+                        </label>
+
+
+
+                        <!-- CASH ON DELIVERY -->
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment-method"
+                                value="cod"
+                            >
+
+
+                            <div class="payment-option-content">
+
+
+                                <div class="payment-option-left">
+
+                                    <span class="payment-icon">
+                                        ₹
+                                    </span>
+
+
+                                    <div>
+
+                                        <strong>
+                                            Cash on Delivery
+                                        </strong>
+
+                                        <p>
+                                            Pay when your THREADVERSE order is delivered
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <span class="payment-radio"></span>
+
+
+                            </div>
+
+                        </label>
+
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         SECURITY MESSAGE
+                    ================================== -->
+                    <div class="checkout-security">
+
+
+                        <div class="security-icon">
+                            🔒
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Secure Checkout
+                            </strong>
+
+                            <p>
+                                Your information is securely used to process
+                                your THREADVERSE order.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         CONTINUE TO PAYMENT BUTTON
+                    ================================== -->
                     <button
                         type="submit"
                         class="place-order-button"
+                        id="continue-payment-button"
                     >
-                        <span>PLACE ORDER</span>
-                        <span class="button-arrow">→</span>
+
+                        <span>
+                            CONTINUE TO PAYMENT
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
                     </button>
+
 
                 </form>
 
             </section>
 
 
-            <!-- RIGHT SIDE - ORDER SUMMARY -->
+
+            <!-- =================================
+                 RIGHT SIDE - ORDER SUMMARY
+            ================================== -->
             <aside class="checkout-summary">
+
 
                 <div class="order-summary-top">
 
-                    <p>ORDER SUMMARY</p>
+                    <p>
+                        ORDER SUMMARY
+                    </p>
 
-                    <h2>Your THREADVERSE Order</h2>
+                    <h2>
+                        Your THREADVERSE Order
+                    </h2>
 
-                    <a href="cart.html" class="edit-cart-link">
+
+                    <a
+                        href="cart.html"
+                        class="edit-cart-link"
+                    >
                         ← EDIT CART
                     </a>
 
                 </div>
 
 
-                <!-- PRODUCTS -->
-                <div id="checkout-items" class="checkout-items">
+
+                <!-- ORDER PRODUCTS -->
+                <div
+                    id="checkout-items"
+                    class="checkout-items"
+                >
+
                     Loading your order...
+
                 </div>
 
 
-                <!-- ORDER TOTAL -->
+
+                <!-- PRICE DETAILS -->
                 <div class="checkout-price-details">
 
-                    <div class="checkout-price-row">
-                        <span>Subtotal</span>
-                        <span id="checkout-subtotal">Calculated at checkout</span>
-                    </div>
 
                     <div class="checkout-price-row">
-                        <span>Shipping</span>
-                        <span>Calculated at checkout</span>
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <span id="checkout-subtotal">
+                            Calculated at checkout
+                        </span>
+
                     </div>
+
+
+
+                    <div class="checkout-price-row">
+
+                        <span>
+                            Shipping
+                        </span>
+
+                        <span>
+                            Calculated at checkout
+                        </span>
+
+                    </div>
+
 
                 </div>
 
 
+
+                <!-- TOTAL -->
                 <div class="checkout-total">
 
+
                     <div>
-                        <span>ORDER TOTAL</span>
-                        <small>Including applicable charges</small>
+
+                        <span>
+                            ORDER TOTAL
+                        </span>
+
+                        <small>
+                            Including applicable charges
+                        </small>
+
                     </div>
 
-                    <!-- IMPORTANT: KEEP THIS ID FOR checkout.js -->
+
+
+                    <!-- REQUIRED FOR checkout.js -->
                     <strong id="checkout-total-price">
                         ₹0
                     </strong>
 
+
                 </div>
+
 
 
                 <!-- BENEFITS -->
                 <div class="checkout-benefits">
 
-                    <div class="checkout-benefit">
-                        <span>✓</span>
-                        <p>Premium quality custom wear</p>
-                    </div>
 
                     <div class="checkout-benefit">
-                        <span>✓</span>
-                        <p>Order details securely stored</p>
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Premium quality custom wear
+                        </p>
+
                     </div>
 
+
+
                     <div class="checkout-benefit">
-                        <span>✓</span>
-                        <p>Support available for your order</p>
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Secure payment processing
+                        </p>
+
                     </div>
+
+
+
+                    <div class="checkout-benefit">
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Order details securely stored
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="checkout-benefit">
+
+                        <span>
+                            ✓
+                        </span>
+
+                        <p>
+                            Support available for your order
+                        </p>
+
+                    </div>
+
 
                 </div>
 
+
             </aside>
 
+
         </div>
+
 
     </main>
 
 
-    <!-- FOOTER -->
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
     <footer>
 
-        <h2>THREADVERSE</h2>
+        <h2>
+            THREADVERSE
+        </h2>
 
-        <p>A World of Custom Wear</p>
+        <p>
+            A World of Custom Wear
+        </p>
 
-        <p>© 2026 THREADVERSE. All rights reserved.</p>
+        <p>
+            © 2026 THREADVERSE. All rights reserved.
+        </p>
 
     </footer>
 
 
-    <!-- SUPABASE -->
+
+    <!-- =========================================
+         SUPABASE LIBRARY
+    ========================================== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- CHECKOUT JAVASCRIPT -->
+
+
+    <!-- =========================================
+         CHECKOUT JAVASCRIPT
+    ========================================== -->
     <script src="checkout.js"></script>
+
 
 </body>
 
 </html>
+```
