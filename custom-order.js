@@ -1,4 +1,3 @@
-
 // ==========================================
 // THREADVERSE - CUSTOM ORDER JAVASCRIPT
 // ==========================================
@@ -27,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("THREADVERSE Custom Order page started!");
 
+
     const customOrderForm =
         document.getElementById("custom-order-form");
 
@@ -37,11 +37,28 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("custom-order-message");
 
 
+    // Check required elements
     if (!customOrderForm) {
 
-        console.error(
-            "Custom order form not found."
-        );
+        console.error("Custom order form not found.");
+
+        return;
+
+    }
+
+
+    if (!submitButton) {
+
+        console.error("Submit button not found.");
+
+        return;
+
+    }
+
+
+    if (!messageBox) {
+
+        console.error("Custom order message box not found.");
 
         return;
 
@@ -56,83 +73,179 @@ document.addEventListener("DOMContentLoaded", function () {
         "submit",
         async function (event) {
 
+            // Stop page refresh
             event.preventDefault();
 
 
-            // Prevent duplicate submissions
+            // Prevent duplicate submission
             if (submitButton.disabled) {
+
                 return;
+
             }
 
 
-            // --------------------------------------
-            // GET FORM VALUES
-            // --------------------------------------
+            // ======================================
+            // 4. GET FORM VALUES
+            // ======================================
 
-            const customerName =
-                document.getElementById("customer-name").value.trim();
+            const customerNameElement =
+                document.getElementById("customer-name");
 
-            const email =
-                document.getElementById("email").value.trim();
+            const emailElement =
+                document.getElementById("email");
 
-            const phone =
-                document.getElementById("phone").value.trim();
+            const phoneElement =
+                document.getElementById("phone");
 
-            const productType =
-                document.getElementById("product-type").value;
+            const productTypeElement =
+                document.getElementById("product-type");
 
-            const style =
-                document.getElementById("style").value.trim();
+            const styleElement =
+                document.getElementById("style");
 
-            const size =
-                document.getElementById("size").value;
+            const sizeElement =
+                document.getElementById("size");
 
-            const quantity =
-                Number(
-                    document.getElementById("quantity").value
-                );
+            const quantityElement =
+                document.getElementById("quantity");
 
-            const designDescription =
-                document
-                    .getElementById("design-description")
-                    .value
-                    .trim();
+            const designDescriptionElement =
+                document.getElementById("design-description");
 
             const imageInput =
                 document.getElementById("design-image");
 
 
-            // --------------------------------------
-            // BASIC VALIDATION
-            // --------------------------------------
-
+            // Check form fields exist
             if (
-                !customerName ||
-                !email ||
-                !phone ||
-                !productType ||
-                !size ||
-                !quantity ||
-                quantity < 1 ||
-                !designDescription
+                !customerNameElement ||
+                !emailElement ||
+                !phoneElement ||
+                !productTypeElement ||
+                !styleElement ||
+                !sizeElement ||
+                !quantityElement ||
+                !designDescriptionElement
             ) {
 
+                console.error("One or more form fields are missing.");
+
                 messageBox.textContent =
-                    "Please complete all required fields.";
+                    "Something is missing from the form. Please refresh and try again.";
 
                 return;
 
             }
 
 
-            // --------------------------------------
-            // START LOADING
-            // --------------------------------------
+            const customerName =
+                customerNameElement.value.trim();
+
+            const email =
+                emailElement.value.trim();
+
+            const phone =
+                phoneElement.value.trim();
+
+            const productType =
+                productTypeElement.value;
+
+            const style =
+                styleElement.value.trim();
+
+            const size =
+                sizeElement.value;
+
+            const quantity =
+                Number(quantityElement.value);
+
+            const designDescription =
+                designDescriptionElement.value.trim();
+
+
+            // ======================================
+            // 5. BASIC VALIDATION
+            // ======================================
+
+            if (!customerName) {
+
+                messageBox.textContent =
+                    "Please enter your name.";
+
+                return;
+
+            }
+
+
+            if (!email) {
+
+                messageBox.textContent =
+                    "Please enter your email address.";
+
+                return;
+
+            }
+
+
+            if (!phone) {
+
+                messageBox.textContent =
+                    "Please enter your phone number.";
+
+                return;
+
+            }
+
+
+            if (!productType) {
+
+                messageBox.textContent =
+                    "Please select a product type.";
+
+                return;
+
+            }
+
+
+            if (!size) {
+
+                messageBox.textContent =
+                    "Please select a size.";
+
+                return;
+
+            }
+
+
+            if (!quantity || quantity < 1) {
+
+                messageBox.textContent =
+                    "Please enter a valid quantity.";
+
+                return;
+
+            }
+
+
+            if (!designDescription) {
+
+                messageBox.textContent =
+                    "Please describe your design.";
+
+                return;
+
+            }
+
+
+            // ======================================
+            // 6. START SUBMISSION
+            // ======================================
 
             submitButton.disabled = true;
 
             submitButton.innerHTML =
-                "SUBMITTING YOUR ORDER...";
+                "SUBMITTING YOUR DESIGN...";
 
             messageBox.textContent =
                 "Please wait while we submit your custom order...";
@@ -142,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 // ==================================
-                // 4. UPLOAD DESIGN IMAGE
+                // 7. UPLOAD DESIGN IMAGE
                 // ==================================
 
                 let designImageURL = null;
@@ -159,12 +272,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         imageInput.files[0];
 
 
-                    // Create unique filename
+                    // Get file extension
                     const fileExtension =
                         file.name.split(".").pop();
 
 
-                    const safeFileName =
+                    // Create unique filename
+                    const uniqueFileName =
                         Date.now() +
                         "-" +
                         Math.random()
@@ -174,9 +288,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         fileExtension;
 
 
+                    // Storage path
                     const filePath =
                         "custom-orders/" +
-                        safeFileName;
+                        uniqueFileName;
 
 
                     console.log(
@@ -185,8 +300,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
 
-                    // Upload to Supabase Storage
+                    // Upload image
                     const {
+                        data: uploadData,
                         error: uploadError
                     } =
                     await supabaseClient
@@ -210,30 +326,42 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
 
                         throw new Error(
-                            "Unable to upload your design. Please try again."
+                            "Unable to upload your design image: " +
+                            uploadError.message
                         );
 
                     }
 
 
-                    // Get public image URL
+                    console.log(
+                        "Design uploaded successfully:",
+                        uploadData
+                    );
+
+
+                    // Get public URL
                     const {
                         data: publicURLData
                     } =
                     supabaseClient
                         .storage
                         .from("designs")
-                        .getPublicUrl(
-                            filePath
-                        );
+                        .getPublicUrl(filePath);
 
 
-                    designImageURL =
-                        publicURLData.publicUrl;
+                    if (
+                        publicURLData &&
+                        publicURLData.publicUrl
+                    ) {
+
+                        designImageURL =
+                            publicURLData.publicUrl;
+
+                    }
 
 
                     console.log(
-                        "Design uploaded successfully:",
+                        "Design image URL:",
                         designImageURL
                     );
 
@@ -241,7 +369,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 // ==================================
-                // 5. SAVE CUSTOM ORDER IN SUPABASE
+                // 8. SAVE CUSTOM ORDER TO SUPABASE
                 // ==================================
 
                 console.log(
@@ -249,62 +377,78 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
 
 
+                // IMPORTANT:
+                // No .select() or .single() here.
+                // This prevents requiring SELECT permission.
+
                 const {
-                    data,
-                    error
+                    error: insertError
                 } =
-                const { error } = await supabaseClient
-    .from("custom_designs")
-    .insert([
-        {
-            customer_name: customerName,
-            email: email,
-            phone: phone,
-            product_type: productType,
-            style: style || null,
-            size: size,
-            quantity: quantity,
-            design_description: designDescription,
-            design_image: designImageURL,
-            status: "Pending"
-        }
-    ]);
+                await supabaseClient
+                    .from("custom_designs")
+                    .insert([
+                        {
+                            customer_name: customerName,
+                            email: email,
+                            phone: phone,
+
+                            product_type: productType,
+
+                            style:
+                                style || null,
+
+                            size: size,
+
+                            quantity: quantity,
+
+                            design_description:
+                                designDescription,
+
+                            design_image:
+                                designImageURL,
+
+                            status:
+                                "Pending"
+                        }
+                    ]);
 
 
-                if (error) {
+                // Check database error
+                if (insertError) {
 
                     console.error(
                         "Custom order save error:",
-                        error
+                        insertError
                     );
 
                     throw new Error(
-                        error.message ||
-                        "Unable to submit your custom order."
+                        insertError.message ||
+                        "Unable to save your custom order."
                     );
 
                 }
 
 
                 console.log(
-                    "Custom order saved successfully:",
-                    data
+                    "Custom order saved successfully!"
                 );
 
 
                 // ==================================
-                // 6. SUCCESS MESSAGE
+                // 9. SUCCESS
                 // ==================================
 
-                messageBox.textContent =
-                    "✓ Your custom order has been submitted successfully! THREADVERSE will contact you soon.";
+                messageBox.innerHTML =
+                    "✓ Your custom design has been submitted successfully! " +
+                    "Thank you for choosing THREADVERSE. " +
+                    "We will review your design and contact you soon.";
 
 
                 // Reset form
                 customOrderForm.reset();
 
 
-                // Scroll to message
+                // Scroll to success message
                 messageBox.scrollIntoView({
                     behavior: "smooth",
                     block: "center"
@@ -329,7 +473,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 // ==================================
-                // 7. RESET BUTTON
+                // 10. RESET BUTTON
                 // ==================================
 
                 submitButton.disabled = false;
@@ -342,5 +486,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-});
 
+    console.log(
+        "THREADVERSE Custom Order form is ready!"
+    );
+
+});
