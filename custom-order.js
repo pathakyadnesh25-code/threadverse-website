@@ -253,30 +253,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     data,
                     error
                 } =
-                await supabaseClient
-                    .from("custom_designs")
-                    .insert([
-                        {
-                            customer_name: customerName,
-                            email: email,
-                            phone: phone,
-
-                            product_type: productType,
-                            style: style || null,
-                            size: size,
-                            quantity: quantity,
-
-                            design_description:
-                                designDescription,
-
-                            design_image:
-                                designImageURL,
-
-                            status: "Pending"
-                        }
-                    ])
-                    .select()
-                    .single();
+                const { error } = await supabaseClient
+    .from("custom_designs")
+    .insert([
+        {
+            customer_name: customerName,
+            email: email,
+            phone: phone,
+            product_type: productType,
+            style: style || null,
+            size: size,
+            quantity: quantity,
+            design_description: designDescription,
+            design_image: designImageURL,
+            status: "Pending"
+        }
+    ]);
 
 
                 if (error) {
