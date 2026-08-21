@@ -9,30 +9,39 @@
    1. ROOT + RESET
 ============================================================
 :root {
-    --bg: #08080d;
-    --bg-soft: #101018;
-    --bg-card: #15151f;
-    --bg-light: #f4f1eb;
+    /* =========================================
+       THREADVERSE ORIGINAL PREMIUM DARK THEME
+       Deep Black • White • Soft Gray
+       Very Subtle Purple Accent
+    ========================================= */
 
-    --text: #f7f7fb;
-    --text-dark: #111118;
-    --muted: #a8a8b3;
+    --bg: #09090b;
+    --bg-soft: #0f1014;
+    --bg-card: #15161b;
+    --bg-light: #f5f5f5;
 
-    --line: rgba(255, 255, 255, 0.12);
-    --line-dark: rgba(0, 0, 0, 0.12);
+    --text: #f5f5f5;
+    --text-dark: #111111;
+    --muted: #a3a3ad;
 
-    /* THREADVERSE PREMIUM PURPLE */
-    --accent: #8b5cf6;
-    --accent-dark: #6d3fe0;
-    --accent-light: #b79cff;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-dark: rgba(0, 0, 0, 0.10);
 
-    --shadow: 0 25px 80px rgba(0, 0, 0, 0.32);
-    --shadow-large: 0 35px 100px rgba(0, 0, 0, 0.55);
+    /* SUBTLE THREADVERSE ACCENT - NOT TOO COLOURFUL */
+    --accent: #8d82c9;
+    --accent-dark: #6f659f;
+    --accent-light: #aaa1d8;
 
+    /* PREMIUM SHADOWS */
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    --shadow-large: 0 30px 90px rgba(0, 0, 0, 0.55);
+
+    /* BORDER RADIUS */
     --radius-sm: 12px;
-    --radius: 20px;
-    --radius-lg: 32px;
+    --radius: 18px;
+    --radius-lg: 28px;
 
+    /* ANIMATION */
     --transition: 0.35s ease;
 }
 
