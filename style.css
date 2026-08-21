@@ -10,38 +10,45 @@
 ============================================================
 :root {
     /* =========================================
-       THREADVERSE ORIGINAL PREMIUM DARK THEME
-       Deep Black • White • Soft Gray
-       Very Subtle Purple Accent
+       THREADVERSE ORIGINAL PREMIUM COLOR SYSTEM
+       Based on the exact reference design
     ========================================= */
 
-    --bg: #09090b;
-    --bg-soft: #0f1014;
-    --bg-card: #15161b;
+    /* MAIN BACKGROUNDS */
+    --bg: #0b0b0d;
+    --bg-soft: #101012;
+    --bg-card: #151516;
     --bg-light: #f5f5f5;
 
-    --text: #f5f5f5;
+    /* TEXT */
+    --text: #f5f5f7;
     --text-dark: #111111;
-    --muted: #a3a3ad;
+    --muted: #aaa9b2;
 
-    --line: rgba(255, 255, 255, 0.10);
-    --line-dark: rgba(0, 0, 0, 0.10);
+    /* BORDERS */
+    --line: rgba(255, 255, 255, 0.13);
+    --line-soft: rgba(255, 255, 255, 0.08);
+    --line-dark: rgba(0, 0, 0, 0.12);
 
-    /* SUBTLE THREADVERSE ACCENT - NOT TOO COLOURFUL */
-    --accent: #8d82c9;
-    --accent-dark: #6f659f;
-    --accent-light: #aaa1d8;
+    /* THREADVERSE SUBTLE PURPLE */
+    --accent: #8c82c9;
+    --accent-dark: #2a1d41;
+    --accent-light: #c5bee8;
 
-    /* PREMIUM SHADOWS */
+    /* DARK PURPLE GLOW FROM ORIGINAL DESIGN */
+    --purple-glow: rgba(42, 29, 65, 0.38);
+    --purple-glow-soft: rgba(42, 29, 65, 0.18);
+
+    /* SHADOWS */
     --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     --shadow-large: 0 30px 90px rgba(0, 0, 0, 0.55);
 
-    /* BORDER RADIUS */
+    /* RADIUS */
     --radius-sm: 12px;
     --radius: 18px;
     --radius-lg: 28px;
 
-    /* ANIMATION */
+    /* TRANSITION */
     --transition: 0.35s ease;
 }
 
