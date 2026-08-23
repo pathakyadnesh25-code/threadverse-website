@@ -9,46 +9,42 @@
    1. ROOT + RESET
 ============================================================
 :root {
-    /* =========================================
-       THREADVERSE ORIGINAL PREMIUM COLOR SYSTEM
-       Based on the exact reference design
-    ========================================= */
+    /* ==========================================
+       THREADVERSE ORIGINAL BRAND COLORS
+       ========================================== */
 
-    /* MAIN BACKGROUNDS */
-    --bg: #0b0b0d;
-    --bg-soft: #101012;
-    --bg-card: #151516;
-    --bg-light: #f5f5f5;
+    --bg: #0b0b0f;
+    --bg-soft: #101016;
+    --bg-card: #17171d;
 
-    /* TEXT */
-    --text: #f5f5f7;
+    --text: #ffffff;
     --text-dark: #111111;
-    --muted: #aaa9b2;
 
-    /* BORDERS */
-    --line: rgba(255, 255, 255, 0.13);
-    --line-soft: rgba(255, 255, 255, 0.08);
-    --line-dark: rgba(0, 0, 0, 0.12);
+    --muted: #a8a8b5;
+    --muted-light: #c4c4cf;
 
-    /* THREADVERSE SUBTLE PURPLE */
-    --accent: #8c82c9;
-    --accent-dark: #2a1d41;
-    --accent-light: #c5bee8;
+    --line: rgba(255, 255, 255, 0.12);
+    --line-soft: rgba(255, 255, 255, 0.07);
 
-    /* DARK PURPLE GLOW FROM ORIGINAL DESIGN */
-    --purple-glow: rgba(42, 29, 65, 0.38);
-    --purple-glow-soft: rgba(42, 29, 65, 0.18);
+    /* ORIGINAL SUBTLE PURPLE ACCENT */
+    --accent: #9b8cff;
+    --accent-dark: #6d4fd3;
+    --accent-light: #b9adff;
+
+    /* ORIGINAL SOFT PURPLE GLOW */
+    --purple-glow: rgba(110, 70, 190, 0.16);
+    --purple-glow-soft: rgba(110, 70, 190, 0.08);
 
     /* SHADOWS */
     --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-    --shadow-large: 0 30px 90px rgba(0, 0, 0, 0.55);
+    --shadow-large: 0 35px 100px rgba(0, 0, 0, 0.55);
 
-    /* RADIUS */
+    /* CORNERS */
     --radius-sm: 12px;
-    --radius: 18px;
-    --radius-lg: 28px;
+    --radius: 20px;
+    --radius-lg: 30px;
 
-    /* TRANSITION */
+    /* ANIMATION */
     --transition: 0.35s ease;
 }
 
