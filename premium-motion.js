@@ -1,23 +1,26 @@
 /* =========================================================
    THREADVERSE
-   PREMIUM MOTION ENGINE
+   PREMIUM MOTION ENGINE v2.0
    ---------------------------------------------------------
    Handles:
    • Page loader
-   • Scroll reveal
    • Hero entrance
+   • Scroll reveal
    • Text reveal
    • Mouse parallax
    • Magnetic buttons
    • Navbar scroll state
    • Active navigation
    • Process timeline
-   • Product entrance animation
-   • 3D product-card hover
-   • Smooth image movement
+   • Dynamic product entrance
+   • Product card 3D tilt
    • Cursor glow
-   • About/footer reveal
-   • Reduced-motion support
+   • Smooth anchor navigation
+   • Footer reveal
+   • Page visibility optimization
+   • Reduced-motion accessibility
+   • Mobile / touch protection
+   • Performance optimization
    ========================================================= */
 
 (() => {
@@ -26,18 +29,117 @@
 
 
     /* =====================================================
-       01. INITIALIZATION
+       01. GLOBAL CONFIGURATION
     ===================================================== */
 
-    document.addEventListener("DOMContentLoaded", () => {
+    const CONFIG = {
 
-        console.log("THREADVERSE Premium Motion Engine started.");
+        navbarScrollPoint: 40,
+
+        revealThreshold: 0.12,
+
+        revealRootMargin:
+            "0px 0px -70px 0px",
+
+        activeNavThreshold: 0.35,
+
+        productDelayStep: 90,
+
+        productMaxDelay: 500,
+
+        cardTiltStrength: 3,
+
+        cardLift: 9,
+
+        parallaxSmoothness: 0.05,
+
+        cursorSmoothness: 0.12,
+
+        magneticStrength: 0.15
+
+    };
+
+
+    /* =====================================================
+       02. REDUCED MOTION
+    ===================================================== */
+
+    const prefersReducedMotion =
+        window.matchMedia &&
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+    /* =====================================================
+       03. DEVICE DETECTION
+    ===================================================== */
+
+    const isTouchDevice =
+        window.matchMedia &&
+        window.matchMedia(
+            "(hover: none), (pointer: coarse)"
+        ).matches;
+
+
+    const isDesktopPointer =
+        window.matchMedia &&
+        window.matchMedia(
+            "(hover: hover) and (pointer: fine)"
+        ).matches;
+
+
+    /* =====================================================
+       04. PAGE VISIBILITY
+    ===================================================== */
+
+    let pageIsVisible =
+        !document.hidden;
+
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            pageIsVisible =
+                !document.hidden;
+
+            if (document.hidden) {
+
+                document.body.classList.add(
+                    "page-hidden"
+                );
+
+            } else {
+
+                document.body.classList.remove(
+                    "page-hidden"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       05. INITIALIZATION
+    ===================================================== */
+
+    function initializeMotionEngine() {
+
+        console.log(
+            "THREADVERSE Premium Motion Engine started."
+        );
+
 
         initPageLoader();
 
+        initHeroAnimation();
+
         initScrollReveal();
 
-        initHeroAnimation();
+        initTextReveal();
 
         initParallax();
 
@@ -59,40 +161,40 @@
 
         initFooterAnimation();
 
-    });
 
+        console.log(
+            "THREADVERSE motion systems initialized successfully."
+        );
 
-
-    /* =====================================================
-       02. REDUCED MOTION
-       Respect user's browser accessibility setting.
-    ===================================================== */
-
-    const prefersReducedMotion =
-        window.matchMedia &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
+    }
 
 
     /* =====================================================
-       03. PAGE LOADER
+       06. PAGE LOADER
     ===================================================== */
 
     function initPageLoader() {
 
         const loader =
-            document.querySelector(".page-loader");
+            document.querySelector(
+                ".page-loader"
+            );
+
 
         if (!loader) return;
 
 
         if (prefersReducedMotion) {
 
-            loader.classList.add("loader-complete");
+            loader.classList.add(
+                "loader-complete"
+            );
 
             setTimeout(() => {
 
-                loader.remove();
+                if (loader.isConnected) {
+                    loader.remove();
+                }
 
             }, 100);
 
@@ -101,51 +203,74 @@
         }
 
 
-        document.body.classList.add("page-loading");
+        document.body.classList.add(
+            "page-loading"
+        );
 
 
-        window.addEventListener("load", () => {
-
-            setTimeout(() => {
-
-                loader.classList.add("loader-complete");
-
-                document.body.classList.remove("page-loading");
-
-            }, 500);
-
+        const finishLoader = () => {
 
             setTimeout(() => {
 
-                if (loader) {
+                loader.classList.add(
+                    "loader-complete"
+                );
 
+                document.body.classList.remove(
+                    "page-loading"
+                );
+
+            }, 400);
+
+
+            setTimeout(() => {
+
+                if (loader.isConnected) {
                     loader.remove();
-
                 }
 
-            }, 1400);
+            }, 1300);
 
-        });
+        };
+
+
+        if (document.readyState === "complete") {
+
+            finishLoader();
+
+        } else {
+
+            window.addEventListener(
+                "load",
+                finishLoader,
+                { once: true }
+            );
+
+        }
 
     }
 
 
-
     /* =====================================================
-       04. HERO ANIMATION
+       07. HERO ANIMATION
     ===================================================== */
 
     function initHeroAnimation() {
 
         const hero =
-            document.querySelector("[data-hero]");
+            document.querySelector(
+                "[data-hero]"
+            );
+
 
         if (!hero) return;
 
 
         if (prefersReducedMotion) {
 
-            hero.classList.add("hero-ready");
+            hero.classList.add(
+                "hero-ready"
+            );
 
             return;
 
@@ -156,7 +281,9 @@
 
             setTimeout(() => {
 
-                hero.classList.add("hero-ready");
+                hero.classList.add(
+                    "hero-ready"
+                );
 
             }, 100);
 
@@ -165,15 +292,17 @@
     }
 
 
-
     /* =====================================================
-       05. SCROLL REVEAL
+       08. SCROLL REVEAL
     ===================================================== */
 
     function initScrollReveal() {
 
         const elements =
-            document.querySelectorAll("[data-reveal]");
+            document.querySelectorAll(
+                "[data-reveal]"
+            );
+
 
         if (!elements.length) return;
 
@@ -182,7 +311,24 @@
 
             elements.forEach(element => {
 
-                element.classList.add("is-visible");
+                element.classList.add(
+                    "is-visible"
+                );
+
+            });
+
+            return;
+
+        }
+
+
+        if (!("IntersectionObserver" in window)) {
+
+            elements.forEach(element => {
+
+                element.classList.add(
+                    "is-visible"
+                );
 
             });
 
@@ -197,10 +343,14 @@
 
                     entries.forEach(entry => {
 
-                        if (!entry.isIntersecting) return;
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
 
 
-                        entry.target.classList.add("is-visible");
+                        entry.target.classList.add(
+                            "is-visible"
+                        );
 
 
                         observerInstance.unobserve(
@@ -211,8 +361,11 @@
 
                 },
                 {
-                    threshold: 0.12,
-                    rootMargin: "0px 0px -70px 0px"
+                    threshold:
+                        CONFIG.revealThreshold,
+
+                    rootMargin:
+                        CONFIG.revealRootMargin
                 }
             );
 
@@ -226,9 +379,10 @@
     }
 
 
-
     /* =====================================================
-       06. TEXT REVEAL
+       09. TEXT REVEAL
+       IMPORTANT:
+       Runs after DOM is ready.
     ===================================================== */
 
     function initTextReveal() {
@@ -237,6 +391,7 @@
             document.querySelectorAll(
                 "[data-text-reveal]"
             );
+
 
         if (!textElements.length) return;
 
@@ -258,33 +413,44 @@
                 "text-reveal-ready"
             );
 
+
+            if (prefersReducedMotion) {
+
+                element.classList.add(
+                    "text-reveal-visible"
+                );
+
+            }
+
         });
 
     }
 
 
-    initTextReveal();
-
-
-
     /* =====================================================
-       07. MOUSE PARALLAX
+       10. MOUSE PARALLAX
     ===================================================== */
 
     function initParallax() {
 
         const hero =
-            document.querySelector("[data-hero]");
+            document.querySelector(
+                "[data-hero]"
+            );
+
 
         if (!hero) return;
 
         if (prefersReducedMotion) return;
+
+        if (isTouchDevice) return;
 
 
         const layers =
             hero.querySelectorAll(
                 "[data-parallax]"
             );
+
 
         if (!layers.length) return;
 
@@ -295,6 +461,8 @@
         let currentX = 0;
         let currentY = 0;
 
+        let animationRunning = false;
+
 
         hero.addEventListener(
             "mousemove",
@@ -304,18 +472,32 @@
                     hero.getBoundingClientRect();
 
 
+                if (
+                    rect.width === 0 ||
+                    rect.height === 0
+                ) {
+                    return;
+                }
+
+
                 mouseX =
-                    (event.clientX - rect.left) /
-                    rect.width -
-                    0.5;
+                    (
+                        (event.clientX - rect.left) /
+                        rect.width
+                    ) - 0.5;
 
 
                 mouseY =
-                    (event.clientY - rect.top) /
-                    rect.height -
-                    0.5;
+                    (
+                        (event.clientY - rect.top) /
+                        rect.height
+                    ) - 0.5;
 
-            }
+
+                startParallax();
+
+            },
+            { passive: true }
         );
 
 
@@ -326,17 +508,48 @@
                 mouseX = 0;
                 mouseY = 0;
 
+                startParallax();
+
             }
         );
 
 
+        function startParallax() {
+
+            if (animationRunning) return;
+
+            animationRunning = true;
+
+            requestAnimationFrame(
+                animateParallax
+            );
+
+        }
+
+
         function animateParallax() {
 
+            animationRunning = false;
+
+
+            if (!pageIsVisible) {
+                return;
+            }
+
+
             currentX +=
-                (mouseX - currentX) * 0.05;
+                (mouseX - currentX) *
+                CONFIG.parallaxSmoothness;
+
 
             currentY +=
-                (mouseY - currentY) * 0.05;
+                (mouseY - currentY) *
+                CONFIG.parallaxSmoothness;
+
+
+            const distance =
+                Math.abs(mouseX - currentX) +
+                Math.abs(mouseY - currentY);
 
 
             layers.forEach(layer => {
@@ -360,26 +573,28 @@
 
 
                 layer.style.transform =
-                    `translate3d(${moveX}px, ${moveY}px, 0)`;
+                    `translate3d(
+                        ${moveX}px,
+                        ${moveY}px,
+                        0
+                    )`;
 
             });
 
 
-            requestAnimationFrame(
-                animateParallax
-            );
+            if (distance > 0.001) {
+
+                startParallax();
+
+            }
 
         }
-
-
-        animateParallax();
 
     }
 
 
-
     /* =====================================================
-       08. MAGNETIC BUTTONS
+       11. MAGNETIC BUTTONS
     ===================================================== */
 
     function initMagneticButtons() {
@@ -389,29 +604,25 @@
                 ".magnetic-btn"
             );
 
+
         if (!buttons.length) return;
 
         if (prefersReducedMotion) return;
 
-
-        /*
-         * Disable magnetic effect on touch devices.
-         */
-
-        const isTouchDevice =
-            window.matchMedia(
-                "(hover: none)"
-            ).matches;
-
-
-        if (isTouchDevice) return;
+        if (!isDesktopPointer) return;
 
 
         buttons.forEach(button => {
 
+            let resetTimer;
+
+
             button.addEventListener(
                 "mousemove",
                 event => {
+
+                    clearTimeout(resetTimer);
+
 
                     const rect =
                         button.getBoundingClientRect();
@@ -430,17 +641,24 @@
 
 
                     const moveX =
-                        x * 0.15;
+                        x *
+                        CONFIG.magneticStrength;
 
 
                     const moveY =
-                        y * 0.15;
+                        y *
+                        CONFIG.magneticStrength;
 
 
                     button.style.transform =
-                        `translate3d(${moveX}px, ${moveY}px, 0)`;
+                        `translate3d(
+                            ${moveX}px,
+                            ${moveY}px,
+                            0
+                        )`;
 
-                }
+                },
+                { passive: true }
             );
 
 
@@ -448,8 +666,13 @@
                 "mouseleave",
                 () => {
 
-                    button.style.transform =
-                        "";
+                    resetTimer =
+                        setTimeout(() => {
+
+                            button.style.transform =
+                                "";
+
+                        }, 30);
 
                 }
             );
@@ -459,9 +682,8 @@
     }
 
 
-
     /* =====================================================
-       09. NAVBAR SCROLL EFFECT
+       12. NAVBAR SCROLL EFFECT
     ===================================================== */
 
     function initNavbar() {
@@ -471,6 +693,7 @@
                 "[data-nav]"
             );
 
+
         if (!navbar) return;
 
 
@@ -479,7 +702,10 @@
 
         function updateNavbar() {
 
-            if (window.scrollY > 40) {
+            if (
+                window.scrollY >
+                CONFIG.navbarScrollPoint
+            ) {
 
                 navbar.classList.add(
                     "nav-scrolled"
@@ -503,18 +729,20 @@
             "scroll",
             () => {
 
-                if (!ticking) {
+                if (ticking) return;
 
-                    window.requestAnimationFrame(
-                        updateNavbar
-                    );
 
-                    ticking = true;
+                ticking = true;
 
-                }
+
+                window.requestAnimationFrame(
+                    updateNavbar
+                );
 
             },
-            { passive: true }
+            {
+                passive: true
+            }
         );
 
 
@@ -523,9 +751,8 @@
     }
 
 
-
     /* =====================================================
-       10. ACTIVE NAVIGATION
+       13. ACTIVE NAVIGATION
     ===================================================== */
 
     function initActiveNavigation() {
@@ -534,6 +761,7 @@
             document.querySelectorAll(
                 "main section[id]"
             );
+
 
         const navLinks =
             document.querySelectorAll(
@@ -545,9 +773,14 @@
             !sections.length ||
             !navLinks.length
         ) {
-
             return;
+        }
 
+
+        if (
+            !("IntersectionObserver" in window)
+        ) {
+            return;
         }
 
 
@@ -557,8 +790,11 @@
 
                     entries.forEach(entry => {
 
-                        if (!entry.isIntersecting)
+                        if (
+                            !entry.isIntersecting
+                        ) {
                             return;
+                        }
 
 
                         const id =
@@ -595,7 +831,9 @@
 
                 },
                 {
-                    threshold: 0.35,
+                    threshold:
+                        CONFIG.activeNavThreshold,
+
                     rootMargin:
                         "-80px 0px -40% 0px"
                 }
@@ -604,16 +842,17 @@
 
         sections.forEach(section => {
 
-            sectionObserver.observe(section);
+            sectionObserver.observe(
+                section
+            );
 
         });
 
     }
 
 
-
     /* =====================================================
-       11. PROCESS TIMELINE
+       14. PROCESS TIMELINE
     ===================================================== */
 
     function initProcessAnimation() {
@@ -627,19 +866,10 @@
         if (!process) return;
 
 
-        const steps =
-            process.querySelectorAll(
-                ".step"
-            );
-
-
         const progress =
             process.querySelector(
                 ".process-line-progress"
             );
-
-
-        if (!steps.length) return;
 
 
         if (prefersReducedMotion) {
@@ -648,96 +878,150 @@
                 "process-active"
             );
 
+            if (progress) {
+
+                progress.style.height =
+                    "100%";
+
+            }
+
             return;
 
         }
 
 
-        const observer =
-            new IntersectionObserver(
-                entries => {
+        if (
+            "IntersectionObserver" in window
+        ) {
 
-                    entries.forEach(entry => {
+            const observer =
+                new IntersectionObserver(
+                    entries => {
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+                        entries.forEach(entry => {
 
-                            process.classList.add(
-                                "process-active"
-                            );
+                            if (
+                                entry.isIntersecting
+                            ) {
 
-                        }
+                                process.classList.add(
+                                    "process-active"
+                                );
 
-                    });
+                            }
 
-                },
-                {
-                    threshold: 0.25
-                }
-            );
+                        });
 
-
-        observer.observe(process);
-
-
-        /*
-         * Progress line follows scroll position.
-         */
-
-        if (progress) {
-
-            window.addEventListener(
-                "scroll",
-                () => {
-
-                    const rect =
-                        process.getBoundingClientRect();
+                    },
+                    {
+                        threshold: 0.25
+                    }
+                );
 
 
-                    const windowHeight =
-                        window.innerHeight;
+            observer.observe(process);
 
+        } else {
 
-                    const start =
-                        windowHeight * 0.75;
-
-
-                    const end =
-                        -rect.height * 0.25;
-
-
-                    let percentage =
-                        (start - rect.top) /
-                        (start - end);
-
-
-                    percentage =
-                        Math.max(
-                            0,
-                            Math.min(
-                                1,
-                                percentage
-                            )
-                        );
-
-
-                    progress.style.height =
-                        `${percentage * 100}%`;
-
-                },
-                { passive: true }
+            process.classList.add(
+                "process-active"
             );
 
         }
 
+
+        if (!progress) return;
+
+
+        let ticking = false;
+
+
+        function updateProcessProgress() {
+
+            const rect =
+                process.getBoundingClientRect();
+
+
+            const windowHeight =
+                window.innerHeight;
+
+
+            const start =
+                windowHeight * 0.75;
+
+
+            const end =
+                -rect.height * 0.25;
+
+
+            let percentage =
+                (
+                    start - rect.top
+                ) /
+                (
+                    start - end
+                );
+
+
+            percentage =
+                Math.max(
+                    0,
+                    Math.min(
+                        1,
+                        percentage
+                    )
+                );
+
+
+            progress.style.height =
+                `${percentage * 100}%`;
+
+
+            ticking = false;
+
+        }
+
+
+        function requestProcessUpdate() {
+
+            if (ticking) return;
+
+            ticking = true;
+
+            requestAnimationFrame(
+                updateProcessProgress
+            );
+
+        }
+
+
+        window.addEventListener(
+            "scroll",
+            requestProcessUpdate,
+            {
+                passive: true
+            }
+        );
+
+
+        window.addEventListener(
+            "resize",
+            requestProcessUpdate,
+            {
+                passive: true
+            }
+        );
+
+
+        requestProcessUpdate();
+
     }
 
 
-
     /* =====================================================
-       12. PRODUCT ANIMATIONS
-       ===================================================== */
+       15. PRODUCT ANIMATIONS
+       Works with dynamically loaded Supabase products.
+    ===================================================== */
 
     function initProductAnimations() {
 
@@ -750,48 +1034,43 @@
         if (!productGrid) return;
 
 
-        /*
-         * Products are inserted by script.js.
-         *
-         * MutationObserver waits for Supabase
-         * products to appear.
-         */
+        animateProducts(productGrid);
+
+
+        if (
+            !("MutationObserver" in window)
+        ) {
+            return;
+        }
+
+
+        let mutationScheduled = false;
+
 
         const observer =
-            new MutationObserver(
-                mutations => {
+            new MutationObserver(() => {
 
-                    let hasNewProducts =
+                if (mutationScheduled) {
+                    return;
+                }
+
+
+                mutationScheduled = true;
+
+
+                requestAnimationFrame(() => {
+
+                    mutationScheduled =
                         false;
 
 
-                    mutations.forEach(
-                        mutation => {
-
-                            if (
-                                mutation.addedNodes &&
-                                mutation.addedNodes.length
-                            ) {
-
-                                hasNewProducts =
-                                    true;
-
-                            }
-
-                        }
+                    animateProducts(
+                        productGrid
                     );
 
+                });
 
-                    if (hasNewProducts) {
-
-                        animateProducts(
-                            productGrid
-                        );
-
-                    }
-
-                }
-            );
+            });
 
 
         observer.observe(
@@ -802,15 +1081,7 @@
             }
         );
 
-
-        /*
-         * In case products already exist.
-         */
-
-        animateProducts(productGrid);
-
     }
-
 
 
     function animateProducts(grid) {
@@ -831,9 +1102,7 @@
                     card.dataset.motionReady ===
                     "true"
                 ) {
-
                     return;
-
                 }
 
 
@@ -841,9 +1110,18 @@
                     "true";
 
 
+                const delay =
+                    Math.min(
+                        index *
+                        CONFIG.productDelayStep,
+
+                        CONFIG.productMaxDelay
+                    );
+
+
                 card.style.setProperty(
                     "--product-delay",
-                    `${Math.min(index * 90, 500)}ms`
+                    `${delay}ms`
                 );
 
 
@@ -852,20 +1130,26 @@
                 );
 
 
-                /*
-                 * Trigger browser layout before
-                 * adding visible class.
-                 */
+                if (prefersReducedMotion) {
+
+                    card.classList.add(
+                        "product-motion-visible"
+                    );
+
+                    return;
+
+                }
+
 
                 requestAnimationFrame(() => {
 
-                    setTimeout(() => {
+                    requestAnimationFrame(() => {
 
                         card.classList.add(
                             "product-motion-visible"
                         );
 
-                    }, 50);
+                    });
 
                 });
 
@@ -875,29 +1159,20 @@
     }
 
 
-
     /* =====================================================
-       13. PREMIUM CARD TILT
+       16. PREMIUM PRODUCT CARD TILT
+       -----------------------------------------------------
+       IMPORTANT:
+       Uses CSS variables instead of overwriting
+       the entire transform property.
     ===================================================== */
 
     function initCardTilt() {
 
         if (prefersReducedMotion) return;
 
+        if (!isDesktopPointer) return;
 
-        const isTouchDevice =
-            window.matchMedia(
-                "(hover: none)"
-            ).matches;
-
-
-        if (isTouchDevice) return;
-
-
-        /*
-         * Use MutationObserver because products
-         * are loaded dynamically from Supabase.
-         */
 
         const grid =
             document.querySelector(
@@ -922,11 +1197,32 @@
 
             cards.forEach(card => {
 
-                if (processed.has(card))
+                if (
+                    processed.has(card)
+                ) {
                     return;
+                }
 
 
                 processed.add(card);
+
+
+                card.style.setProperty(
+                    "--tilt-x",
+                    "0deg"
+                );
+
+
+                card.style.setProperty(
+                    "--tilt-y",
+                    "0deg"
+                );
+
+
+                card.style.setProperty(
+                    "--tilt-lift",
+                    "0px"
+                );
 
 
                 card.addEventListener(
@@ -935,6 +1231,14 @@
 
                         const rect =
                             card.getBoundingClientRect();
+
+
+                        if (
+                            rect.width === 0 ||
+                            rect.height === 0
+                        ) {
+                            return;
+                        }
 
 
                         const x =
@@ -956,23 +1260,41 @@
 
 
                         const rotateY =
-                            ((x - centerX) /
-                                centerX) *
-                            3;
+                            (
+                                (x - centerX) /
+                                centerX
+                            ) *
+                            CONFIG.cardTiltStrength;
 
 
                         const rotateX =
-                            ((centerY - y) /
-                                centerY) *
-                            3;
+                            (
+                                (centerY - y) /
+                                centerY
+                            ) *
+                            CONFIG.cardTiltStrength;
 
 
-                        card.style.transform =
-                            `perspective(1000px)
-                             rotateX(${rotateX}deg)
-                             rotateY(${rotateY}deg)
-                             translateY(-9px)`;
+                        card.style.setProperty(
+                            "--tilt-x",
+                            `${rotateX}deg`
+                        );
 
+
+                        card.style.setProperty(
+                            "--tilt-y",
+                            `${rotateY}deg`
+                        );
+
+
+                        card.style.setProperty(
+                            "--tilt-lift",
+                            `-${CONFIG.cardLift}px`
+                        );
+
+                    },
+                    {
+                        passive: true
                     }
                 );
 
@@ -981,8 +1303,22 @@
                     "mouseleave",
                     () => {
 
-                        card.style.transform =
-                            "";
+                        card.style.setProperty(
+                            "--tilt-x",
+                            "0deg"
+                        );
+
+
+                        card.style.setProperty(
+                            "--tilt-y",
+                            "0deg"
+                        );
+
+
+                        card.style.setProperty(
+                            "--tilt-lift",
+                            "0px"
+                        );
 
                     }
                 );
@@ -995,46 +1331,46 @@
         setupCards();
 
 
-        const observer =
-            new MutationObserver(() => {
+        if (
+            "MutationObserver" in window
+        ) {
 
-                setupCards();
+            const observer =
+                new MutationObserver(() => {
 
-            });
+                    setupCards();
+
+                });
 
 
-        observer.observe(
-            grid,
-            {
-                childList: true,
-                subtree: true
-            }
-        );
+            observer.observe(
+                grid,
+                {
+                    childList: true,
+                    subtree: true
+                }
+            );
+
+        }
 
     }
 
 
-
     /* =====================================================
-       14. CURSOR GLOW
+       17. CURSOR GLOW
     ===================================================== */
 
     function initCursorGlow() {
 
         if (prefersReducedMotion) return;
 
-
-        const desktop =
-            window.matchMedia(
-                "(hover: hover) and (pointer: fine)"
-            ).matches;
-
-
-        if (!desktop) return;
+        if (!isDesktopPointer) return;
 
 
         const glow =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         glow.className =
@@ -1056,6 +1392,8 @@
         let currentX = -200;
         let currentY = -200;
 
+        let animationRunning = false;
+
 
         document.addEventListener(
             "mousemove",
@@ -1067,6 +1405,17 @@
                 mouseY =
                     event.clientY;
 
+
+                if (!animationRunning) {
+
+                    animationRunning = true;
+
+                    requestAnimationFrame(
+                        animateCursor
+                    );
+
+                }
+
             },
             {
                 passive: true
@@ -1076,14 +1425,28 @@
 
         function animateCursor() {
 
+            animationRunning = false;
+
+
+            if (!pageIsVisible) {
+                return;
+            }
+
+
             currentX +=
-                (mouseX - currentX) *
-                0.12;
+                (
+                    mouseX -
+                    currentX
+                ) *
+                CONFIG.cursorSmoothness;
 
 
             currentY +=
-                (mouseY - currentY) *
-                0.12;
+                (
+                    mouseY -
+                    currentY
+                ) *
+                CONFIG.cursorSmoothness;
 
 
             glow.style.transform =
@@ -1094,20 +1457,27 @@
                 ) translate(-50%, -50%)`;
 
 
-            requestAnimationFrame(
-                animateCursor
-            );
+            const distance =
+                Math.abs(
+                    mouseX - currentX
+                ) +
+                Math.abs(
+                    mouseY - currentY
+                );
+
+
+            if (distance > 0.5) {
+
+                animationRunning = true;
+
+                requestAnimationFrame(
+                    animateCursor
+                );
+
+            }
 
         }
 
-
-        animateCursor();
-
-
-        /*
-         * Hide cursor glow over mobile
-         * or when pointer leaves page.
-         */
 
         document.addEventListener(
             "mouseleave",
@@ -1135,9 +1505,8 @@
     }
 
 
-
     /* =====================================================
-       15. SMOOTH ANCHOR NAVIGATION
+       18. SMOOTH ANCHOR NAVIGATION
     ===================================================== */
 
     function initSmoothAnchors() {
@@ -1146,6 +1515,9 @@
             document.querySelectorAll(
                 'a[href^="#"]'
             );
+
+
+        if (!anchors.length) return;
 
 
         anchors.forEach(anchor => {
@@ -1164,16 +1536,30 @@
                         !targetId ||
                         targetId === "#"
                     ) {
+                        return;
+                    }
+
+
+                    let target = null;
+
+
+                    try {
+
+                        target =
+                            document.querySelector(
+                                targetId
+                            );
+
+                    } catch (error) {
+
+                        console.warn(
+                            "THREADVERSE: Invalid anchor selector:",
+                            targetId
+                        );
 
                         return;
 
                     }
-
-
-                    const target =
-                        document.querySelector(
-                            targetId
-                        );
 
 
                     if (!target) return;
@@ -1195,7 +1581,8 @@
 
 
                     const targetPosition =
-                        target.getBoundingClientRect()
+                        target
+                            .getBoundingClientRect()
                             .top +
                         window.scrollY -
                         navHeight -
@@ -1205,7 +1592,10 @@
                     window.scrollTo({
 
                         top:
-                            targetPosition,
+                            Math.max(
+                                0,
+                                targetPosition
+                            ),
 
                         behavior:
                             prefersReducedMotion
@@ -1213,6 +1603,29 @@
                                 : "smooth"
 
                     });
+
+
+                    /* Update URL without jumping. */
+
+                    if (
+                        history.pushState
+                    ) {
+
+                        try {
+
+                            history.pushState(
+                                null,
+                                "",
+                                targetId
+                            );
+
+                        } catch (error) {
+
+                            /* Ignore URL errors. */
+
+                        }
+
+                    }
 
                 }
             );
@@ -1222,9 +1635,8 @@
     }
 
 
-
     /* =====================================================
-       16. FOOTER ANIMATION
+       19. FOOTER ANIMATION
     ===================================================== */
 
     function initFooterAnimation() {
@@ -1249,6 +1661,19 @@
         }
 
 
+        if (
+            !("IntersectionObserver" in window)
+        ) {
+
+            footer.classList.add(
+                "footer-visible"
+            );
+
+            return;
+
+        }
+
+
         const observer =
             new IntersectionObserver(
                 entries => {
@@ -1256,18 +1681,20 @@
                     entries.forEach(entry => {
 
                         if (
-                            entry.isIntersecting
+                            !entry.isIntersecting
                         ) {
-
-                            footer.classList.add(
-                                "footer-visible"
-                            );
-
-                            observer.unobserve(
-                                footer
-                            );
-
+                            return;
                         }
+
+
+                        footer.classList.add(
+                            "footer-visible"
+                        );
+
+
+                        observer.unobserve(
+                            footer
+                        );
 
                     });
 
@@ -1283,38 +1710,8 @@
     }
 
 
-
     /* =====================================================
-       17. PAGE VISIBILITY
-       ===================================================== */
-
-    document.addEventListener(
-        "visibilitychange",
-        () => {
-
-            if (
-                document.hidden
-            ) {
-
-                document.body.classList.add(
-                    "page-hidden"
-                );
-
-            } else {
-
-                document.body.classList.remove(
-                    "page-hidden"
-                );
-
-            }
-
-        }
-    );
-
-
-
-    /* =====================================================
-       18. PERFORMANCE SAFETY
+       20. PAGE EXIT
     ===================================================== */
 
     window.addEventListener(
@@ -1329,61 +1726,112 @@
     );
 
 
+    /* =====================================================
+       21. INITIALIZE AFTER DOM READY
+    ===================================================== */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeMotionEngine,
+            {
+                once: true
+            }
+        );
+
+    } else {
+
+        initializeMotionEngine();
+
+    }
+
 
     /* =====================================================
-       19. DEBUG INFORMATION
+       22. DEBUG INFORMATION
     ===================================================== */
 
     console.log(
-        "THREADVERSE motion systems loaded:"
+        "THREADVERSE Premium Motion Engine v2.0 loaded."
     );
+
 
     console.log(
         "✓ Page loader"
     );
 
+
     console.log(
         "✓ Hero reveal"
     );
 
+
     console.log(
-        "✓ Scroll animations"
+        "✓ Scroll reveal"
     );
+
+
+    console.log(
+        "✓ Text reveal"
+    );
+
 
     console.log(
         "✓ Mouse parallax"
     );
 
+
     console.log(
         "✓ Magnetic buttons"
     );
 
+
     console.log(
-        "✓ Navbar animation"
+        "✓ Navbar scroll state"
     );
+
 
     console.log(
         "✓ Active navigation"
     );
 
+
     console.log(
         "✓ Process timeline"
     );
 
-    console.log(
-        "✓ Dynamic product animation"
-    );
 
     console.log(
-        "✓ Product card tilt"
+        "✓ Dynamic Supabase product animation"
     );
+
+
+    console.log(
+        "✓ Premium product card tilt"
+    );
+
 
     console.log(
         "✓ Cursor glow"
     );
 
+
     console.log(
-        "✓ Smooth navigation"
+        "✓ Smooth anchor navigation"
     );
+
+
+    console.log(
+        "✓ Footer reveal"
+    );
+
+
+    console.log(
+        "✓ Reduced-motion support"
+    );
+
 
 })();
