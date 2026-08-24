@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,266 +6,782 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="description"
+        content="THREADVERSE — A World of Custom Wear. Create premium custom clothing that represents your style, creativity and identity.">
+
+    <meta name="theme-color" content="#050505">
+
     <title>THREADVERSE | A World of Custom Wear</title>
 
-    <!-- Main CSS -->
+    <!-- =====================================================
+         MAIN CSS
+    ====================================================== -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Supabase Library -->
+    <!-- =====================================================
+         SUPABASE
+    ====================================================== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
-<body>
 
-    <!-- =========================================
-         NAVIGATION
-    ========================================== -->
-    <nav class="main-navbar">
+<body class="page-home">
 
-        <a href="#home" class="logo">
+
+    <!-- =====================================================
+         PAGE LOADER
+         Premium entrance layer
+    ====================================================== -->
+
+    <div class="page-loader" aria-hidden="true">
+
+        <div class="loader-brand">
             THREADVERSE
+        </div>
+
+        <div class="loader-line">
+            <span></span>
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <nav class="main-navbar" data-nav>
+
+        <a href="#home"
+           class="logo"
+           aria-label="THREADVERSE Home">
+
+            THREADVERSE
+
         </a>
 
+
         <div class="nav-links">
-            <a href="#home">HOME</a>
-            <a href="#shop">SHOP</a>
-            <a href="cart.html">CART</a>
-            <a href="#custom">CUSTOM</a>
-            <a href="#about">ABOUT</a>
+
+            <a href="#home" data-nav-link>
+                HOME
+            </a>
+
+            <a href="#shop" data-nav-link>
+                SHOP
+            </a>
+
+            <a href="cart.html" data-nav-link>
+                CART
+            </a>
+
+            <a href="#custom" data-nav-link>
+                CUSTOM
+            </a>
+
+            <a href="#about" data-nav-link>
+                ABOUT
+            </a>
+
         </div>
 
     </nav>
 
 
-    <!-- =========================================
+
+    <!-- =====================================================
          HERO SECTION
-    ========================================== -->
-    <section id="home" class="hero">
+    ====================================================== -->
 
-        <div class="hero-content">
+    <main>
 
-            <p class="hero-small-text">
-                A WORLD OF CUSTOM WEAR
-            </p>
+        <section
+            id="home"
+            class="hero"
+            data-hero
+            aria-labelledby="hero-title">
 
-            <h1>
-                WEAR YOUR<br>
-                IDENTITY.
-            </h1>
 
-            <p class="hero-description">
-                Create premium custom clothing that represents your style,
-                creativity, brand and identity.
-            </p>
+            <!-- =============================================
+                 HERO DECORATIVE MOTION LAYERS
+                 These are controlled by CSS / JS.
+            ============================================== -->
 
-            <div class="hero-buttons">
-
-                <a href="#shop" class="btn">
-                    SHOP NOW
-                </a>
-
-                <a href="custom-order.html" class="btn custom-order">
-                    CREATE YOUR DESIGN
-                </a>
-
+            <div class="hero-orb hero-orb-one"
+                 data-parallax="0.10"
+                 aria-hidden="true">
             </div>
 
-        </div>
 
-    </section>
-
-
-    <!-- =========================================
-         SHOP SECTION
-    ========================================== -->
-    <section id="shop" class="products-section">
-
-        <div class="section-heading">
-
-            <p>
-                EXPLORE THREADVERSE
-            </p>
-
-            <h2>
-                OUR COLLECTION
-            </h2>
-
-            <p class="section-description">
-                Premium custom wear made for your style.
-            </p>
-
-        </div>
+            <div class="hero-orb hero-orb-two"
+                 data-parallax="0.18"
+                 aria-hidden="true">
+            </div>
 
 
-        <!-- Products are loaded automatically
-             from Supabase by script.js -->
-        <div class="products-grid">
-
-            <p class="products-loading">
-                Loading THREADVERSE products...
-            </p>
-
-        </div>
-
-    </section>
+            <div class="hero-grid"
+                 aria-hidden="true">
+            </div>
 
 
-    <!-- =========================================
-         CUSTOM DESIGN SECTION
-    ========================================== -->
-    <section id="custom" class="custom-section">
-
-        <div class="section-heading">
-
-            <p>
-                CREATE SOMETHING UNIQUE
-            </p>
-
-            <h2>
-                CREATE YOUR OWN DESIGN
-            </h2>
-
-            <p class="section-description">
-                From your idea to premium custom clothing.
-            </p>
-
-        </div>
+            <div class="hero-noise"
+                 aria-hidden="true">
+            </div>
 
 
-        <div class="steps-container">
 
-            <!-- STEP 1 -->
-            <div class="step">
+            <!-- =============================================
+                 HERO CONTENT
+            ============================================== -->
 
-                <span>01</span>
+            <div class="hero-content">
 
-                <h3>
-                    Choose Your Style
-                </h3>
 
-                <p>
-                    Select the product and style you want.
+                <p
+                    class="hero-small-text reveal hero-reveal hero-reveal-1"
+                    data-reveal>
+                    A WORLD OF CUSTOM WEAR
                 </p>
 
-            </div>
 
 
-            <!-- STEP 2 -->
-            <div class="step">
+                <h1
+                    id="hero-title"
+                    class="hero-title"
+                    data-text-reveal>
 
-                <span>02</span>
+                    <span class="hero-title-line">
+                        <span class="hero-title-inner">
+                            WEAR YOUR
+                        </span>
+                    </span>
 
-                <h3>
-                    Add Your Artwork
-                </h3>
+                    <span class="hero-title-line">
+                        <span class="hero-title-inner hero-title-accent">
+                            IDENTITY.
+                        </span>
+                    </span>
 
-                <p>
-                    Upload your design or share your idea.
+                </h1>
+
+
+
+                <p
+                    class="hero-description reveal hero-reveal hero-reveal-3"
+                    data-reveal>
+
+                    Create premium custom clothing that represents
+                    your style, creativity, brand and identity.
+
                 </p>
 
+
+
+                <!-- =========================================
+                     HERO BUTTONS
+                ========================================== -->
+
+                <div
+                    class="hero-buttons reveal hero-reveal-4"
+                    data-reveal>
+
+
+                    <a
+                        href="#shop"
+                        class="btn btn-premium magnetic-btn">
+
+                        <span>
+                            SHOP NOW
+                        </span>
+
+                        <span
+                            class="btn-arrow"
+                            aria-hidden="true">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="custom-order.html"
+                        class="btn custom-order btn-premium magnetic-btn">
+
+                        <span>
+                            CREATE YOUR DESIGN
+                        </span>
+
+                        <span
+                            class="btn-arrow"
+                            aria-hidden="true">
+                            →
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+
             </div>
 
 
-            <!-- STEP 3 -->
-            <div class="step">
 
-                <span>03</span>
+            <!-- =============================================
+                 HERO SCROLL INDICATOR
+            ============================================== -->
 
-                <h3>
-                    We Create Your Design
-                </h3>
+            <a
+                href="#shop"
+                class="hero-scroll"
+                aria-label="Scroll to collection">
 
-                <p>
-                    Your design is prepared for premium printing.
-                </p>
+                <span class="hero-scroll-text">
+                    SCROLL TO EXPLORE
+                </span>
 
-            </div>
+                <span
+                    class="hero-scroll-line"
+                    aria-hidden="true">
+                </span>
 
-
-            <!-- STEP 4 -->
-            <div class="step">
-
-                <span>04</span>
-
-                <h3>
-                    Wear Your Identity
-                </h3>
-
-                <p>
-                    Receive clothing made uniquely for you.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="custom-order-action">
-
-            <a href="custom-order.html" class="btn custom-order">
-                START CUSTOM ORDER
             </a>
 
+
+
+            <!-- =============================================
+                 HERO CORNER LABEL
+            ============================================== -->
+
+            <div
+                class="hero-corner-label"
+                aria-hidden="true">
+
+                <span>
+                    TV / 001
+                </span>
+
+                <span>
+                    EST. 2026
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             BRAND MOTION STRIP
+             ================================================= -->
+
+        <div
+            class="brand-marquee"
+            aria-hidden="true">
+
+            <div class="brand-marquee-track">
+
+                <span>THREADVERSE</span>
+                <span>✦</span>
+                <span>A WORLD OF CUSTOM WEAR</span>
+                <span>✦</span>
+                <span>THREADVERSE</span>
+                <span>✦</span>
+                <span>A WORLD OF CUSTOM WEAR</span>
+                <span>✦</span>
+
+                <!-- Duplicate content for seamless loop -->
+
+                <span>THREADVERSE</span>
+                <span>✦</span>
+                <span>A WORLD OF CUSTOM WEAR</span>
+                <span>✦</span>
+                <span>THREADVERSE</span>
+                <span>✦</span>
+                <span>A WORLD OF CUSTOM WEAR</span>
+                <span>✦</span>
+
+            </div>
+
         </div>
 
-    </section>
 
 
-    <!-- =========================================
-         ABOUT SECTION
-    ========================================== -->
-    <section id="about" class="about-section">
+        <!-- =================================================
+             SHOP SECTION
+        ================================================== -->
 
-        <div class="section-heading">
-
-            <p>
-                ABOUT THREADVERSE
-            </p>
-
-            <h2>
-                MORE THAN JUST CLOTHING
-            </h2>
-
-        </div>
+        <section
+            id="shop"
+            class="products-section premium-section"
+            data-section>
 
 
-        <p class="about-description">
-
-            THREADVERSE is a world of custom wear where creativity meets
-            premium clothing. We help individuals, creators, businesses and
-            brands turn their ideas into wearable identities.
-
-        </p>
-
-    </section>
+            <div
+                class="section-heading reveal"
+                data-reveal>
 
 
-    <!-- =========================================
+                <p class="section-eyebrow">
+                    EXPLORE THREADVERSE
+                </p>
+
+
+                <h2>
+                    OUR COLLECTION
+                </h2>
+
+
+                <p class="section-description">
+
+                    Premium custom wear made for your style.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 PRODUCT GRID
+                 IMPORTANT:
+                 script.js continues to inject products here.
+            ============================================== -->
+
+            <div
+                class="products-grid"
+                data-products-grid>
+
+
+                <div
+                    class="products-loading premium-loading">
+
+                    <div
+                        class="loading-spinner"
+                        aria-hidden="true">
+                    </div>
+
+                    <p>
+                        Loading THREADVERSE products...
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             CUSTOM DESIGN SECTION
+        ================================================== -->
+
+        <section
+            id="custom"
+            class="custom-section premium-section"
+            data-section>
+
+
+            <div
+                class="section-heading reveal"
+                data-reveal>
+
+
+                <p class="section-eyebrow">
+                    CREATE SOMETHING UNIQUE
+                </p>
+
+
+                <h2>
+                    CREATE YOUR OWN DESIGN
+                </h2>
+
+
+                <p class="section-description">
+
+                    From your idea to premium custom clothing.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 PROCESS TIMELINE
+            ============================================== -->
+
+            <div
+                class="steps-wrapper"
+                data-process>
+
+
+                <div
+                    class="process-line"
+                    aria-hidden="true">
+
+                    <span class="process-line-progress"></span>
+
+                </div>
+
+
+
+                <div class="steps-container">
+
+
+                    <!-- STEP 01 -->
+
+                    <article
+                        class="step reveal step-reveal-1"
+                        data-reveal
+                        data-step="1">
+
+
+                        <span
+                            class="step-number"
+                            aria-hidden="true">
+                            01
+                        </span>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Choose Your Style
+                            </h3>
+
+                            <p>
+
+                                Select the product and style
+                                you want.
+
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="step-arrow"
+                            aria-hidden="true">
+                            ↗
+                        </span>
+
+
+                    </article>
+
+
+
+                    <!-- STEP 02 -->
+
+                    <article
+                        class="step reveal step-reveal-2"
+                        data-reveal
+                        data-step="2">
+
+
+                        <span
+                            class="step-number"
+                            aria-hidden="true">
+                            02
+                        </span>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Add Your Artwork
+                            </h3>
+
+                            <p>
+
+                                Upload your design or
+                                share your idea.
+
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="step-arrow"
+                            aria-hidden="true">
+                            ↗
+                        </span>
+
+
+                    </article>
+
+
+
+                    <!-- STEP 03 -->
+
+                    <article
+                        class="step reveal step-reveal-3"
+                        data-reveal
+                        data-step="3">
+
+
+                        <span
+                            class="step-number"
+                            aria-hidden="true">
+                            03
+                        </span>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                We Create Your Design
+                            </h3>
+
+                            <p>
+
+                                Your design is prepared
+                                for premium printing.
+
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="step-arrow"
+                            aria-hidden="true">
+                            ↗
+                        </span>
+
+
+                    </article>
+
+
+
+                    <!-- STEP 04 -->
+
+                    <article
+                        class="step reveal step-reveal-4"
+                        data-reveal
+                        data-step="4">
+
+
+                        <span
+                            class="step-number"
+                            aria-hidden="true">
+                            04
+                        </span>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Wear Your Identity
+                            </h3>
+
+                            <p>
+
+                                Receive clothing made
+                                uniquely for you.
+
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="step-arrow"
+                            aria-hidden="true">
+                            ↗
+                        </span>
+
+
+                    </article>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 CUSTOM CTA
+            ============================================== -->
+
+            <div
+                class="custom-order-action reveal"
+                data-reveal>
+
+
+                <a
+                    href="custom-order.html"
+                    class="btn custom-order btn-premium magnetic-btn">
+
+                    <span>
+                        START CUSTOM ORDER
+                    </span>
+
+                    <span
+                        class="btn-arrow"
+                        aria-hidden="true">
+                        →
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ABOUT SECTION
+        ================================================== -->
+
+        <section
+            id="about"
+            class="about-section premium-section"
+            data-section>
+
+
+            <div
+                class="section-heading reveal"
+                data-reveal>
+
+
+                <p class="section-eyebrow">
+                    ABOUT THREADVERSE
+                </p>
+
+
+                <h2
+                    class="about-title"
+                    data-text-reveal>
+
+                    MORE THAN JUST CLOTHING
+
+                </h2>
+
+
+            </div>
+
+
+
+            <div
+                class="about-content reveal"
+                data-reveal>
+
+
+                <p class="about-description">
+
+                    THREADVERSE is a world of custom wear where
+                    creativity meets premium clothing. We help
+                    individuals, creators, businesses and brands
+                    turn their ideas into wearable identities.
+
+                </p>
+
+
+            </div>
+
+
+            <!-- Decorative about line -->
+
+            <div
+                class="about-line"
+                aria-hidden="true">
+
+                <span></span>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
          FOOTER
-    ========================================== -->
-    <footer class="main-footer">
+    ====================================================== -->
 
-        <h2>
-            THREADVERSE
-        </h2>
+    <footer
+        class="main-footer"
+        data-footer>
 
-        <p>
-            A World of Custom Wear
-        </p>
 
-        <p>
-            © 2026 THREADVERSE. All Rights Reserved.
-        </p>
+        <div class="footer-inner">
+
+
+            <div
+                class="footer-brand reveal"
+                data-reveal>
+
+                <h2>
+                    THREADVERSE
+                </h2>
+
+                <p>
+                    A World of Custom Wear
+                </p>
+
+            </div>
+
+
+
+            <div
+                class="footer-divider"
+                aria-hidden="true">
+            </div>
+
+
+
+            <div
+                class="footer-bottom">
+
+                <p>
+                    © 2026 THREADVERSE. All Rights Reserved.
+                </p>
+
+            </div>
+
+
+        </div>
+
 
     </footer>
 
 
-    <!-- =========================================
+
+    <!-- =====================================================
          MAIN JAVASCRIPT
-    ========================================== -->
+         Existing Supabase/product logic remains.
+    ====================================================== -->
+
     <script src="script.js"></script>
+
+
+    <!-- =====================================================
+         PREMIUM MOTION ENGINE
+         This file will be created in the next step.
+    ====================================================== -->
+
+    <script src="premium-motion.js"></script>
+
 
 </body>
 
 </html>
-
