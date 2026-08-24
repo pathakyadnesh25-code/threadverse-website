@@ -3063,5 +3063,236 @@ footer p,
 
     }
 
+/* =========================================================
+   THREADVERSE — PRODUCT DETAILS CONTROLS
+   Premium High-Contrast Theme
+   ========================================================= */
+
+/* Product detail information area */
+.product-detail-info {
+    color: #f5f5f5;
+}
+
+/* Product labels */
+.product-detail-info label {
+    display: block;
+    margin-top: 22px;
+    margin-bottom: 9px;
+
+    color: #f2f2f2;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* SIZE SELECT + QUANTITY INPUT */
+.product-detail-info select,
+.product-detail-info input[type="number"] {
+    width: 100%;
+    min-height: 52px;
+
+    padding: 0 16px;
+
+    background: #1b1b24;
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+/* Dropdown text */
+.product-detail-info select option {
+    background: #18181f;
+    color: #ffffff;
+}
+
+/* Hover */
+.product-detail-info select:hover,
+.product-detail-info input[type="number"]:hover {
+    background: #20202a;
+    border-color: rgba(139, 92, 246, 0.65);
+}
+
+/* Focus */
+.product-detail-info select:focus,
+.product-detail-info input[type="number"]:focus {
+    background: #20202a;
+
+    border-color: #8b5cf6;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.13),
+        0 8px 25px rgba(0, 0, 0, 0.25);
+
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   ADD TO CART BUTTON
+   ========================================================= */
+
+.product-detail-info .add-to-cart-button,
+.add-to-cart-button {
+    width: 100%;
+
+    min-height: 56px;
+
+    margin-top: 28px;
+
+    padding: 0 24px;
+
+    border: 1px solid rgba(139, 92, 246, 0.75);
+    border-radius: 14px;
+
+    background: #8b5cf6;
+    color: #ffffff;
+
+    font-size: 0.88rem;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px rgba(139, 92, 246, 0.18);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+/* Button hover */
+.product-detail-info .add-to-cart-button:hover,
+.add-to-cart-button:hover {
+    background: #9b73f7;
+    border-color: #b79cff;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 16px 38px rgba(139, 92, 246, 0.28);
+}
+
+/* Button click */
+.product-detail-info .add-to-cart-button:active,
+.add-to-cart-button:active {
+    transform: translateY(-1px);
+}
+
+/* Disabled button */
+.product-detail-info .add-to-cart-button:disabled,
+.add-to-cart-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* =========================================================
+   BACK TO SHOP
+   ========================================================= */
+
+.product-detail-info .back-button,
+.back-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 48px;
+
+    margin-top: 12px;
+
+    color: #d6d6dd;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.product-detail-info .back-button:hover,
+.back-button:hover {
+    color: #ffffff;
+
+    background: rgba(139, 92, 246, 0.08);
+
+    border-color: rgba(139, 92, 246, 0.45);
+
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   PRODUCT PRICE
+   ========================================================= */
+
+.product-detail-price {
+    color: #ffffff !important;
+
+    font-weight: 800;
+
+    text-shadow:
+        0 0 20px rgba(139, 92, 246, 0.12);
+}
+
+/* Product category */
+.product-category {
+    color: #b79cff !important;
+
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+/* Product description */
+.product-detail-description {
+    color: #b8b8c2 !important;
+
+    line-height: 1.7;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .product-detail-info select,
+    .product-detail-info input[type="number"] {
+        min-height: 50px;
+    }
+
+    .product-detail-info .add-to-cart-button,
+    .add-to-cart-button {
+        min-height: 54px;
+    }
+
 }
 
