@@ -3295,4 +3295,51 @@ footer p,
     }
 
 }
+/* =====================================================
+   THREADVERSE FOUNDER SIGNATURE
+   ===================================================== */
+
+.main-navbar .logo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+}
+
+.main-navbar .logo .logo-brand {
+    display: block !important;
+    line-height: 1 !important;
+}
+
+.main-navbar .logo .logo-founder {
+    display: block !important;
+    margin-top: 7px !important;
+
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+
+    font-weight: 500 !important;
+    letter-spacing: 1.4px !important;
+
+    color: rgba(255, 255, 255, 0.60) !important;
+
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+}
+
+.main-navbar .logo:hover .logo-founder {
+    color: #b79cff !important;
+}
+
+
+@media (max-width: 768px) {
+
+    .main-navbar .logo .logo-founder {
+        font-size: 7px !important;
+        letter-spacing: 1px !important;
+        margin-top: 6px !important;
+    }
+
+}   
 
