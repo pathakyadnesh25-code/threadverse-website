@@ -1303,4 +1303,225 @@ a:focus-visible {
         scroll-behavior:
             auto !important;
     }
+/* =========================================================
+   THREADVERSE PRODUCT CONTROLS — FINAL VISIBILITY FIX
+   ========================================================= */
+
+/* SIZE LABEL */
+.size-section h3,
+.quantity-section h3,
+.size-label,
+.quantity-label,
+.product-option label,
+.option-group label {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* SIZE BUTTONS */
+.size-btn,
+.size-button,
+.size-option {
+    background: #17171c !important;
+    color: #f5f5f5 !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    box-shadow: none !important;
+}
+
+/* SIZE BUTTON HOVER */
+.size-btn:hover,
+.size-button:hover,
+.size-option:hover {
+    background: rgba(139, 92, 246, 0.14) !important;
+
+    color: #ffffff !important;
+
+    border-color: #8b5cf6 !important;
+
+    box-shadow:
+        0 0 0 1px rgba(139, 92, 246, 0.18),
+        0 10px 30px rgba(139, 92, 246, 0.12) !important;
+
+    transform: translateY(-2px) !important;
+}
+
+/* SELECTED SIZE */
+.size-btn.active,
+.size-btn.selected,
+.size-button.active,
+.size-button.selected,
+.size-option.active,
+.size-option.selected {
+    background: #8b5cf6 !important;
+
+    color: #ffffff !important;
+
+    border-color: #a78bfa !important;
+
+    box-shadow:
+        0 8px 25px rgba(139, 92, 246, 0.25) !important;
+}
+
+
+/* =========================================================
+   QUANTITY
+   ========================================================= */
+
+.quantity-controls,
+.quantity-selector {
+    background: #17171c !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.quantity-btn,
+.quantity-button,
+.minus-btn,
+.plus-btn {
+    background: transparent !important;
+
+    color: #ffffff !important;
+
+    border: none !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.quantity-btn:hover,
+.quantity-button:hover,
+.minus-btn:hover,
+.plus-btn:hover {
+    background: rgba(139, 92, 246, 0.15) !important;
+
+    color: #a78bfa !important;
+}
+
+.quantity-value,
+#quantity-value {
+    color: #ffffff !important;
+
+    opacity: 1 !important;
+}
+
+
+/* =========================================================
+   ADD TO CART — CLEAR PREMIUM PURPLE
+   ========================================================= */
+
+.add-to-cart-btn,
+#add-to-cart,
+.add-cart-button {
+    display: flex !important;
+
+    width: 100% !important;
+
+    min-height: 60px !important;
+
+    background: rgba(139, 92, 246, 0.08) !important;
+
+    color: #ffffff !important;
+
+    border: 1px solid rgba(139, 92, 246, 0.65) !important;
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    box-shadow:
+        0 0 0 1px rgba(139, 92, 246, 0.05) !important;
+}
+
+.add-to-cart-btn:hover,
+#add-to-cart:hover,
+.add-cart-button:hover {
+    background: #8b5cf6 !important;
+
+    color: #ffffff !important;
+
+    border-color: #a78bfa !important;
+
+    transform: translateY(-3px) !important;
+
+    box-shadow:
+        0 15px 40px rgba(139, 92, 246, 0.25) !important;
+}
+
+
+/* =========================================================
+   BUY NOW
+   ========================================================= */
+
+.buy-now-btn,
+#buy-now,
+.buy-now-button {
+    background: #ffffff !important;
+
+    color: #111111 !important;
+
+    border-color: #ffffff !important;
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+}
+
+.buy-now-btn:hover,
+#buy-now:hover,
+.buy-now-button:hover {
+    background: #f3f3f3 !important;
+
+    color: #111111 !important;
+}
+
+
+/* =========================================================
+   PRODUCT OPTION TEXT
+   ========================================================= */
+
+.product-details label,
+.product-details h3,
+.product-details strong {
+    opacity: 1 !important;
+}
+
+.product-details {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MOBILE VISIBILITY
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .size-btn,
+    .size-button,
+    .size-option {
+        background: #17171c !important;
+
+        color: #ffffff !important;
+
+        border-color: rgba(255, 255, 255, 0.28) !important;
+    }
+
+    .add-to-cart-btn,
+    #add-to-cart,
+    .add-cart-button {
+        background: rgba(139, 92, 246, 0.10) !important;
+
+        color: #ffffff !important;
+
+        border-color: #8b5cf6 !important;
+    }
 }
