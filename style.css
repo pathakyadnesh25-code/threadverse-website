@@ -3355,4 +3355,637 @@ footer,
         min-height: 58px !important;
     }
 
+/* =========================================================
+   THREADVERSE — FINAL ORIGINAL COLOR SYSTEM
+   BLACK + CHARCOAL + WHITE + SOFT GRAY + CONTROLLED PURPLE
+   FINAL OVERRIDE
+========================================================= */
+
+:root {
+    --bg: #08080c;
+    --bg-soft: #0d0d12;
+
+    --bg-card: #15151b;
+    --bg-card-hover: #1b1b23;
+
+    --text: #ffffff;
+    --text-dark: #111111;
+
+    --muted: #a8a8b3;
+    --muted-light: #c7c7d0;
+
+    --line: rgba(255,255,255,0.10);
+    --line-soft: rgba(255,255,255,0.06);
+    --line-strong: rgba(255,255,255,0.16);
+
+    /* CONTROLLED PURPLE */
+    --accent: #8b5cf6;
+    --accent-dark: #6d3fd3;
+    --accent-light: #b79cff;
+
+    /* VERY SUBTLE PURPLE GLOW */
+    --purple-glow: rgba(139,92,246,0.12);
+    --purple-glow-soft: rgba(139,92,246,0.055);
+
+    --shadow:
+        0 20px 60px rgba(0,0,0,0.42);
+
+    --shadow-large:
+        0 35px 100px rgba(0,0,0,0.58);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+html,
+body {
+    background: #08080c !important;
+    color: #ffffff !important;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 15% 0%,
+            rgba(139,92,246,0.035),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(139,92,246,0.025),
+            transparent 30%
+        ),
+        #08080c !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #ffffff !important;
+}
+
+p {
+    color: #a8a8b3;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+nav,
+.main-navbar {
+    background: rgba(15,15,20,0.92) !important;
+
+    border-color:
+        rgba(255,255,255,0.09) !important;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,0.38) !important;
+}
+
+.logo {
+    color: #ffffff !important;
+}
+
+.logo:hover {
+    color: #b79cff !important;
+}
+
+.nav-links a {
+    color: #c5c5cc !important;
+}
+
+.nav-links a:hover,
+.nav-links a.active-nav {
+    color: #ffffff !important;
+}
+
+.nav-links a::after {
+    background: #8b5cf6 !important;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(8,8,12,0.97) 0%,
+            rgba(8,8,12,0.88) 40%,
+            rgba(8,8,12,0.40) 100%
+        ),
+        linear-gradient(
+            135deg,
+            #17171d,
+            #09090d 58%,
+            #15151b
+        ) !important;
+
+    border-color:
+        rgba(255,255,255,0.09) !important;
+}
+
+.hero::before {
+    background: #8b5cf6 !important;
+    opacity: 0.075 !important;
+}
+
+.hero-small-text {
+    color: #b79cff !important;
+
+    border-color:
+        rgba(139,92,246,0.28) !important;
+}
+
+.hero h1 {
+    color: #ffffff !important;
+}
+
+.hero-description {
+    color: #b7b7c0 !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn,
+.product-button,
+.checkout-button,
+.place-order-button,
+.add-to-cart-button,
+.back-button {
+    background: #8b5cf6 !important;
+    color: #ffffff !important;
+
+    box-shadow:
+        0 10px 30px rgba(139,92,246,0.12);
+}
+
+.btn:hover,
+.product-button:hover,
+.checkout-button:hover,
+.place-order-button:hover,
+.add-to-cart-button:hover {
+    background: #9d75f8 !important;
+
+    color: #ffffff !important;
+
+    box-shadow:
+        0 15px 40px rgba(139,92,246,0.22) !important;
+
+    transform: translateY(-3px);
+}
+
+.btn:active,
+.product-button:active,
+.checkout-button:active,
+.place-order-button:active,
+.add-to-cart-button:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.section-heading > p:first-child,
+.section-label {
+    color: #b79cff !important;
+}
+
+.section-heading h2 {
+    color: #ffffff !important;
+}
+
+.section-description {
+    color: #a8a8b3 !important;
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.products-section,
+.custom-section,
+.about-section {
+    background: transparent !important;
+}
+
+.product-card {
+    background:
+        linear-gradient(
+            145deg,
+            #17171d,
+            #111116
+        ) !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.product-card:hover {
+    border-color:
+        rgba(139,92,246,0.38) !important;
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,0.45),
+        0 0 30px rgba(139,92,246,0.05) !important;
+}
+
+.product-image,
+.real-product-image {
+    background:
+        linear-gradient(
+            135deg,
+            #202026,
+            #101014
+        ) !important;
+}
+
+.product-card h3,
+.product-details h3 {
+    color: #ffffff !important;
+}
+
+.product-card p,
+.product-description {
+    color: #a8a8b3 !important;
+}
+
+.product-category,
+.product-price {
+    color: #b79cff !important;
+}
+
+
+/* =========================================================
+   CUSTOM DESIGN STEPS
+========================================================= */
+
+.step {
+    background:
+        linear-gradient(
+            145deg,
+            #17171d,
+            #101014
+        ) !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.step:hover {
+    border-color:
+        rgba(139,92,246,0.38) !important;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.35) !important;
+}
+
+.step::before {
+    background: #8b5cf6 !important;
+}
+
+.step span {
+    color:
+        rgba(183,156,255,0.82) !important;
+}
+
+.step h3 {
+    color: #ffffff !important;
+}
+
+.step p {
+    color: #a8a8b3 !important;
+}
+
+
+/* =========================================================
+   PRODUCT DETAILS
+========================================================= */
+
+.product-detail-card {
+    background:
+        linear-gradient(
+            145deg,
+            #17171d,
+            #101014
+        ) !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.45) !important;
+}
+
+.product-detail-info h1 {
+    color: #ffffff !important;
+}
+
+.product-detail-description {
+    color: #a8a8b3 !important;
+}
+
+.product-detail-price {
+    color: #ffffff !important;
+}
+
+.product-category {
+    color: #b79cff !important;
+}
+
+
+/* =========================================================
+   FORM ELEMENTS
+========================================================= */
+
+input,
+textarea,
+select {
+    background: #111116 !important;
+
+    color: #ffffff !important;
+
+    border-color:
+        rgba(255,255,255,0.12) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #777782 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color:
+        rgba(139,92,246,0.65) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(139,92,246,0.08) !important;
+
+    outline: none !important;
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart-products-section,
+.cart-summary-card,
+.cart-help-card {
+    background:
+        #15151b !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.cart-item {
+    background:
+        #111116 !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.cart-item h3,
+.cart-summary h2,
+.cart-summary-card h2 {
+    color: #ffffff !important;
+}
+
+.cart-item p,
+.cart-help-card p {
+    color: #a8a8b3 !important;
+}
+
+.summary-total strong,
+#cart-final-total {
+    color: #ffffff !important;
+}
+
+.continue-shopping-link {
+    color: #b79cff !important;
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+.checkout-form-section,
+.checkout-summary {
+    background:
+        #15151b !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.checkout-section-header p,
+.order-summary-top > p {
+    color: #b79cff !important;
+}
+
+.checkout-section-header h2,
+.order-summary-top h2 {
+    color: #ffffff !important;
+}
+
+.checkout-price-row span:first-child {
+    color: #b8b8c2 !important;
+}
+
+.checkout-total strong {
+    color: #ffffff !important;
+}
+
+.checkout-benefit span {
+    color: #b79cff !important;
+}
+
+
+/* =========================================================
+   CUSTOM ORDER
+========================================================= */
+
+.custom-order-container,
+.custom-order-form,
+.custom-order-card {
+    background:
+        #15151b !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.custom-order-container h1,
+.custom-order-container h2,
+.custom-order-container h3 {
+    color: #ffffff !important;
+}
+
+.custom-order-container p {
+    color: #a8a8b3 !important;
+}
+
+.custom-order-message {
+    color: #b79cff !important;
+}
+
+
+/* =========================================================
+   SUCCESS PAGE
+========================================================= */
+
+.order-success-container {
+    background:
+        #15151b !important;
+
+    border-color:
+        rgba(255,255,255,0.08) !important;
+}
+
+.order-success-container h1,
+.order-success-container h2 {
+    color: #ffffff !important;
+}
+
+.order-success-container p {
+    color: #a8a8b3 !important;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer,
+.main-footer {
+    background:
+        #0d0d12 !important;
+
+    border-color:
+        rgba(255,255,255,0.07) !important;
+}
+
+footer h2,
+.main-footer h2,
+.footer-logo {
+    color: #ffffff !important;
+}
+
+footer p,
+.main-footer p {
+    color: #888893 !important;
+}
+
+
+/* =========================================================
+   PURPLE ACCENT DETAILS
+========================================================= */
+
+a:hover {
+    color: #b79cff;
+}
+
+::selection {
+    background: #8b5cf6 !important;
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   REMOVE OLD LIME/YELLOW COLORS
+========================================================= */
+
+/* Old lime glow replacements */
+[style*="#d9ff3f"],
+[style*="#D9FF3F"],
+[style*="#ecff89"],
+[style*="#ECFF89"] {
+    color: #8b5cf6 !important;
+    background-color: #8b5cf6 !important;
+}
+
+
+/* =========================================================
+   PREMIUM SUBTLE ANIMATION
+========================================================= */
+
+.product-card,
+.step,
+.product-detail-card,
+.cart-summary-card,
+.checkout-summary,
+.checkout-form-section {
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.product-card:hover,
+.step:hover {
+    transform: translateY(-8px);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    nav,
+    .main-navbar {
+        background:
+            rgba(15,15,20,0.97) !important;
+    }
+
+    .hero {
+        background:
+            linear-gradient(
+                135deg,
+                #15151b,
+                #08080c
+            ) !important;
+    }
+
+    .hero::before {
+        opacity: 0.05 !important;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
