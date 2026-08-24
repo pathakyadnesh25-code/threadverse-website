@@ -1,7 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +15,97 @@
 
     <title>THREADVERSE | A World of Custom Wear</title>
 
+
     <!-- =====================================================
          MAIN CSS
     ====================================================== -->
+
     <link rel="stylesheet" href="style.css">
+
+
+    <!-- =====================================================
+         FOUNDER NAME NAVBAR STYLING
+    ====================================================== -->
+
+    <style>
+
+        /* ================================================
+           THREADVERSE NAVBAR BRAND
+        ================================================ */
+
+        .logo {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: center !important;
+            text-decoration: none !important;
+            line-height: 1 !important;
+        }
+
+
+        /* Main THREADVERSE brand name */
+
+        .logo-brand {
+            display: block;
+            font-size: inherit;
+            font-weight: inherit;
+            letter-spacing: inherit;
+            line-height: 1;
+        }
+
+
+        /* Founder name below THREADVERSE */
+
+        .logo-founder {
+            display: block;
+            margin-top: 7px;
+
+            font-size: 8px;
+            line-height: 1.2;
+
+            font-weight: 500;
+            letter-spacing: 1.4px;
+
+            color: rgba(255, 255, 255, 0.58);
+
+            text-transform: uppercase;
+
+            white-space: nowrap;
+
+            transition:
+                color 0.3s ease,
+                opacity 0.3s ease;
+        }
+
+
+        /* Subtle premium hover */
+
+        .logo:hover .logo-founder {
+            color: rgba(183, 156, 255, 0.95);
+        }
+
+
+        /* ================================================
+           MOBILE NAVBAR
+        ================================================ */
+
+        @media (max-width: 768px) {
+
+            .logo-founder {
+                font-size: 7px;
+                letter-spacing: 1.1px;
+                margin-top: 6px;
+            }
+
+        }
+
+    </style>
+
 
     <!-- =====================================================
          SUPABASE
     ====================================================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
@@ -31,7 +116,6 @@
 
     <!-- =====================================================
          PAGE LOADER
-         Premium entrance layer
     ====================================================== -->
 
     <div class="page-loader" aria-hidden="true">
@@ -54,14 +138,32 @@
 
     <nav class="main-navbar" data-nav>
 
-        <a href="#home"
-           class="logo"
-           aria-label="THREADVERSE Home">
 
-            THREADVERSE
+        <!-- =================================================
+             BRAND + FOUNDER
+        ================================================== -->
+
+        <a
+            href="#home"
+            class="logo"
+            aria-label="THREADVERSE Home"
+        >
+
+            <span class="logo-brand">
+                THREADVERSE
+            </span>
+
+            <span class="logo-founder">
+                YADNESH PATHAK · CEO AND FOUNDER
+            </span>
 
         </a>
 
+
+
+        <!-- =================================================
+             NAVIGATION LINKS
+        ================================================== -->
 
         <div class="nav-links">
 
@@ -101,33 +203,37 @@
             id="home"
             class="hero"
             data-hero
-            aria-labelledby="hero-title">
+            aria-labelledby="hero-title"
+        >
 
 
             <!-- =============================================
                  HERO DECORATIVE MOTION LAYERS
-                 These are controlled by CSS / JS.
             ============================================== -->
 
-            <div class="hero-orb hero-orb-one"
-                 data-parallax="0.10"
-                 aria-hidden="true">
+            <div
+                class="hero-orb hero-orb-one"
+                data-parallax="0.10"
+                aria-hidden="true">
             </div>
 
 
-            <div class="hero-orb hero-orb-two"
-                 data-parallax="0.18"
-                 aria-hidden="true">
+            <div
+                class="hero-orb hero-orb-two"
+                data-parallax="0.18"
+                aria-hidden="true">
             </div>
 
 
-            <div class="hero-grid"
-                 aria-hidden="true">
+            <div
+                class="hero-grid"
+                aria-hidden="true">
             </div>
 
 
-            <div class="hero-noise"
-                 aria-hidden="true">
+            <div
+                class="hero-noise"
+                aria-hidden="true">
             </div>
 
 
@@ -141,7 +247,8 @@
 
                 <p
                     class="hero-small-text reveal hero-reveal hero-reveal-1"
-                    data-reveal>
+                    data-reveal
+                >
                     A WORLD OF CUSTOM WEAR
                 </p>
 
@@ -150,18 +257,24 @@
                 <h1
                     id="hero-title"
                     class="hero-title"
-                    data-text-reveal>
+                    data-text-reveal
+                >
 
                     <span class="hero-title-line">
+
                         <span class="hero-title-inner">
                             WEAR YOUR
                         </span>
+
                     </span>
 
+
                     <span class="hero-title-line">
+
                         <span class="hero-title-inner hero-title-accent">
                             IDENTITY.
                         </span>
+
                     </span>
 
                 </h1>
@@ -170,7 +283,8 @@
 
                 <p
                     class="hero-description reveal hero-reveal hero-reveal-3"
-                    data-reveal>
+                    data-reveal
+                >
 
                     Create premium custom clothing that represents
                     your style, creativity, brand and identity.
@@ -185,12 +299,14 @@
 
                 <div
                     class="hero-buttons reveal hero-reveal-4"
-                    data-reveal>
+                    data-reveal
+                >
 
 
                     <a
                         href="#shop"
-                        class="btn btn-premium magnetic-btn">
+                        class="btn btn-premium magnetic-btn"
+                    >
 
                         <span>
                             SHOP NOW
@@ -198,7 +314,8 @@
 
                         <span
                             class="btn-arrow"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             →
                         </span>
 
@@ -208,7 +325,8 @@
 
                     <a
                         href="custom-order.html"
-                        class="btn custom-order btn-premium magnetic-btn">
+                        class="btn custom-order btn-premium magnetic-btn"
+                    >
 
                         <span>
                             CREATE YOUR DESIGN
@@ -216,7 +334,8 @@
 
                         <span
                             class="btn-arrow"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             →
                         </span>
 
@@ -237,7 +356,8 @@
             <a
                 href="#shop"
                 class="hero-scroll"
-                aria-label="Scroll to collection">
+                aria-label="Scroll to collection"
+            >
 
                 <span class="hero-scroll-text">
                     SCROLL TO EXPLORE
@@ -258,7 +378,8 @@
 
             <div
                 class="hero-corner-label"
-                aria-hidden="true">
+                aria-hidden="true"
+            >
 
                 <span>
                     TV / 001
@@ -277,11 +398,12 @@
 
         <!-- =================================================
              BRAND MOTION STRIP
-             ================================================= -->
+        ================================================== -->
 
         <div
             class="brand-marquee"
-            aria-hidden="true">
+            aria-hidden="true"
+        >
 
             <div class="brand-marquee-track">
 
@@ -289,10 +411,12 @@
                 <span>✦</span>
                 <span>A WORLD OF CUSTOM WEAR</span>
                 <span>✦</span>
+
                 <span>THREADVERSE</span>
                 <span>✦</span>
                 <span>A WORLD OF CUSTOM WEAR</span>
                 <span>✦</span>
+
 
                 <!-- Duplicate content for seamless loop -->
 
@@ -300,6 +424,7 @@
                 <span>✦</span>
                 <span>A WORLD OF CUSTOM WEAR</span>
                 <span>✦</span>
+
                 <span>THREADVERSE</span>
                 <span>✦</span>
                 <span>A WORLD OF CUSTOM WEAR</span>
@@ -318,13 +443,14 @@
         <section
             id="shop"
             class="products-section premium-section"
-            data-section>
+            data-section
+        >
 
 
             <div
                 class="section-heading reveal"
-                data-reveal>
-
+                data-reveal
+            >
 
                 <p class="section-eyebrow">
                     EXPLORE THREADVERSE
@@ -337,11 +463,8 @@
 
 
                 <p class="section-description">
-
                     Premium custom wear made for your style.
-
                 </p>
-
 
             </div>
 
@@ -349,17 +472,16 @@
 
             <!-- =============================================
                  PRODUCT GRID
-                 IMPORTANT:
-                 script.js continues to inject products here.
             ============================================== -->
 
             <div
                 class="products-grid"
-                data-products-grid>
-
+                data-products-grid
+            >
 
                 <div
-                    class="products-loading premium-loading">
+                    class="products-loading premium-loading"
+                >
 
                     <div
                         class="loading-spinner"
@@ -371,7 +493,6 @@
                     </p>
 
                 </div>
-
 
             </div>
 
@@ -387,13 +508,14 @@
         <section
             id="custom"
             class="custom-section premium-section"
-            data-section>
+            data-section
+        >
 
 
             <div
                 class="section-heading reveal"
-                data-reveal>
-
+                data-reveal
+            >
 
                 <p class="section-eyebrow">
                     CREATE SOMETHING UNIQUE
@@ -406,11 +528,8 @@
 
 
                 <p class="section-description">
-
                     From your idea to premium custom clothing.
-
                 </p>
-
 
             </div>
 
@@ -422,12 +541,14 @@
 
             <div
                 class="steps-wrapper"
-                data-process>
+                data-process
+            >
 
 
                 <div
                     class="process-line"
-                    aria-hidden="true">
+                    aria-hidden="true"
+                >
 
                     <span class="process-line-progress"></span>
 
@@ -443,12 +564,13 @@
                     <article
                         class="step reveal step-reveal-1"
                         data-reveal
-                        data-step="1">
-
+                        data-step="1"
+                    >
 
                         <span
                             class="step-number"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             01
                         </span>
 
@@ -460,10 +582,8 @@
                             </h3>
 
                             <p>
-
                                 Select the product and style
                                 you want.
-
                             </p>
 
                         </div>
@@ -471,10 +591,10 @@
 
                         <span
                             class="step-arrow"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             ↗
                         </span>
-
 
                     </article>
 
@@ -485,12 +605,13 @@
                     <article
                         class="step reveal step-reveal-2"
                         data-reveal
-                        data-step="2">
-
+                        data-step="2"
+                    >
 
                         <span
                             class="step-number"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             02
                         </span>
 
@@ -502,10 +623,8 @@
                             </h3>
 
                             <p>
-
                                 Upload your design or
                                 share your idea.
-
                             </p>
 
                         </div>
@@ -513,10 +632,10 @@
 
                         <span
                             class="step-arrow"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             ↗
                         </span>
-
 
                     </article>
 
@@ -527,12 +646,13 @@
                     <article
                         class="step reveal step-reveal-3"
                         data-reveal
-                        data-step="3">
-
+                        data-step="3"
+                    >
 
                         <span
                             class="step-number"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             03
                         </span>
 
@@ -544,10 +664,8 @@
                             </h3>
 
                             <p>
-
                                 Your design is prepared
                                 for premium printing.
-
                             </p>
 
                         </div>
@@ -555,10 +673,10 @@
 
                         <span
                             class="step-arrow"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             ↗
                         </span>
-
 
                     </article>
 
@@ -569,12 +687,13 @@
                     <article
                         class="step reveal step-reveal-4"
                         data-reveal
-                        data-step="4">
-
+                        data-step="4"
+                    >
 
                         <span
                             class="step-number"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             04
                         </span>
 
@@ -586,10 +705,8 @@
                             </h3>
 
                             <p>
-
                                 Receive clothing made
                                 uniquely for you.
-
                             </p>
 
                         </div>
@@ -597,16 +714,15 @@
 
                         <span
                             class="step-arrow"
-                            aria-hidden="true">
+                            aria-hidden="true"
+                        >
                             ↗
                         </span>
-
 
                     </article>
 
 
                 </div>
-
 
             </div>
 
@@ -618,12 +734,13 @@
 
             <div
                 class="custom-order-action reveal"
-                data-reveal>
-
+                data-reveal
+            >
 
                 <a
                     href="custom-order.html"
-                    class="btn custom-order btn-premium magnetic-btn">
+                    class="btn custom-order btn-premium magnetic-btn"
+                >
 
                     <span>
                         START CUSTOM ORDER
@@ -631,12 +748,12 @@
 
                     <span
                         class="btn-arrow"
-                        aria-hidden="true">
+                        aria-hidden="true"
+                    >
                         →
                     </span>
 
                 </a>
-
 
             </div>
 
@@ -652,13 +769,14 @@
         <section
             id="about"
             class="about-section premium-section"
-            data-section>
+            data-section
+        >
 
 
             <div
                 class="section-heading reveal"
-                data-reveal>
-
+                data-reveal
+            >
 
                 <p class="section-eyebrow">
                     ABOUT THREADVERSE
@@ -667,12 +785,10 @@
 
                 <h2
                     class="about-title"
-                    data-text-reveal>
-
+                    data-text-reveal
+                >
                     MORE THAN JUST CLOTHING
-
                 </h2>
-
 
             </div>
 
@@ -680,8 +796,8 @@
 
             <div
                 class="about-content reveal"
-                data-reveal>
-
+                data-reveal
+            >
 
                 <p class="about-description">
 
@@ -692,15 +808,16 @@
 
                 </p>
 
-
             </div>
+
 
 
             <!-- Decorative about line -->
 
             <div
                 class="about-line"
-                aria-hidden="true">
+                aria-hidden="true"
+            >
 
                 <span></span>
 
@@ -720,15 +837,16 @@
 
     <footer
         class="main-footer"
-        data-footer>
-
+        data-footer
+    >
 
         <div class="footer-inner">
 
 
             <div
                 class="footer-brand reveal"
-                data-reveal>
+                data-reveal
+            >
 
                 <h2>
                     THREADVERSE
@@ -749,8 +867,7 @@
 
 
 
-            <div
-                class="footer-bottom">
+            <div class="footer-bottom">
 
                 <p>
                     © 2026 THREADVERSE. All Rights Reserved.
@@ -761,22 +878,20 @@
 
         </div>
 
-
     </footer>
 
 
 
     <!-- =====================================================
          MAIN JAVASCRIPT
-         Existing Supabase/product logic remains.
     ====================================================== -->
 
     <script src="script.js"></script>
 
 
+
     <!-- =====================================================
          PREMIUM MOTION ENGINE
-         This file will be created in the next step.
     ====================================================== -->
 
     <script src="premium-motion.js"></script>
@@ -785,3 +900,4 @@
 </body>
 
 </html>
+```
