@@ -1,64 +1,56 @@
 /* =========================================================
-   THREADVERSE - PREMIUM PRODUCT PAGE
-   DARK / CHARCOAL / WHITE / CONTROLLED PURPLE
-   COMPLETE REPLACEMENT
+   THREADVERSE
+   PRODUCT PAGE CSS
+   PREMIUM BLACK + CHARCOAL + WHITE + CONTROLLED PURPLE
    ========================================================= */
 
 
 /* =========================================================
-   ROOT
+   THREADVERSE COLOR SYSTEM
    ========================================================= */
 
 :root {
 
-    /* THREADVERSE CORE COLORS */
+    --tv-bg: #08090c;
 
-    --tv-black: #08090b;
-    --tv-black-soft: #0d0e11;
+    --tv-bg-soft: #101116;
 
-    --tv-charcoal: #15171b;
-    --tv-charcoal-light: #1b1d22;
-    --tv-charcoal-hover: #22252b;
+    --tv-card: #17191f;
+
+    --tv-card-light: #1d2027;
+
+    --tv-card-hover: #252832;
 
     --tv-white: #ffffff;
-    --tv-soft-white: #f4f4f5;
 
-    --tv-gray: #b3b5bb;
-    --tv-muted: #858891;
+    --tv-soft-white: #f4f4f6;
 
-    /* CONTROLLED PURPLE */
+    --tv-gray: #b8bac2;
+
+    --tv-muted: #898c96;
 
     --tv-purple: #9b7cff;
-    --tv-purple-bright: #a88cff;
-    --tv-purple-dark: #7657e8;
+
+    --tv-purple-light: #b29aff;
+
+    --tv-purple-dark: #7658e8;
 
     --tv-purple-soft: rgba(155, 124, 255, 0.12);
-    --tv-purple-border: rgba(155, 124, 255, 0.45);
-    --tv-purple-glow: rgba(155, 124, 255, 0.16);
 
-    /* BORDERS */
+    --tv-purple-border: rgba(155, 124, 255, 0.55);
 
-    --tv-border: rgba(255, 255, 255, 0.12);
-    --tv-border-strong: rgba(255, 255, 255, 0.22);
+    --tv-purple-glow: rgba(155, 124, 255, 0.20);
 
-    /* SHADOWS */
+    --tv-border: rgba(255, 255, 255, 0.14);
 
-    --tv-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.45);
+    --tv-border-strong: rgba(255, 255, 255, 0.28);
 
-    --tv-purple-shadow:
-        0 14px 40px rgba(115, 82, 220, 0.20);
+    --tv-radius: 12px;
 
-    /* RADIUS */
-
-    --tv-radius-sm: 12px;
-    --tv-radius: 16px;
-    --tv-radius-lg: 22px;
-
-    /* TRANSITION */
+    --tv-radius-large: 20px;
 
     --tv-transition:
-        0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 
@@ -82,18 +74,18 @@ body {
 
     background:
         radial-gradient(
-            circle at 12% 18%,
-            rgba(155, 124, 255, 0.035),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 88% 75%,
-            rgba(155, 124, 255, 0.025),
+            circle at 15% 20%,
+            rgba(155, 124, 255, 0.045),
             transparent 28%
         ),
-        var(--tv-black);
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(155, 124, 255, 0.035),
+            transparent 28%
+        ),
+        var(--tv-bg) !important;
 
-    color: var(--tv-white);
+    color: var(--tv-white) !important;
 
     font-family:
         Arial,
@@ -101,24 +93,126 @@ body {
         sans-serif;
 
     overflow-x: hidden;
-
-    animation:
-        tvPageIn
-        0.7s
-        ease
-        both;
 }
 
 
-@keyframes tvPageIn {
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-    from {
-        opacity: 0;
-    }
+nav {
 
-    to {
-        opacity: 1;
-    }
+    position: relative;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: 100%;
+
+    min-height: 84px;
+
+    padding:
+        0
+        clamp(24px, 7vw, 100px);
+
+    background:
+        rgba(8, 9, 12, 0.96) !important;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    backdrop-filter: blur(18px);
+}
+
+
+/* LOGO */
+
+nav .logo {
+
+    position: relative;
+
+    color:
+        #ffffff !important;
+
+    text-decoration: none;
+
+    font-size: 22px;
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+}
+
+
+/* Purple line below logo */
+
+nav .logo::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -14px;
+
+    width: 23px;
+
+    height: 2px;
+
+    background:
+        var(--tv-purple);
+
+    box-shadow:
+        0 0 12px
+        rgba(155, 124, 255, 0.45);
+}
+
+
+/* NAV LINKS */
+
+nav .nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 42px;
+}
+
+
+nav .nav-links a {
+
+    color:
+        #eeeeef !important;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.8px;
+
+    transition:
+        color var(--tv-transition),
+        transform var(--tv-transition);
+}
+
+
+nav .nav-links a:hover {
+
+    color:
+        var(--tv-purple-light) !important;
+
+    transform:
+        translateY(-2px);
 }
 
 
@@ -130,15 +224,15 @@ body {
 
     width:
         min(
-            1220px,
+            1200px,
             calc(100% - 40px)
         );
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
     padding:
-        42px 0
-        90px;
+        48px 0 90px;
 }
 
 
@@ -148,15 +242,12 @@ body {
 
 .back-to-shop {
 
-    display: inline-flex;
+    display: inline-block;
 
-    align-items: center;
+    margin-bottom: 40px;
 
-    gap: 10px;
-
-    margin-bottom: 38px;
-
-    color: var(--tv-gray) !important;
+    color:
+        #eeeeef !important;
 
     text-decoration: none;
 
@@ -164,7 +255,7 @@ body {
 
     font-weight: 700;
 
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
 
     transition:
         color var(--tv-transition),
@@ -174,7 +265,8 @@ body {
 
 .back-to-shop:hover {
 
-    color: var(--tv-white) !important;
+    color:
+        var(--tv-purple-light) !important;
 
     transform:
         translateX(-5px);
@@ -183,45 +275,21 @@ body {
 
 /* =========================================================
    PRODUCT CONTAINER
+   IMPORTANT:
+   Actual HTML uses .single-product-container
    ========================================================= */
 
-.product-container {
+.single-product-container {
 
     display: grid;
 
     grid-template-columns:
         minmax(420px, 1fr)
-        minmax(380px, 0.95fr);
+        minmax(380px, 1fr);
 
-    gap: 64px;
+    gap: 60px;
 
     align-items: start;
-
-    animation:
-        tvProductReveal
-        0.85s
-        cubic-bezier(0.22, 1, 0.36, 1)
-        both;
-}
-
-
-@keyframes tvProductReveal {
-
-    from {
-
-        opacity: 0;
-
-        transform:
-            translateY(28px);
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
 }
 
 
@@ -229,37 +297,34 @@ body {
    PRODUCT IMAGE
    ========================================================= */
 
-.product-image-container,
-.product-image-wrapper,
-.product-image-box {
-
-    position: relative;
+.single-product-image-container {
 
     width: 100%;
 
+    overflow: hidden;
+
     background:
-        var(--tv-charcoal);
+        var(--tv-card);
 
     border:
         1px solid
         var(--tv-border);
 
     border-radius:
-        var(--tv-radius-lg);
+        var(--tv-radius-large);
 
-    overflow: hidden;
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.35);
 
     transition:
-        transform 0.5s
-        cubic-bezier(0.22, 1, 0.36, 1),
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
+        transform 0.45s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
 
-.product-image-container:hover,
-.product-image-wrapper:hover,
-.product-image-box:hover {
+.single-product-image-container:hover {
 
     transform:
         translateY(-5px);
@@ -268,42 +333,22 @@ body {
         var(--tv-purple-border);
 
     box-shadow:
-        var(--tv-shadow),
-        0 0 55px
+        0 30px 80px
+        rgba(0, 0, 0, 0.42),
+        0 0 45px
         rgba(155, 124, 255, 0.06);
 }
 
 
-.product-image-container img,
-.product-image-wrapper img,
-.product-image-box img,
-#product-image {
+.single-product-image {
 
     display: block;
 
     width: 100%;
 
-    height: auto;
-
     max-height: 650px;
 
     object-fit: cover;
-
-    background:
-        var(--tv-charcoal);
-
-    transition:
-        transform 0.8s
-        cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-
-.product-image-container:hover img,
-.product-image-wrapper:hover img,
-.product-image-box:hover img {
-
-    transform:
-        scale(1.018);
 }
 
 
@@ -311,38 +356,13 @@ body {
    PRODUCT DETAILS
    ========================================================= */
 
-.product-details {
+.single-product-details {
 
     padding:
-        12px 0
-        20px;
+        10px 0 30px;
 
-    animation:
-        tvDetailsReveal
-        0.9s
-        0.1s
-        cubic-bezier(0.22, 1, 0.36, 1)
-        both;
-}
-
-
-@keyframes tvDetailsReveal {
-
-    from {
-
-        opacity: 0;
-
-        transform:
-            translateX(25px);
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            translateX(0);
-    }
+    color:
+        #ffffff !important;
 }
 
 
@@ -350,52 +370,52 @@ body {
    CATEGORY
    ========================================================= */
 
-.product-category,
-.product-type,
-.product-label {
+.single-product-category {
 
-    display: block;
-
-    margin-bottom: 18px;
+    margin:
+        0 0 18px;
 
     color:
-        var(--tv-purple) !important;
+        var(--tv-purple-light) !important;
 
-    font-size: 12px;
+    font-size: 13px;
 
     font-weight: 800;
 
     letter-spacing: 2.5px;
 
     text-transform: uppercase;
+
+    opacity: 1 !important;
 }
 
 
 /* =========================================================
-   PRODUCT TITLE
+   PRODUCT NAME
    ========================================================= */
 
-.product-title,
-.product-details h1 {
+.single-product-name {
 
     margin:
-        0 0 24px;
+        0 0 20px;
 
     color:
-        var(--tv-white) !important;
+        #ffffff !important;
 
     font-size:
         clamp(
             36px,
             4vw,
-            58px
+            54px
         );
 
     line-height: 1.08;
 
-    letter-spacing: -1.8px;
-
     font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    opacity: 1 !important;
 }
 
 
@@ -403,21 +423,30 @@ body {
    PRICE
    ========================================================= */
 
-.product-price,
-#product-price {
+.single-product-price {
 
-    display: block;
-
-    margin-bottom: 26px;
+    margin:
+        20px 0 25px;
 
     color:
-        var(--tv-white) !important;
+        #ffffff !important;
 
     font-size: 30px;
 
-    font-weight: 800;
+    font-weight: 900;
 
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
+
+    opacity: 1 !important;
+}
+
+
+/* Small purple ₹ accent */
+
+.single-product-price::first-letter {
+
+    color:
+        var(--tv-purple-light);
 }
 
 
@@ -425,13 +454,12 @@ body {
    DESCRIPTION
    ========================================================= */
 
-.product-description,
-#product-description {
-
-    margin:
-        0 0 38px;
+.single-product-description {
 
     max-width: 620px;
+
+    margin:
+        0 0 32px;
 
     color:
         var(--tv-gray) !important;
@@ -439,47 +467,34 @@ body {
     font-size: 16px;
 
     line-height: 1.8;
+
+    opacity: 1 !important;
 }
 
 
 /* =========================================================
-   OPTIONS
+   OPTION TITLES
+   ACTUAL HTML:
+   <p class="option-title">
    ========================================================= */
 
-.product-option,
-.option-group,
-.size-section,
-.quantity-section {
+.option-title {
 
-    margin-top: 30px;
-}
-
-
-/* =========================================================
-   OPTION LABELS
-   ========================================================= */
-
-.product-option label,
-.option-group label,
-.size-section h3,
-.quantity-section h3,
-.size-label,
-.quantity-label {
-
-    display: block;
-
-    margin-bottom: 16px;
+    margin:
+        25px 0 13px;
 
     color:
-        var(--tv-soft-white) !important;
+        #ffffff !important;
 
     font-size: 13px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     letter-spacing: 1.6px;
 
     text-transform: uppercase;
+
+    opacity: 1 !important;
 }
 
 
@@ -487,8 +502,7 @@ body {
    SIZE OPTIONS
    ========================================================= */
 
-.size-options,
-.size-buttons {
+.size-options {
 
     display: flex;
 
@@ -496,17 +510,16 @@ body {
 
     gap: 10px;
 
-    margin-bottom: 32px;
+    margin-bottom: 30px;
 }
 
 
 /* =========================================================
    SIZE BUTTONS
+   THIS IS THE IMPORTANT FIX
    ========================================================= */
 
-.size-btn,
-.size-button,
-.size-option {
+.size-button {
 
     display: flex !important;
 
@@ -514,31 +527,31 @@ body {
 
     justify-content: center;
 
-    min-width: 62px;
+    min-width: 60px !important;
 
-    height: 52px;
+    height: 50px !important;
 
     padding:
-        0 16px;
-
-    cursor: pointer;
+        0 17px !important;
 
     background:
-        var(--tv-charcoal) !important;
+        #1b1e25 !important;
 
     border:
         1px solid
-        var(--tv-border-strong) !important;
+        rgba(255, 255, 255, 0.30) !important;
 
     border-radius:
-        var(--tv-radius-sm);
+        10px !important;
 
     color:
-        var(--tv-soft-white) !important;
+        #ffffff !important;
 
-    font-size: 14px;
+    font-size: 14px !important;
 
-    font-weight: 800;
+    font-weight: 900 !important;
+
+    cursor: pointer;
 
     opacity: 1 !important;
 
@@ -557,128 +570,90 @@ body {
 }
 
 
-/* =========================================================
-   SIZE HOVER
-   ========================================================= */
+/* SIZE BUTTON HOVER */
 
-.size-btn:hover,
-.size-button:hover,
-.size-option:hover {
+.size-button:hover {
 
     background:
-        var(--tv-purple-soft) !important;
+        rgba(155, 124, 255, 0.15) !important;
 
     border-color:
         var(--tv-purple) !important;
 
     color:
-        var(--tv-white) !important;
+        #ffffff !important;
 
     transform:
         translateY(-3px);
 
     box-shadow:
-        var(--tv-purple-shadow);
+        0 10px 30px
+        rgba(155, 124, 255, 0.16);
 }
 
 
-/* =========================================================
-   SELECTED SIZE
-   ========================================================= */
+/* SELECTED SIZE */
 
-.size-btn.active,
-.size-btn.selected,
-.size-button.active,
-.size-button.selected,
-.size-option.active,
-.size-option.selected {
+.size-button.selected-size {
 
     background:
         var(--tv-purple) !important;
 
     border-color:
-        var(--tv-purple) !important;
-
-    color:
-        #ffffff !important;
-
-    box-shadow:
-        0 8px 28px
-        rgba(155, 124, 255, 0.24);
-}
-
-
-/* =========================================================
-   SELECTED SIZE HOVER
-   ========================================================= */
-
-.size-btn.active:hover,
-.size-btn.selected:hover,
-.size-button.active:hover,
-.size-button.selected:hover,
-.size-option.active:hover,
-.size-option.selected:hover {
-
-    background:
-        var(--tv-purple-bright) !important;
+        var(--tv-purple-light) !important;
 
     color:
         #ffffff !important;
 
     transform:
-        translateY(-2px);
+        translateY(-2px)
+        scale(1.04);
+
+    box-shadow:
+        0 10px 30px
+        rgba(155, 124, 255, 0.28);
 }
 
 
 /* =========================================================
-   QUANTITY
+   QUANTITY CONTROLS
    ========================================================= */
 
-.quantity-controls,
-.quantity-selector {
+.quantity-controls {
 
-    display: inline-flex;
+    display: flex;
 
     align-items: center;
 
-    min-height: 52px;
+    width: fit-content;
 
-    overflow: hidden;
+    min-height: 50px;
 
     background:
-        var(--tv-charcoal) !important;
+        #1b1e25 !important;
 
     border:
         1px solid
-        var(--tv-border-strong) !important;
+        rgba(255, 255, 255, 0.30) !important;
 
     border-radius:
-        var(--tv-radius-sm);
+        10px !important;
 
-    margin-bottom: 38px;
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.18);
 
     opacity: 1 !important;
 
     visibility: visible !important;
-
-    box-shadow:
-        0 6px 22px
-        rgba(0, 0, 0, 0.20);
 }
 
 
-/* =========================================================
-   QUANTITY BUTTONS
-   ========================================================= */
+/* QUANTITY BUTTON */
 
-.quantity-btn,
-.quantity-button,
-.minus-btn,
-.plus-btn {
-
-    width: 52px;
-
-    height: 52px;
+.quantity-button {
 
     display: flex !important;
 
@@ -686,71 +661,79 @@ body {
 
     justify-content: center;
 
-    cursor: pointer;
+    width: 52px !important;
 
-    border: none !important;
+    height: 50px !important;
+
+    border:
+        none !important;
 
     background:
         transparent !important;
 
     color:
-        var(--tv-soft-white) !important;
+        #ffffff !important;
 
-    font-size: 23px;
+    cursor: pointer;
 
-    font-weight: 600;
+    font-size: 23px !important;
+
+    font-weight: 700;
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
 
     transition:
         background var(--tv-transition),
-        color var(--tv-transition),
-        transform var(--tv-transition);
+        color var(--tv-transition);
 }
 
 
-.quantity-btn:hover,
-.quantity-button:hover,
-.minus-btn:hover,
-.plus-btn:hover {
+/* QUANTITY BUTTON HOVER */
+
+.quantity-button:hover {
 
     background:
-        var(--tv-purple-soft) !important;
+        rgba(155, 124, 255, 0.16) !important;
 
     color:
-        var(--tv-purple-bright) !important;
-
-    transform:
-        scale(1.05);
+        var(--tv-purple-light) !important;
 }
 
 
-/* =========================================================
-   QUANTITY VALUE
-   ========================================================= */
+/* QUANTITY NUMBER */
 
-.quantity-value,
-#quantity-value {
+.quantity-value {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 
     width: 58px;
 
-    text-align: center;
+    height: 50px;
 
     color:
-        var(--tv-white) !important;
+        #ffffff !important;
 
-    font-size: 16px;
+    font-size: 17px !important;
 
-    font-weight: 800;
+    font-weight: 900 !important;
 
-    user-select: none;
+    opacity: 1 !important;
+
+    visibility: visible !important;
 }
 
 
 /* =========================================================
-   ACTION AREA
+   ACTION BUTTONS
    ========================================================= */
 
-.product-actions,
-.product-buttons {
+.product-action-buttons {
 
     display: flex;
 
@@ -758,9 +741,9 @@ body {
 
     gap: 14px;
 
-    width: 100%;
+    margin-top: 32px;
 
-    margin-top: 4px;
+    width: 100%;
 }
 
 
@@ -768,13 +751,7 @@ body {
    ADD TO CART
    ========================================================= */
 
-.add-to-cart-btn,
-#add-to-cart,
 .add-cart-button {
-
-    width: 100% !important;
-
-    min-height: 60px;
 
     display: flex !important;
 
@@ -782,31 +759,33 @@ body {
 
     justify-content: center;
 
-    gap: 12px;
+    width: 100% !important;
 
-    cursor: pointer;
+    min-height: 58px !important;
 
     padding:
-        15px 25px;
+        15px 20px !important;
 
     background:
-        var(--tv-purple-soft) !important;
+        rgba(155, 124, 255, 0.13) !important;
 
     border:
         1px solid
-        var(--tv-purple-border) !important;
+        rgba(155, 124, 255, 0.65) !important;
 
     border-radius:
-        var(--tv-radius-sm);
+        10px !important;
 
     color:
-        var(--tv-white) !important;
+        #ffffff !important;
 
-    font-size: 14px;
+    cursor: pointer;
 
-    font-weight: 800;
+    font-size: 14px !important;
 
-    letter-spacing: 1.4px;
+    font-weight: 900 !important;
+
+    letter-spacing: 1.5px;
 
     text-transform: uppercase;
 
@@ -816,12 +795,11 @@ body {
 
     box-shadow:
         0 8px 25px
-        rgba(0, 0, 0, 0.18);
+        rgba(155, 124, 255, 0.08);
 
     transition:
         background var(--tv-transition),
         border-color var(--tv-transition),
-        color var(--tv-transition),
         transform var(--tv-transition),
         box-shadow var(--tv-transition);
 }
@@ -829,15 +807,13 @@ body {
 
 /* ADD TO CART HOVER */
 
-.add-to-cart-btn:hover,
-#add-to-cart:hover,
 .add-cart-button:hover {
 
     background:
         var(--tv-purple) !important;
 
     border-color:
-        var(--tv-purple-bright) !important;
+        var(--tv-purple-light) !important;
 
     color:
         #ffffff !important;
@@ -846,20 +822,98 @@ body {
         translateY(-3px);
 
     box-shadow:
-        0 15px 38px
-        rgba(115, 82, 220, 0.24);
+        0 15px 40px
+        rgba(155, 124, 255, 0.25);
 }
 
 
-/* ADD TO CART ACTIVE */
+/* =========================================================
+   CART QUANTITY CONTROLS
+   ========================================================= */
 
-.add-to-cart-btn:active,
-#add-to-cart:active,
-.add-cart-button:active {
+.cart-quantity-controls {
 
-    transform:
-        translateY(0)
-        scale(0.99);
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100% !important;
+
+    height: 58px !important;
+
+    background:
+        rgba(155, 124, 255, 0.13) !important;
+
+    border:
+        1px solid
+        rgba(155, 124, 255, 0.65) !important;
+
+    border-radius:
+        10px !important;
+
+    overflow: hidden;
+
+    color:
+        #ffffff !important;
+}
+
+
+/* CART QUANTITY BUTTON */
+
+.cart-quantity-button {
+
+    width:
+        33.33% !important;
+
+    height:
+        100% !important;
+
+    border:
+        none !important;
+
+    background:
+        transparent !important;
+
+    color:
+        #ffffff !important;
+
+    cursor: pointer;
+
+    font-size: 25px;
+
+    transition:
+        background var(--tv-transition),
+        color var(--tv-transition);
+}
+
+
+.cart-quantity-button:hover {
+
+    background:
+        var(--tv-purple) !important;
+
+    color:
+        #ffffff !important;
+}
+
+
+/* CART QUANTITY NUMBER */
+
+#cartQuantityValue {
+
+    width:
+        33.33% !important;
+
+    color:
+        #ffffff !important;
+
+    text-align: center;
+
+    font-size: 18px;
+
+    font-weight: 900;
 }
 
 
@@ -867,13 +921,7 @@ body {
    BUY NOW
    ========================================================= */
 
-.buy-now-btn,
-#buy-now,
 .buy-now-button {
-
-    width: 100% !important;
-
-    min-height: 60px;
 
     display: flex !important;
 
@@ -881,31 +929,33 @@ body {
 
     justify-content: center;
 
-    gap: 12px;
+    width: 100% !important;
 
-    cursor: pointer;
+    min-height: 58px !important;
 
     padding:
-        15px 25px;
+        15px 20px !important;
 
     background:
-        var(--tv-soft-white) !important;
+        #f4f4f5 !important;
 
     border:
         1px solid
-        var(--tv-soft-white) !important;
+        #f4f4f5 !important;
 
     border-radius:
-        var(--tv-radius-sm);
+        10px !important;
 
     color:
-        #111216 !important;
+        #111217 !important;
 
-    font-size: 14px;
+    cursor: pointer;
 
-    font-weight: 900;
+    font-size: 14px !important;
 
-    letter-spacing: 1.4px;
+    font-weight: 900 !important;
+
+    letter-spacing: 1.5px;
 
     text-transform: uppercase;
 
@@ -920,221 +970,58 @@ body {
 }
 
 
-.buy-now-btn:hover,
-#buy-now:hover,
+/* BUY NOW HOVER */
+
 .buy-now-button:hover {
 
     background:
         #ffffff !important;
 
     color:
-        #111216 !important;
+        #111217 !important;
 
     transform:
         translateY(-3px);
 
     box-shadow:
-        0 15px 38px
+        0 15px 40px
         rgba(255, 255, 255, 0.12);
 }
 
 
-.buy-now-btn:active,
-#buy-now:active,
-.buy-now-button:active {
-
-    transform:
-        translateY(0)
-        scale(0.99);
-}
-
-
 /* =========================================================
-   DISABLED BUTTONS
+   PRODUCT MESSAGE
    ========================================================= */
 
-button:disabled {
+.product-message {
 
-    cursor:
-        not-allowed;
+    text-align: center;
 
-    opacity:
-        0.55 !important;
-
-    transform:
-        none !important;
-
-    box-shadow:
-        none !important;
-}
-
-
-/* =========================================================
-   PRODUCT EXTRA INFORMATION
-   ========================================================= */
-
-.product-extra-info,
-.product-info,
-.product-features {
-
-    margin-top: 38px;
-
-    padding-top: 25px;
-
-    border-top:
-        1px solid
-        var(--tv-border);
-}
-
-
-.product-info-row,
-.product-feature {
-
-    display: flex;
-
-    align-items: flex-start;
-
-    gap: 12px;
-
-    padding: 14px 0;
+    padding:
+        100px 20px;
 
     color:
         var(--tv-gray) !important;
 
-    font-size: 14px;
+    font-size: 20px;
 
-    border-bottom:
-        1px solid
-        rgba(255, 255, 255, 0.06);
-}
-
-
-.product-info-row strong,
-.product-feature strong {
-
-    color:
-        var(--tv-white) !important;
+    opacity: 1 !important;
 }
 
 
 /* =========================================================
-   LOADING
+   BUTTON ACCESSIBILITY
    ========================================================= */
 
-.loading,
-.product-loading {
+button:focus-visible,
+a:focus-visible {
 
-    min-height: 300px;
+    outline:
+        2px solid
+        var(--tv-purple-light) !important;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color:
-        var(--tv-gray) !important;
-
-    font-size: 16px;
-}
-
-
-/* =========================================================
-   CONTROL ANIMATIONS
-   ========================================================= */
-
-.size-section,
-.quantity-section,
-.product-actions,
-.product-buttons {
-
-    animation:
-        tvControlReveal
-        0.65s
-        cubic-bezier(0.22, 1, 0.36, 1)
-        both;
-}
-
-
-.size-section {
-
-    animation-delay:
-        0.15s;
-}
-
-
-.quantity-section {
-
-    animation-delay:
-        0.25s;
-}
-
-
-.product-actions,
-.product-buttons {
-
-    animation-delay:
-        0.35s;
-}
-
-
-@keyframes tvControlReveal {
-
-    from {
-
-        opacity: 0;
-
-        transform:
-            translateY(14px);
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 950px) {
-
-    .product-page {
-
-        width:
-            min(
-                720px,
-                calc(100% - 32px)
-            );
-    }
-
-    .product-container {
-
-        grid-template-columns:
-            1fr;
-
-        gap: 40px;
-    }
-
-    .product-image-container,
-    .product-image-wrapper,
-    .product-image-box {
-
-        max-width: 700px;
-
-        margin:
-            0 auto;
-    }
-
-    .product-details {
-
-        padding-top: 0;
-    }
+    outline-offset:
+        4px;
 }
 
 
@@ -1142,7 +1029,34 @@ button:disabled {
    MOBILE
    ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+
+    nav {
+
+        min-height: 72px;
+
+        padding:
+            0 20px;
+    }
+
+    nav .logo {
+
+        font-size: 18px;
+
+        letter-spacing: 2px;
+    }
+
+    nav .nav-links {
+
+        gap: 16px;
+    }
+
+    nav .nav-links a {
+
+        font-size: 10px;
+
+        letter-spacing: 1px;
+    }
 
     .product-page {
 
@@ -1150,78 +1064,56 @@ button:disabled {
             calc(100% - 28px);
 
         padding:
-            25px 0
-            60px;
+            35px 0 60px;
     }
 
-    .back-to-shop {
+    .single-product-container {
 
-        margin-bottom:
-            25px;
-
-        font-size:
-            12px;
-    }
-
-    .product-container {
+        grid-template-columns:
+            1fr;
 
         gap:
-            28px;
+            35px;
     }
 
-    .product-title,
-    .product-details h1 {
+    .single-product-name {
 
         font-size:
-            36px;
+            34px;
 
         letter-spacing:
             -1px;
     }
 
-    .product-price,
-    #product-price {
+    .single-product-price {
 
         font-size:
-            26px;
-
-        margin-bottom:
-            20px;
+            27px;
     }
 
-    .product-description,
-    #product-description {
-
-        margin-bottom:
-            28px;
+    .single-product-description {
 
         font-size:
             15px;
     }
 
-    .size-btn,
-    .size-button,
-    .size-option {
-
-        flex:
-            1;
+    .size-button {
 
         min-width:
-            50px;
+            52px !important;
+
+        height:
+            48px !important;
+
+        padding:
+            0 14px !important;
     }
 
-    .add-to-cart-btn,
-    #add-to-cart,
     .add-cart-button,
-    .buy-now-btn,
-    #buy-now,
     .buy-now-button {
 
         min-height:
-            58px;
-
-        font-size:
-            13px;
+            56px !important;
     }
 }
 
@@ -1230,59 +1122,49 @@ button:disabled {
    SMALL MOBILE
    ========================================================= */
 
-@media (max-width: 380px) {
+@media (max-width: 480px) {
 
-    .size-options,
-    .size-buttons {
+    nav .nav-links {
+
+        gap: 10px;
+    }
+
+    nav .nav-links a {
+
+        font-size: 9px;
+    }
+
+    .product-page {
+
+        width:
+            calc(100% - 22px);
+    }
+
+    .single-product-name {
+
+        font-size:
+            30px;
+    }
+
+    .size-options {
 
         gap:
             7px;
     }
 
-    .size-btn,
-    .size-button,
-    .size-option {
+    .size-button {
+
+        flex:
+            1;
 
         min-width:
-            45px;
-
-        height:
-            48px;
-
-        padding:
-            0 8px;
-
-        font-size:
-            12px;
-    }
-
-    .product-title,
-    .product-details h1 {
-
-        font-size:
-            31px;
+            45px !important;
     }
 }
 
 
 /* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-button:focus-visible,
-a:focus-visible {
-
-    outline:
-        2px solid
-        var(--tv-purple-bright) !important;
-
-    outline-offset:
-        4px;
-}
-
-
-/* =========================================================
-   REDUCE MOTION
+   REDUCED MOTION
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1291,237 +1173,13 @@ a:focus-visible {
     *::before,
     *::after {
 
-        animation-duration:
-            0.01ms !important;
+        animation:
+            none !important;
 
-        animation-iteration-count:
-            1 !important;
-
-        transition-duration:
-            0.01ms !important;
+        transition:
+            none !important;
 
         scroll-behavior:
             auto !important;
-    }
-/* =========================================================
-   THREADVERSE PRODUCT CONTROLS — FINAL VISIBILITY FIX
-   ========================================================= */
-
-/* SIZE LABEL */
-.size-section h3,
-.quantity-section h3,
-.size-label,
-.quantity-label,
-.product-option label,
-.option-group label {
-    color: #ffffff !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-/* SIZE BUTTONS */
-.size-btn,
-.size-button,
-.size-option {
-    background: #17171c !important;
-    color: #f5f5f5 !important;
-
-    border: 1px solid rgba(255, 255, 255, 0.28) !important;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-
-    box-shadow: none !important;
-}
-
-/* SIZE BUTTON HOVER */
-.size-btn:hover,
-.size-button:hover,
-.size-option:hover {
-    background: rgba(139, 92, 246, 0.14) !important;
-
-    color: #ffffff !important;
-
-    border-color: #8b5cf6 !important;
-
-    box-shadow:
-        0 0 0 1px rgba(139, 92, 246, 0.18),
-        0 10px 30px rgba(139, 92, 246, 0.12) !important;
-
-    transform: translateY(-2px) !important;
-}
-
-/* SELECTED SIZE */
-.size-btn.active,
-.size-btn.selected,
-.size-button.active,
-.size-button.selected,
-.size-option.active,
-.size-option.selected {
-    background: #8b5cf6 !important;
-
-    color: #ffffff !important;
-
-    border-color: #a78bfa !important;
-
-    box-shadow:
-        0 8px 25px rgba(139, 92, 246, 0.25) !important;
-}
-
-
-/* =========================================================
-   QUANTITY
-   ========================================================= */
-
-.quantity-controls,
-.quantity-selector {
-    background: #17171c !important;
-
-    border: 1px solid rgba(255, 255, 255, 0.28) !important;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-.quantity-btn,
-.quantity-button,
-.minus-btn,
-.plus-btn {
-    background: transparent !important;
-
-    color: #ffffff !important;
-
-    border: none !important;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-.quantity-btn:hover,
-.quantity-button:hover,
-.minus-btn:hover,
-.plus-btn:hover {
-    background: rgba(139, 92, 246, 0.15) !important;
-
-    color: #a78bfa !important;
-}
-
-.quantity-value,
-#quantity-value {
-    color: #ffffff !important;
-
-    opacity: 1 !important;
-}
-
-
-/* =========================================================
-   ADD TO CART — CLEAR PREMIUM PURPLE
-   ========================================================= */
-
-.add-to-cart-btn,
-#add-to-cart,
-.add-cart-button {
-    display: flex !important;
-
-    width: 100% !important;
-
-    min-height: 60px !important;
-
-    background: rgba(139, 92, 246, 0.08) !important;
-
-    color: #ffffff !important;
-
-    border: 1px solid rgba(139, 92, 246, 0.65) !important;
-
-    opacity: 1 !important;
-
-    visibility: visible !important;
-
-    box-shadow:
-        0 0 0 1px rgba(139, 92, 246, 0.05) !important;
-}
-
-.add-to-cart-btn:hover,
-#add-to-cart:hover,
-.add-cart-button:hover {
-    background: #8b5cf6 !important;
-
-    color: #ffffff !important;
-
-    border-color: #a78bfa !important;
-
-    transform: translateY(-3px) !important;
-
-    box-shadow:
-        0 15px 40px rgba(139, 92, 246, 0.25) !important;
-}
-
-
-/* =========================================================
-   BUY NOW
-   ========================================================= */
-
-.buy-now-btn,
-#buy-now,
-.buy-now-button {
-    background: #ffffff !important;
-
-    color: #111111 !important;
-
-    border-color: #ffffff !important;
-
-    opacity: 1 !important;
-
-    visibility: visible !important;
-}
-
-.buy-now-btn:hover,
-#buy-now:hover,
-.buy-now-button:hover {
-    background: #f3f3f3 !important;
-
-    color: #111111 !important;
-}
-
-
-/* =========================================================
-   PRODUCT OPTION TEXT
-   ========================================================= */
-
-.product-details label,
-.product-details h3,
-.product-details strong {
-    opacity: 1 !important;
-}
-
-.product-details {
-    color: #ffffff;
-}
-
-
-/* =========================================================
-   MOBILE VISIBILITY
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .size-btn,
-    .size-button,
-    .size-option {
-        background: #17171c !important;
-
-        color: #ffffff !important;
-
-        border-color: rgba(255, 255, 255, 0.28) !important;
-    }
-
-    .add-to-cart-btn,
-    #add-to-cart,
-    .add-cart-button {
-        background: rgba(139, 92, 246, 0.10) !important;
-
-        color: #ffffff !important;
-
-        border-color: #8b5cf6 !important;
     }
 }
